@@ -1,11 +1,37 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard1.6;netstandard2.0;netstandard2.1;net6.0;net7.0;net8.0</TargetFrameworks>
+    <TargetFrameworks>netstandard1.6;netstandard2.0;netstandard2.1;net6.0;net8.0</TargetFrameworks>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Title>TTYPDB.NET</Title>
     <Version>1.0.0-beta1</Version>
     <Authors>QingYi-Studio</Authors>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <PackageIcon>icon.png</PackageIcon>
+    <RepositoryUrl>https://github.com/TYLDDB/TTYPDB-CSharp</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageProjectUrl>ttypdb.qingyi-studio.top</PackageProjectUrl>
+    <Copyright>BSD 3-Clause License</Copyright>
+    <Description>A strongly typed constrained distributed file system that can act as a database.</Description>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="icon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="icon.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
 </Project>
