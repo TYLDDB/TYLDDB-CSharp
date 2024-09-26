@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TTYPDB.Basic
+namespace TYLDDB.Basic
 {
 #if NET8_0
     /// <summary>

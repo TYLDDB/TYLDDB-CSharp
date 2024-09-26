@@ -1,8 +1,7 @@
-﻿using System;
-using System.IO;
-using TTYPDB.Basic;
+﻿using System.IO;
+using TYLDDB.Basic;
 
-namespace TTYPDB.Utils
+namespace TYLDDB.Utils
 {
     internal class ReadFile
     {

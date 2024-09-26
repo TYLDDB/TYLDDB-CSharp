@@ -1,10 +1,10 @@
 ﻿using System.Text.RegularExpressions;
-using TTYPDB.Basic;
-using TTYPDB.Utils;
+using TYLDDB.Basic;
+using TYLDDB.Utils;
 
-namespace TTYPDB
+namespace TYLDDB
 {
-    public class TTYPDB
+    public class TYLDDB
     {
         private string _filePath;  // 私有字段存储文件路径
         private string _fileContent; // 私有字段存储文件内容
