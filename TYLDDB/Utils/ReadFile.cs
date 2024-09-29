@@ -5,7 +5,7 @@ namespace TYLDDB.Utils
 {
     internal class ReadFile
     {
-        public static string ReadTtypdbFile(string filePath)
+        public static string ReadTylddbFile(string filePath)
         {
 #if NETSTANDARD1_6
             return NetStandard1_6(filePath);
@@ -30,7 +30,7 @@ namespace TYLDDB.Utils
                     return content;
                 }
             }
-            catch (TtypdbException ex)
+            catch (TylddbException ex)
             {
                 throw new FileReadingFailException($"Error reading file: {ex.Message}");
             }
@@ -49,7 +49,7 @@ namespace TYLDDB.Utils
                     return content;
                 }
             }
-            catch (TtypdbException ex)
+            catch (TylddbException ex)
             {
                 throw new FileReadingFailException($"Error reading file: {ex.Message}");
             }
@@ -66,7 +66,7 @@ namespace TYLDDB.Utils
                 string content = reader.ReadToEnd();
                 return content;
             }
-            catch (TtypdbException ex)
+            catch (TylddbException ex)
             {
                 throw new FileReadingFailException($"Error reading file: {ex.Message}");
             }
@@ -83,7 +83,7 @@ namespace TYLDDB.Utils
                 string content = reader.ReadToEnd();
                 return content;
             }
-            catch (TtypdbException ex)
+            catch (TylddbException ex)
             {
                 throw new FileReadingFailException($"Error reading file: {ex.Message}");
             }

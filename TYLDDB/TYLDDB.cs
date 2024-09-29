@@ -26,8 +26,9 @@ namespace TYLDDB
             }
         }
 
+#pragma warning disable CA1822 // 忽略静态提示
         // 验证文件路径的方法
-        private static void ValidateFilePath(string path)
+        private void ValidateFilePath(string path)
         {
             if (string.IsNullOrWhiteSpace(path))
             {
@@ -39,13 +40,17 @@ namespace TYLDDB
         /// Read the contents from the file<br/>
         /// 从文件中读取内容
         /// </summary>
-        public void ReadingFile() => _fileContent = ReadFile.ReadTtypdbFile(FilePath);
+        public void ReadingFile() => _fileContent = ReadFile.ReadTylddbFile(FilePath);
 
         /// <summary>
         /// Set the database to load<br/>
         /// 设置要加载的数据库
         /// </summary>
         /// <param name="db">name of the database<br/>数据库名称</param>
-        public void LoadDatabase(string db) => _database = database.LoadDatabase(db, _fileContent);
+        public void LoadDatabase(string db)
+        {
+            _database = database.LoadDatabase(db, _fileContent);
+            _databaseContent = database.GetDatabaseContent(_fileContent, db);
+        }
     }
 }
