@@ -10,7 +10,7 @@ namespace TYLDDB
         private string _database;
         private string _databaseContent;
 
-        private readonly Database database = new Database();
+        private Database database = new Database();
 
         /// <summary>
         /// Set the path where you want to read the file<br/>
