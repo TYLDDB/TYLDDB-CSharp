@@ -9,7 +9,7 @@
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <PackageIcon>icon.png</PackageIcon>
-    <RepositoryUrl>https://github.com/TYLDDB/TTYPDB-CSharp</RepositoryUrl>
+    <RepositoryUrl>https://github.com/TYLDDB/TYLDDB-CSharp</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageProjectUrl>ttypdb.qingyi-studio.top</PackageProjectUrl>
     <Copyright>BSD 3-Clause License</Copyright>
