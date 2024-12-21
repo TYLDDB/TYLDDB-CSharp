@@ -1,0 +1,28 @@
+﻿database1::{
+	string::"str_name"="name1";
+	int::"int_value"="123"
+	short::"short_value"="32767"
+	long::"long_value"="2147483647";
+	float::"float_value"="3.14f"
+	double::"double_value"="3.141592653589793"
+	boolean::"bool"="true"
+	char::"char_value"="127"
+	decimal::decima_value = 19.99m"
+	internaldb::"db_name"={};
+	distributeddb::"distributed_db_name"="./example.lddb";
+};
+database2::{
+	string::"str_name"="name1";
+	int::"int_value"="123"
+	short::"short_value"="32767"
+	long::"long_value"="2147483647";
+	float::"float_value"="3.14f"
+	double::"double_value"="3.141592653589793"
+	boolean::"bool"="true"
+	char::"char_value"="127"
+	decimal::decima_value = 19.99m"
+	internaldb::"db_name"={};
+	distributeddb::"distributed_db_name"="./example.lddb";
+};
+ThisIsADatabase::{}
+TestDatabase::{}

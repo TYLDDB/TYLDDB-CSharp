@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using TYLDDB.Basic;
 
 namespace TYLDDB.Utils
@@ -6,37 +7,54 @@ namespace TYLDDB.Utils
     internal class Database
     {
 #pragma warning disable CA1822 // 忽略静态提示
-        public string LoadDatabase(string db, string fileContent)
+        public List<string> GetDatabaseList(string fileContent)
         {
-            // 使用正则表达式查找最外层的数据库
-            string pattern = $@"(?<=^|;)\s*{db}::\{{(.*?)\}};\s*(?=;|$)";
-            Match match = Regex.Match(fileContent, pattern, RegexOptions.Singleline | RegexOptions.Multiline);
+            // 正则表达式：排除 internaldb 和 distributeddb，同时匹配符合规则的数据库名称
+            string pattern = @"(?!internaldb$|distributeddb$)[a-zA-Z0-9_]+(?=::\{)";
 
-            if (match.Success)
+            // 使用正则表达式提取所有数据库名称
+            MatchCollection matches = Regex.Matches(fileContent, pattern);
+
+            // 创建一个List来存储数据库名称
+            List<string> databaseNames = new List<string>();
+
+            // 遍历匹配结果并加入到List中
+            foreach (Match match in matches)
             {
-                // 如果找到数据库，则赋值
-                return db;
+                if (match.Success)
+                {
+                    // 提取数据库名称
+                    string databaseName = match.Value;
+                    databaseNames.Add(databaseName);
+                }
             }
-            else
-            {
-                throw new DatabaseNotFoundException($"数据库 '{db}' 未找到。");
-            }
+
+            return databaseNames;
         }
 
         public string GetDatabaseContent(string content, string databaseName)
         {
-            // 正则表达式模式，匹配指定数据库的内容（支持多行）
-            string pattern = $@"{databaseName}::\s*{{(.*?)}}";
-            Match match = Regex.Match(content, pattern, RegexOptions.Singleline | RegexOptions.IgnoreCase);
+            // 更新的正则表达式，用于匹配指定数据库的内容，包括处理大括号的嵌套结构
+            string pattern = $@"{databaseName}\s*::\s*\{{([^{{}}]*(?:{{[^{{}}]*}}[^{{}}]*)*)\}};";
+
+            // 执行正则匹配
+            Match match = Regex.Match(content, pattern, RegexOptions.Singleline);
 
             if (match.Success)
             {
-                // 返回捕获组的内容，去掉数据库名称和外部大括号
-                return match.Groups[1].Value.Trim();
-            }
+                // 获取匹配的数据库内容
+                string databaseContent = match.Groups[1].Value;
 
-            // 如果未找到匹配项，抛出自定义异常
-            throw new GetDatabaseContentErrorException($"未找到数据库 '{databaseName}' 的内容。");
+                // 替换多余的空格和换行符，保持引号内的空格
+                string cleanedContent = Regex.Replace(databaseContent, @"\s*(?=\S)", "");
+
+                return databaseContent;
+            }
+            else
+            {
+                // 如果未找到匹配项，抛出自定义异常
+                throw new GetDatabaseContentErrorException($"未找到数据库 '{databaseName}' 的内容。");
+            }
         }
     }
 }

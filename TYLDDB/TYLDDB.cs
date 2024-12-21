@@ -1,4 +1,6 @@
-﻿using TYLDDB.Basic;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using TYLDDB.Basic;
 using TYLDDB.Utils;
 
 namespace TYLDDB
@@ -6,14 +8,20 @@ namespace TYLDDB
     /// <summary>
     /// The core class of the database.
     /// </summary>
-    public class TYLDDB
+    public class LDDB
     {
         private string _filePath;  // 私有字段存储文件路径
         private string _fileContent; // 私有字段存储文件内容
         private string _database;
         private string _databaseContent;
 
+        private bool _isRead = false; // 是否已调用读取文件
+
+#if NET6_0_OR_GREATER
+        private Database database = new();
+#else
         private Database database = new Database();
+#endif
 
         /// <summary>
         /// Set the path where you want to read the file<br/>
@@ -29,9 +37,18 @@ namespace TYLDDB
             }
         }
 
-#pragma warning disable CA1822 // 忽略静态提示
-        // 验证文件路径的方法
-        private void ValidateFilePath(string path)
+        /// <summary>
+        /// Names of all databases in the current file<br />
+        /// 当前文件内所有数据库的名称
+        /// </summary>
+        public List<string> AllDatabaseName;
+
+        /// <summary>
+        /// 验证文件路径是否为null或空
+        /// </summary>
+        /// <param name="path">路径</param>
+        /// <exception cref="FilePathIsNullOrWhiteSpace"></exception>
+        private static void ValidateFilePath(string path)
         {
             if (string.IsNullOrWhiteSpace(path))
             {
@@ -43,7 +60,11 @@ namespace TYLDDB
         /// Read the contents from the file<br/>
         /// 从文件中读取内容
         /// </summary>
-        public void ReadingFile() => _fileContent = ReadFile.ReadTylddbFile(FilePath);
+        public void ReadingFile()
+        {
+            _fileContent = ReadFile.ReadTylddbFile(FilePath);
+            _isRead = true;
+        }
 
         /// <summary>
         /// Set the database to load<br/>
@@ -52,8 +73,30 @@ namespace TYLDDB
         /// <param name="db">name of the database<br/>数据库名称</param>
         public void LoadDatabase(string db)
         {
-            _database = database.LoadDatabase(db, _fileContent);
-            _databaseContent = database.GetDatabaseContent(_fileContent, db);
+            if (_isRead == true)
+            {
+                _databaseContent = database.GetDatabaseContent(_fileContent, db);
+            }
+            else
+            {
+                ReadingFile();
+                _databaseContent = database.GetDatabaseContent(_fileContent, db);
+            }
+            }
+
+        /// <summary>
+        /// Gets the contents of the database being loaded<br/>
+        /// 获取正在加载的数据库内容
+        /// </summary>
+        public string GetLoadingDatabaseContent()
+        {
+            return _databaseContent;
         }
+
+        /// <summary>
+        /// Read the names of all databases<br />
+        /// 读取全部数据库的名称
+        /// </summary>
+        public void ReadAllDatabaseName() => AllDatabaseName = database.GetDatabaseList(_fileContent);
     }
 }
