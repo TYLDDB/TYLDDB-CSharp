@@ -3,6 +3,9 @@ using TYLDDB.Utils;
 
 namespace TYLDDB
 {
+    /// <summary>
+    /// The core class of the database.
+    /// </summary>
     public class TYLDDB
     {
         private string _filePath;  // 私有字段存储文件路径
