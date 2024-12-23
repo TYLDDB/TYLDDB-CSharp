@@ -24,10 +24,10 @@ namespace TYLDDB.Utils
     }
 internal class NewReader
 {
-public static string ReadFile(string fPath)
+public static string ReadFile(string filePath)
 {return null;}
-public static string ReadSmallFile(string path)
-{return File.ReadAllText(path);}
+public static string ReadSmallFile(string filePath)
+{return File.ReadAllText(filePath);}
 public static string ReadMediumFile(string filePath)
     {
         // 使用 FileStream 和 BufferedStream 进行高效读取
