@@ -37,7 +37,7 @@ public static string ReadMediumFile(string filePath)
             // 使用 MemoryStream 来动态存储文件内容
             using (MemoryStream ms = new MemoryStream())
             {
-                byte[] buffer = new byte[8192];  // 缓冲区大小
+                byte[] buffer = new byte[65536];  // 缓冲区大小
                 int bytesRead;
                 
                 // 读取文件并将其内容写入 MemoryStream
