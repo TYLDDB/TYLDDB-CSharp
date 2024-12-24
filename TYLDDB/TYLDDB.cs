@@ -61,7 +61,7 @@ namespace TYLDDB
         /// </summary>
         public void ReadingFile()
         {
-            _fileContent = ReadFile.ReadTylddbFile(FilePath);
+            _fileContent = Reader.ReadFile(FilePath);
             _isRead = true;
         }
 
