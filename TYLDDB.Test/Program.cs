@@ -8,8 +8,8 @@ LDDB lddb = new LDDB();
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////// 读取文件
 HighPrecisionTimer readDbTimer = new(); // 从发起读取文件到成功读取的总时间
-readDbTimer.Start();
 lddb.FilePath = dbFilePath;
+readDbTimer.Start();
 lddb.ReadingFile();
 readDbTimer.Stop();
 WriteTime("从发起读取文件指令到成功读取的总时间为: ", readDbTimer.ElapsedMilliseconds());
