@@ -78,25 +78,23 @@ namespace TYLDDB
         /// <param name="db">name of the database<br/>数据库名称</param>
         public void LoadDatabase(string db)
         {
-            if (_isRead == true)
+            switch (_isRead)
             {
-                _databaseContent = database.GetDatabaseContent(_fileContent, db);
+                case true:
+                    _databaseContent = database.GetDatabaseContent(_fileContent, db);
+                    break;
+                default:
+                    ReadingFile();
+                    _databaseContent = database.GetDatabaseContent(_fileContent, db);
+                    break;
             }
-            else
-            {
-                ReadingFile();
-                _databaseContent = database.GetDatabaseContent(_fileContent, db);
-            }
-            }
+        }
 
         /// <summary>
         /// Gets the contents of the database being loaded<br/>
         /// 获取正在加载的数据库内容
         /// </summary>
-        public string GetLoadingDatabaseContent()
-        {
-            return _databaseContent;
-        }
+        public string GetLoadingDatabaseContent() => _databaseContent;
 
         /// <summary>
         /// Read the names of all databases<br />
