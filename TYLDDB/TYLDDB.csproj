@@ -4,7 +4,7 @@
     <TargetFrameworks>netstandard2.0;netstandard2.1;net6.0;net8.0;net9.0</TargetFrameworks>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Title>TTYPDB.NET</Title>
-    <Version>1.0.0-beta.1</Version>
+    <Version>1.0.0-alpha.1</Version>
     <Authors>QingYi-Studio</Authors>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
@@ -20,10 +20,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="How-To-Use.md" />
     <None Remove="icon.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="How-To-Use.md" />
     <Content Include="icon.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
