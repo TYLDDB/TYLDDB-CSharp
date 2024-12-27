@@ -17,7 +17,7 @@ static async void SemaphoreSlimDefault()
     var getAllCacheTime = new HighPrecisionTimer();
     var getAllCacheAsyncTime = new HighPrecisionTimer();
 
-    var cache = new Cache();
+    ICache cache = new SemaphoreThreadLock();
 
     setTime.Start();
     cache.Set("TESTKEY1", "TESTVALUE1");

@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 namespace TYLDDB.Utils.FastCache
 {
     /// <summary>
-    /// Use cached key-value pairs for fast reads and writes.<br />
-    /// 使用缓存的键值对来快速读写。
+    /// Use semaphore based thread locks to achieve high concurrency stability.<br />
+    /// 使用基于信号量的线程锁来实现高并发的稳定性。
     /// </summary>
-    public class Cache
+    public class SemaphoreThreadLock : ICache
     {
         private readonly Dictionary<string, string> keyValueDict;   // 存储键->值映射
         private readonly Dictionary<string, HashSet<string>> valueKeyDict; // 存储值->键的映射
@@ -19,7 +19,7 @@ namespace TYLDDB.Utils.FastCache
         /// Use cached key-value pairs for fast reads and writes.<br />
         /// 使用缓存的键值对来快速读写。
         /// </summary>
-        public Cache()
+        public SemaphoreThreadLock()
         {
             keyValueDict = new Dictionary<string, string>();
             valueKeyDict = new Dictionary<string, HashSet<string>>();
