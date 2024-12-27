@@ -12,6 +12,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TYLDDB.Test", "TYLDDB.Test\TYLDDB.Test.csproj", "{FDFD566C-CB13-43EB-970E-0EC0A21E36C0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TYLDDB.Utils.FastCache.Test", "TYLDDB.Utils.FastCache.Test\TYLDDB.Utils.FastCache.Test.csproj", "{A58C0A6B-9BD4-4B29-9B5F-5FDFB849D23B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{95BC8FAF-AB03-44A3-A7E7-8E42FA7138E3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,9 +30,17 @@ Global
 		{FDFD566C-CB13-43EB-970E-0EC0A21E36C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FDFD566C-CB13-43EB-970E-0EC0A21E36C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FDFD566C-CB13-43EB-970E-0EC0A21E36C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A58C0A6B-9BD4-4B29-9B5F-5FDFB849D23B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A58C0A6B-9BD4-4B29-9B5F-5FDFB849D23B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A58C0A6B-9BD4-4B29-9B5F-5FDFB849D23B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A58C0A6B-9BD4-4B29-9B5F-5FDFB849D23B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{FDFD566C-CB13-43EB-970E-0EC0A21E36C0} = {95BC8FAF-AB03-44A3-A7E7-8E42FA7138E3}
+		{A58C0A6B-9BD4-4B29-9B5F-5FDFB849D23B} = {95BC8FAF-AB03-44A3-A7E7-8E42FA7138E3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {19390089-354C-41AD-AF7D-9FB3998A88EA}

@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
 using TYLDDB.Basic;
 using TYLDDB.Utils;
 
@@ -10,19 +10,25 @@ namespace TYLDDB
     /// </summary>
     public class LDDB
     {
-        private string _filePath;  // 私有字段存储文件路径
-        private string _fileContent; // 私有字段存储文件内容
-        private string _database;
-        private string _databaseContent;
+        /// <summary>
+        /// Instantiate the LDDB class<br />
+        /// 实例化LDDB类
+        /// </summary>
+        public LDDB()
+        {
+            // TODO
+        }
 
+        ///////////////////////////////////////////////////// 私有字段
+        private string _filePath;  // 存储文件路径
+        private string _fileContent; // 存储文件内容
+        private string _database; // 存储正在访问的数据库
+        private string _databaseContent; // 存储数据库内容
         private bool _isRead = false; // 是否已调用读取文件
-
-#if NET6_0_OR_GREATER
-        private Database database = new();
-#else
+        private event Action OnFileReadComplete;
         private Database database = new Database();
-#endif
 
+        ///////////////////////////////////////////////////// 公开字段
         /// <summary>
         /// Set the path where you want to read the file<br/>
         /// 设置希望读取文件的路径
@@ -36,7 +42,6 @@ namespace TYLDDB
                 _filePath = value; // 只有通过验证后才设置值
             }
         }
-
         /// <summary>
         /// Names of all databases in the current file<br />
         /// 当前文件内所有数据库的名称
@@ -62,7 +67,7 @@ namespace TYLDDB
         /// </summary>
         public void ReadingFile()
         {
-            _fileContent = ReadFile.ReadTylddbFile(FilePath);
+            _fileContent = Reader.ReadFile(FilePath);
             _isRead = true;
         }
 
