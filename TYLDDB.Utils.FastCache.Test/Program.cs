@@ -1,4 +1,4 @@
-﻿using TYLDDB.Utils.FastCache;
+using TYLDDB.Utils.FastCache;
 using TYLDDB.Utils.FastCache.Test;
 
 Console.WriteLine("基于信号量的缓存读写运行");
