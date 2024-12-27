@@ -103,14 +103,5 @@ namespace TYLDDB
         /// 读取全部数据库的名称
         /// </summary>
         public void ReadAllDatabaseName() => AllDatabaseName = database.GetDatabaseList(_fileContent);
-
-        /// <summary>
-        /// Initialize the fast cache<br />
-        /// 初始化快速缓存
-        /// </summary>
-        public void QuickReadInitialize()
-        {
-            // TODO
-        }
     }
 }
