@@ -168,22 +168,22 @@ namespace TYLDDB.Utils.FastCache
         {
             lock (semaphore)
             {
-                if (keyValueDict.ContainsKey(key))
+                if (!keyValueDict.ContainsKey(key))
                 {
-                    var value = keyValueDict[key];
-                    keyValueDict.Remove(key);
-
-                    if (valueKeyDict.ContainsKey(value))
-                    {
-                        valueKeyDict[value].Remove(key);
-                        if (valueKeyDict[value].Count == 0)
-                        {
-                            valueKeyDict.Remove(value);
-                        }
-                    }
-                    return true;
+                    return false;
                 }
-                return false;
+                var value = keyValueDict[key];
+                keyValueDict.Remove(key);
+
+                if (valueKeyDict.ContainsKey(value))
+                {
+                    valueKeyDict[value].Remove(key);
+                    if (valueKeyDict[value].Count == 0)
+                    {
+                        valueKeyDict.Remove(value);
+                    }
+                }
+                return true;
             }
         }
 
@@ -197,22 +197,22 @@ namespace TYLDDB.Utils.FastCache
             await semaphore.WaitAsync();
             try
             {
-                if (keyValueDict.ContainsKey(key))
+                if (!keyValueDict.ContainsKey(key))
                 {
-                    var value = keyValueDict[key];
-                    keyValueDict.Remove(key);
-
-                    if (valueKeyDict.ContainsKey(value))
-                    {
-                        valueKeyDict[value].Remove(key);
-                        if (valueKeyDict[value].Count == 0)
-                        {
-                            valueKeyDict.Remove(value);
-                        }
-                    }
-                    return true;
+                    return false;
                 }
-                return false;
+                var value = keyValueDict[key];
+                keyValueDict.Remove(key);
+
+                if (valueKeyDict.ContainsKey(value))
+                {
+                    valueKeyDict[value].Remove(key);
+                    if (valueKeyDict[value].Count == 0)
+                    {
+                        valueKeyDict.Remove(value);
+                    }
+                }
+                return true;
             }
             finally
             {
