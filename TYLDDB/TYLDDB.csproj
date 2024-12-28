@@ -19,8 +19,7 @@
     <PackageTags>DataBase</PackageTags>
     <Company>QingYi-Studio</Company>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageReleaseNotes>Remove support for .netstandard 2.0.
-Remove direct inheritance/derivation of the ICache interface and instead use abstract class relays, using virtual methods to trim asynchronous code in part of the concurrent dictionary.</PackageReleaseNotes>
+    <PackageReleaseNotes></PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
