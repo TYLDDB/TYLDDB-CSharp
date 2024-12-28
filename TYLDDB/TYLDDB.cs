@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using TYLDDB.Basic;
 using TYLDDB.Utils;
+using TYLDDB.Utils.FastCache;
 
 namespace TYLDDB
 {
     /// <summary>
-    /// The core class of the database.
+    /// The core class of the database.<br />
+    /// 数据库的核心类。
     /// </summary>
     public class LDDB
     {
@@ -16,7 +18,7 @@ namespace TYLDDB
         /// </summary>
         public LDDB()
         {
-            // TODO
+            // NOTHING HERE!
         }
 
         ///////////////////////////////////////////////////// 私有字段
@@ -27,6 +29,8 @@ namespace TYLDDB
         private bool _isRead = false; // 是否已调用读取文件
         private event Action OnFileReadComplete;
         private Database database = new Database();
+        private Cache cdCache = new ConcurrentDictionary();
+        private Cache stlCache = new SemaphoreThreadLock();
 
         ///////////////////////////////////////////////////// 公开字段
         /// <summary>

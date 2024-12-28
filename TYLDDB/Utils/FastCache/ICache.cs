@@ -42,44 +42,49 @@ namespace TYLDDB.Utils.FastCache
         Task<List<string>> GetKeysByValueAsync(string value);
 
         /// <summary>
-        /// 同步方法：设置一个键值对。
+        /// Set a key-value pair.<br />
+        /// 设置一个键值对。
         /// </summary>
-        /// <param name="key"></param>
-        /// <param name="value"></param>
-        /// <returns></returns>
+        /// <param name="key">Key<br />键</param>
+        /// <param name="value">Value<br />值</param>
+        /// <returns>Whether the Settings are successful.<br />是否设置成功。</returns>
         bool Set(string key, string value);
 
         /// <summary>
-        /// 异步方法：设置一个键值对。
+        /// Set a key-value pair.<br />
+        /// 设置一个键值对。
         /// </summary>
-        /// <param name="key"></param>
-        /// <param name="value"></param>
-        /// <returns></returns>
+        /// <param name="key">Key<br />键</param>
+        /// <param name="value">Value<br />值</param>
+        /// <returns>Whether the Settings are successful.<br />是否设置成功。</returns>
         Task<bool> SetAsync(string key, string value);
 
         /// <summary>
-        /// 同步方法：移除一个键值对。
+        /// Remove a key-value pair.<br />
+        /// 移除一个键值对。
         /// </summary>
-        /// <param name="key"></param>
-        /// <returns></returns>
+        /// <param name="key">Key<br />键</param>
+        /// <returns>Whether the removal was successful or not.<br />是否移除成功。</returns>
         bool RemoveByKey(string key);
 
         /// <summary>
-        /// 异步方法：移除一个键值对。
+        /// Remove a key-value pair.<br />
+        /// 移除一个键值对。
         /// </summary>
-        /// <param name="key"></param>
-        /// <returns></returns>
+        /// <param name="key">Key<br />键</param>
+        /// <returns>Whether the removal was successful or not.<br />是否移除成功。</returns>
         Task<bool> RemoveByKeyAsync(string key);
 
         /// <summary>
-        /// 同步方法：清空缓存。
+        /// Clear the cache.<br />
+        /// 清空缓存。
         /// </summary>
         void Clear();
 
         /// <summary>
-        /// 异步方法：清空缓存。
+        /// Clear the cache.<br />
+        /// 清空缓存。
         /// </summary>
-        /// <returns></returns>
         Task ClearAsync();
 
         /// <summary>

@@ -103,11 +103,12 @@ namespace TYLDDB.Utils.FastCache
         }
 
         /// <summary>
-        /// 同步方法：设置一个键值对。
+        /// Set a key-value pair.<br />
+        /// 设置一个键值对。
         /// </summary>
-        /// <param name="key"></param>
-        /// <param name="value"></param>
-        /// <returns></returns>
+        /// <param name="key">Key<br />键</param>
+        /// <param name="value">Value<br />值</param>
+        /// <returns>Whether the Settings are successful.<br />是否设置成功</returns>
         public override bool Set(string key, string value)
         {
             lock (semaphore)
@@ -129,11 +130,12 @@ namespace TYLDDB.Utils.FastCache
         }
 
         /// <summary>
-        /// 异步方法：设置一个键值对。
+        /// Set a key-value pair.<br />
+        /// 设置一个键值对。
         /// </summary>
-        /// <param name="key"></param>
-        /// <param name="value"></param>
-        /// <returns></returns>
+        /// <param name="key">Key<br />键</param>
+        /// <param name="value">Value<br />值</param>
+        /// <returns>Whether the Settings are successful.<br />是否设置成功</returns>
         public override async Task<bool> SetAsync(string key, string value)
         {
             await semaphore.WaitAsync();
