@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics;
 
-namespace TYLDDB.Utils.FastCache.Test
+namespace TimeRecord
 {
-    internal class HighPrecisionTimer
+    public class HighPrecisionTimer
     {
         private Stopwatch stopwatch;
 
@@ -11,31 +11,43 @@ namespace TYLDDB.Utils.FastCache.Test
             stopwatch = new Stopwatch();
         }
 
-        // 启动计时器
+        /// <summary>
+        /// 启动计时器
+        /// </summary>
         public void Start()
         {
             stopwatch.Start();
         }
 
-        // 停止计时器
+        /// <summary>
+        /// 停止计时器
+        /// </summary>
         public void Stop()
         {
             stopwatch.Stop();
         }
 
-        // 重置计时器
+        /// <summary>
+        /// 重置计时器
+        /// </summary>
         public void Reset()
         {
             stopwatch.Reset();
         }
 
-        // 获取已用时间（毫秒）
+        /// <summary>
+        /// 获取已用时间（毫秒）
+        /// </summary>
+        /// <returns></returns>
         public double ElapsedMilliseconds()
         {
             return stopwatch.Elapsed.TotalMilliseconds;
         }
 
-        // 获取已用时间（秒）
+        /// <summary>
+        /// 获取已用时间（秒）
+        /// </summary>
+        /// <returns></returns>
         public double ElapsedSeconds()
         {
             return stopwatch.Elapsed.TotalSeconds;

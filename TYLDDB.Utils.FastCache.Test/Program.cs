@@ -1,5 +1,5 @@
+using TimeRecord;
 using TYLDDB.Utils.FastCache;
-using TYLDDB.Utils.FastCache.Test;
 
 Console.WriteLine("基于信号量的缓存读写运行");
 SemaphoreSlimDefault();
@@ -21,7 +21,7 @@ static async void SemaphoreSlimDefault()
     var getAllCacheTime = new HighPrecisionTimer();
     var getAllCacheAsyncTime = new HighPrecisionTimer();
 
-    ICache cache = new SemaphoreThreadLock();
+    var cache = new SemaphoreThreadLock();
 
     setTime.Start();
     cache.Set("TESTKEY1", "TESTVALUE1");
@@ -91,7 +91,7 @@ static async void ConcurrentDictionary()
     var getAllCacheTime = new HighPrecisionTimer();
     var getAllCacheAsyncTime = new HighPrecisionTimer();
 
-    ICache cache = new ConcurrentDictionary();
+    var cache = new ConcurrentDictionary();
 
     setTime.Start();
     cache.Set("TESTKEY1", "TESTVALUE1");
