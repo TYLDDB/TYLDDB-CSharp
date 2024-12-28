@@ -12,7 +12,7 @@
     <RepositoryUrl>https://github.com/TYLDDB/TYLDDB-CSharp</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageProjectUrl>ttypdb.qingyi-studio.top</PackageProjectUrl>
-    <Copyright>BSD 3-Clause License</Copyright>
+    <Copyright>BSD 3-Clause License (Modified)</Copyright>
     <Description>A strongly typed constrained distributed file system that can act as a database.</Description>
     <ProduceReferenceAssembly>True</ProduceReferenceAssembly>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
@@ -26,6 +26,8 @@ Remove direct inheritance/derivation of the ICache interface and instead use abs
   <ItemGroup>
     <None Remove="How-To-Use.md" />
     <None Remove="icon.png" />
+    <None Remove="LICENSE" />
+    <None Remove="LICENSE_CN" />
   </ItemGroup>
 
   <ItemGroup>
@@ -34,6 +36,11 @@ Remove direct inheritance/derivation of the ICache interface and instead use abs
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </Content>
+    <Content Include="LICENSE">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </Content>
+    <Content Include="LICENSE_CN" />
   </ItemGroup>
 
   <ItemGroup>
@@ -45,13 +52,6 @@ Remove direct inheritance/derivation of the ICache interface and instead use abs
 
   <ItemGroup>
     <Folder Include="Parser\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="LICENSE">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
   </ItemGroup>
 
 </Project>
