@@ -3,8 +3,8 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard2.1;net6.0;net8.0;net9.0</TargetFrameworks>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Title>TTYPDB.NET</Title>
-    <Version>1.0.0-alpha.2</Version>
+    <Title>TYLDDB.NET</Title>
+    <Version>1.0.0-alpha.2r</Version>
     <Authors>TYLDDB-Project</Authors>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
@@ -19,6 +19,8 @@
     <PackageTags>DataBase</PackageTags>
     <Company>QingYi-Studio</Company>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageReleaseNotes>Remove support for .netstandard 2.0.
+Remove direct inheritance/derivation of the ICache interface and instead use abstract class relays, using virtual methods to trim asynchronous code in part of the concurrent dictionary.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
