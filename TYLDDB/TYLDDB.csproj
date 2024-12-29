@@ -19,7 +19,8 @@
     <PackageTags>DataBase</PackageTags>
     <Company>QingYi-Studio</Company>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageReleaseNotes></PackageReleaseNotes>
+    <PackageReleaseNotes>Add a database parser (data type only, internal and distributed databases are not available).
+Fast cache underlying interface optimization.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
