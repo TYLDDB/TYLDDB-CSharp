@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TimeRecord\TimeRecord.csproj" />
     <ProjectReference Include="..\TYLDDB\TYLDDB.csproj" />
   </ItemGroup>
 

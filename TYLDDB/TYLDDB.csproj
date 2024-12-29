@@ -4,7 +4,7 @@
     <TargetFrameworks>netstandard2.1;net6.0;net8.0;net9.0</TargetFrameworks>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Title>TYLDDB.NET</Title>
-    <Version>1.0.0-alpha.2r</Version>
+    <Version>1.0.0-alpha.3</Version>
     <Authors>TYLDDB-Project</Authors>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
@@ -12,20 +12,22 @@
     <RepositoryUrl>https://github.com/TYLDDB/TYLDDB-CSharp</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageProjectUrl>ttypdb.qingyi-studio.top</PackageProjectUrl>
-    <Copyright>BSD 3-Clause License</Copyright>
+    <Copyright>BSD 3-Clause License (Modified)</Copyright>
     <Description>A strongly typed constrained distributed file system that can act as a database.</Description>
     <ProduceReferenceAssembly>True</ProduceReferenceAssembly>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <PackageTags>DataBase</PackageTags>
     <Company>QingYi-Studio</Company>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageReleaseNotes>Remove support for .netstandard 2.0.
-Remove direct inheritance/derivation of the ICache interface and instead use abstract class relays, using virtual methods to trim asynchronous code in part of the concurrent dictionary.</PackageReleaseNotes>
+    <PackageReleaseNotes>Add a database parser (data type only, internal and distributed databases are not available).
+Fast cache underlying interface optimization.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="How-To-Use.md" />
     <None Remove="icon.png" />
+    <None Remove="LICENSE" />
+    <None Remove="LICENSE_CN" />
   </ItemGroup>
 
   <ItemGroup>
@@ -34,21 +36,18 @@ Remove direct inheritance/derivation of the ICache interface and instead use abs
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </Content>
+    <Content Include="LICENSE">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </Content>
+    <Content Include="LICENSE_CN" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\LICENSE">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
     <None Include="..\README.md">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Parser\" />
   </ItemGroup>
 
 </Project>
