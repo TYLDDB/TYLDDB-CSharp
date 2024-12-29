@@ -1,8 +1,5 @@
 ﻿[*.{cs,vb}]
 
-# IDE0044: 添加只读修饰符
-dotnet_diagnostic.IDE0044.severity = none
-
 # IDE0051: 删除未使用的私有成员
 dotnet_diagnostic.IDE0051.severity = none
 
