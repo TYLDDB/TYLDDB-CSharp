@@ -10,6 +10,8 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/TYLDDB/TYLDDB-CSharp)
 ![GitHub watchers](https://img.shields.io/github/watchers/TYLDDB/TYLDDB-CSharp)
 
+Nuget link: https://www.nuget.org/packages/TYLDDB
+
 This is the C# version.
 
 A strongly typed constrained distributed file system that can act as a database.
