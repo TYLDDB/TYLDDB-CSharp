@@ -1,7 +1,6 @@
 # TYLDDB-C#
 
-![GitHub commit activity](https://img.shields.io/github/commit-activity/w/TYLDDB/TYLDDB-CSharp?link=https%3A%2F%2Fgithub.com%2FTYLDDB%2FTYLDDB-CSharp)
-![GitHub commits since latest release](https://img.shields.io/github/commits-since/TYLDDB/TYLDDB-CSharp/latest?include_prereleases&link=https%3A%2F%2Fgithub.com%2FTYLDDB%2FTYLDDB-CSharp%2Freleases)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/w/TYLDDB/TYLDDB-CSharp?link=https%3A%2F%2Fgithub.com%2FTYLDDB%2FTYLDDB-CSharp)<!-- ![GitHub commits since latest release](https://img.shields.io/github/commits-since/TYLDDB/TYLDDB-CSharp/latest?include_prereleases&link=https%3A%2F%2Fgithub.com%2FTYLDDB%2FTYLDDB-CSharp%2Freleases) -->
 ![GitHub contributors](https://img.shields.io/github/contributors-anon/TYLDDB/TYLDDB-CSharp)
 ![GitHub Release Date](https://img.shields.io/github/release-date-pre/TYLDDB/TYLDDB-CSharp)
 ![GitHub Release](https://img.shields.io/github/v/release/TYLDDB/TYLDDB-CSharp)
