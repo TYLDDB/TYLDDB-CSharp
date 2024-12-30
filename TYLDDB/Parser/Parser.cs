@@ -8,7 +8,7 @@ namespace TYLDDB.Parser
     /// Data type parser.<br />
     /// 数据类型解析器。
     /// </summary>
-    public class Parser
+    public class DataParser
     {
         // 定义正则表达式来匹配键值对（类型::"key"="value"）
         private readonly static string pattern = @"(?<=^|\s)(\w+)\s*::\s*""([^""]+)""";
