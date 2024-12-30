@@ -50,4 +50,9 @@ Fast cache underlying interface optimization.</PackageReleaseNotes>
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Utils\FastCache\ConcurrentDictionary\" />
+    <Folder Include="Utils\FastCache\SemaphoreThreadLock\" />
+  </ItemGroup>
+
 </Project>
