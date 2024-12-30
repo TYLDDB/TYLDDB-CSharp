@@ -27,7 +27,6 @@ namespace TYLDDB
         private string _database; // 存储正在访问的数据库
         private string _databaseContent; // 存储数据库内容
         private bool _isRead = false; // 是否已调用读取文件
-        private event Action OnFileReadComplete;
         private Database database = new Database();
         private Cache cdCache = new ConcurrentDictionary();
         private Cache stlCache = new SemaphoreThreadLock();
