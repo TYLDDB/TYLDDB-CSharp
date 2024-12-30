@@ -36,8 +36,12 @@ if(lddb.AllDatabaseName != null)
 }
 WriteTime("从发起读取数据库名称到成功返回读取内容的总时间为: ", readAllDbNameTimer.ElapsedMilliseconds());
 
-
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////// 数据库解析缓存
+HighPrecisionTimer parseDbTimer = new(); // 从发起解析文件到成功解析并写入缓存的总时间
+parseDbTimer.Start();
+await lddb.ParseAsync();
+parseDbTimer.Stop();
+WriteTime("从发起解析文件到成功解析并写入缓存的总时间: ", parseDbTimer.ElapsedMilliseconds());
 
 
 
