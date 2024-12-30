@@ -162,10 +162,11 @@ namespace TYLDDB.Utils.FastCache.SemaphoreThreadLock
         }
 
         /// <summary>
-        /// 同步方法：移除一个键值对。
+        /// Remove a key-value pair.<br />
+        /// 移除一个键值对。
         /// </summary>
-        /// <param name="key"></param>
-        /// <returns></returns>
+        /// <param name="key">Key<br />键</param>
+        /// <returns>Check whether the removal is successful.<br />是否移除成功。</returns>
         public virtual bool RemoveByKey(string key)
         {
             lock (semaphore)
@@ -190,10 +191,11 @@ namespace TYLDDB.Utils.FastCache.SemaphoreThreadLock
         }
 
         /// <summary>
-        /// 异步方法：移除一个键值对。
+        /// Remove a key-value pair.<br />
+        /// 移除一个键值对。
         /// </summary>
-        /// <param name="key"></param>
-        /// <returns></returns>
+        /// <param name="key">Key<br />键</param>
+        /// <returns>Check whether the removal is successful.<br />是否移除成功。</returns>
         public virtual async Task<bool> RemoveByKeyAsync(string key)
         {
             await semaphore.WaitAsync();
@@ -223,7 +225,8 @@ namespace TYLDDB.Utils.FastCache.SemaphoreThreadLock
         }
 
         /// <summary>
-        /// 同步方法：清空缓存。
+        /// Empty the cache.<br />
+        /// 清空缓存。
         /// </summary>
         public virtual void Clear()
         {
@@ -235,10 +238,10 @@ namespace TYLDDB.Utils.FastCache.SemaphoreThreadLock
         }
 
         /// <summary>
-        /// 异步方法：清空缓存。
+        /// Empty the cache.<br />
+        /// 清空缓存。
         /// </summary>
-        /// <returns></returns>
-        public virtual async Task ClearAsync()
+        public virtual async void ClearAsync()
         {
             await semaphore.WaitAsync();
             try
