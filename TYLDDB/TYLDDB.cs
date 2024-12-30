@@ -1,8 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using TYLDDB.Basic;
+using TYLDDB.Parser;
 using TYLDDB.Utils;
-using TYLDDB.Utils.FastCache;
+using TYLDDB.Utils.FastCache.ConcurrentDictionary;
+using TYLDDB.Utils.FastCache.SemaphoreThreadLock;
 
 namespace TYLDDB
 {
@@ -27,10 +29,9 @@ namespace TYLDDB
         private string _database; // 存储正在访问的数据库
         private string _databaseContent; // 存储数据库内容
         private bool _isRead = false; // 是否已调用读取文件
-        private event Action OnFileReadComplete;
         private Database database = new Database();
-        private Cache cdCache = new ConcurrentDictionary();
-        private Cache stlCache = new SemaphoreThreadLock();
+        private CdStringDictionary cdStringDictionary = new CdStringDictionary();
+        private StlStringDictionary StlStringDictionary = new StlStringDictionary();
 
         ///////////////////////////////////////////////////// 公开字段
         /// <summary>
@@ -39,11 +40,16 @@ namespace TYLDDB
         /// </summary>
         public string FilePath
         {
-            get => _filePath; // 获取文件路径
+            get
+            {
+                return _filePath; // 获取文件路径
+            }
             set
             {
-                ValidateFilePath(value); // 在设置值之前进行验证
-                _filePath = value; // 只有通过验证后才设置值
+                if (ValidateFilePath(value)) // 在设置值之前进行验证
+                {
+                    _filePath = value;
+                }
             }
         }
         /// <summary>
@@ -57,12 +63,15 @@ namespace TYLDDB
         /// </summary>
         /// <param name="path">路径</param>
         /// <exception cref="FilePathIsNullOrWhiteSpace"></exception>
-        private static void ValidateFilePath(string path)
+        /// <returns>If <c>true</c>, it can be used, if <c>false</c>, it cannot be used.<br />如果为<c>true</c>则可以使用，若为<c>false</c>则不可使用。</returns>
+        private static bool ValidateFilePath(string path)
         {
             if (string.IsNullOrWhiteSpace(path))
             {
+                return false;
                 throw new FilePathIsNullOrWhiteSpace("文件路径不能为 null 或空白");
             }
+            return true;
         }
 
         /// <summary>
@@ -80,7 +89,7 @@ namespace TYLDDB
         /// 设置要加载的数据库
         /// </summary>
         /// <param name="db">name of the database<br/>数据库名称</param>
-        public void LoadDatabase(string db)
+        public async void LoadDatabase(string db)
         {
             switch (_isRead)
             {
@@ -92,6 +101,7 @@ namespace TYLDDB
                     _databaseContent = database.GetDatabaseContent(_fileContent, db);
                     break;
             }
+            await ParseAsync();
         }
 
         /// <summary>
@@ -105,5 +115,35 @@ namespace TYLDDB
         /// 读取全部数据库的名称
         /// </summary>
         public void ReadAllDatabaseName() => AllDatabaseName = database.GetDatabaseList(_fileContent);
+
+        /// <summary>
+        /// Reparse the entire database.<br />
+        /// 重新解析整个数据库。
+        /// </summary>
+        public async Task ParseAsync()
+        {
+            // 创建多个任务，并使用 LongRunning 来确保每个任务在独立线程中运行
+            Task cdStringCacheTask = Task.Factory.StartNew(() => CdString(), TaskCreationOptions.LongRunning);
+            //Task cdIntCacheTask = Task.Factory.StartNew(() => CdInt(), TaskCreationOptions.LongRunning);
+            //Task cdShortCacheTask = Task.Factory.StartNew(() => CdShort(), TaskCreationOptions.LongRunning);
+
+            // 等待所有任务完成
+            await Task.WhenAll(cdStringCacheTask);
+
+            async void CdString()
+            {
+                var dict = DataParser.ParseString(_databaseContent);
+
+                // 遍历 dict 中的每一项
+                foreach (var kvp in dict)
+                {
+                    var key = kvp.Key;   // 获取第一个值 (key)
+                    var value = kvp.Value;  // 获取第二个值 (value)
+
+                    // 将 key-value 对存储到缓存
+                    await cdStringDictionary.SetAsync(key, value);
+                }
+            }
+        }
     }
 }

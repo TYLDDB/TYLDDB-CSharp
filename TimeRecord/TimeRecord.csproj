@@ -6,4 +6,12 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+<<<<<<<< HEAD:TimeRecord/TimeRecord.csproj
+========
+  <ItemGroup>
+    <ProjectReference Include="..\TimeRecord\TimeRecord.csproj" />
+    <ProjectReference Include="..\TYLDDB\TYLDDB.csproj" />
+  </ItemGroup>
+
+>>>>>>>> cdf9c1039cfeae32fce9aac87ceb4ce2409ec22d:TYLDDB.Utils.FastCache.Test/TYLDDB.Utils.FastCache.Test.csproj
 </Project>
