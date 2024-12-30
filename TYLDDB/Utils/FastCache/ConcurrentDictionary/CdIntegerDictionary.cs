@@ -8,13 +8,13 @@ namespace TYLDDB.Utils.FastCache.ConcurrentDictionary
     /// Use concurrent dictionaries to achieve high concurrency stability.<br />
     /// 使用并发词典来实现高并发的稳定性。
     /// </summary>
-    public class CdStringDictionary
+    public class CdIntegerDictionary
     {
         /// <summary>
         /// Thread-safe dictionary to store cache data.<br />
         /// 线程安全的字典，用于存储缓存数据。
         /// </summary>
-        private readonly ConcurrentDictionary<string, string> _cache = new ConcurrentDictionary<string, string>();
+        private readonly ConcurrentDictionary<string, int> _cache = new ConcurrentDictionary<string, int>();
 
         /// <summary>
         /// Synchronization method: Obtain the corresponding value by key.<br />
@@ -22,7 +22,7 @@ namespace TYLDDB.Utils.FastCache.ConcurrentDictionary
         /// </summary>
         /// <param name="key">Key<br />键</param>
         /// <returns>Value<br />值</returns>
-        public virtual string GetByKey(string key)
+        public virtual int GetByKey(string key)
         {
             _cache.TryGetValue(key, out var value);
             return value;
@@ -34,7 +34,7 @@ namespace TYLDDB.Utils.FastCache.ConcurrentDictionary
         /// </summary>
         /// <param name="key">Key<br />键</param>
         /// <returns>Value<br />值</returns>
-        public virtual async Task<string> GetByKeyAsync(string key) => await Task.FromResult(GetByKey(key));
+        public virtual async Task<int> GetByKeyAsync(string key) => await Task.FromResult(GetByKey(key));
 
         /// <summary>
         /// Get a list of keys that correspond to a specific value.<br />
@@ -42,7 +42,7 @@ namespace TYLDDB.Utils.FastCache.ConcurrentDictionary
         /// </summary>
         /// <param name="value">Value to match<br />要匹配的值</param>
         /// <returns>List of keys<br />键的列表</returns>
-        public virtual List<string> GetKeysByValue(string value)
+        public virtual List<string> GetKeysByValue(int value)
         {
             var keys = new List<string>();
             foreach (var kvp in _cache)
@@ -61,7 +61,7 @@ namespace TYLDDB.Utils.FastCache.ConcurrentDictionary
         /// </summary>
         /// <param name="value">Value to match<br />要匹配的值</param>
         /// <returns>List of keys<br />键的列表</returns>
-        public virtual async Task<List<string>> GetKeysByValueAsync(string value) => await Task.FromResult(GetKeysByValue(value));
+        public virtual async Task<List<string>> GetKeysByValueAsync(int value) => await Task.FromResult(GetKeysByValue(value));
 
         /// <summary>
         /// Set a cache entry for a specified key.<br />
@@ -70,7 +70,7 @@ namespace TYLDDB.Utils.FastCache.ConcurrentDictionary
         /// <param name="key">Key<br />键</param>
         /// <param name="value">Value<br />值</param>
         /// <returns>Whether the operation is successful.<br />操作是否成功。</returns>
-        public virtual bool Set(string key, string value)
+        public virtual bool Set(string key, int value)
         {
             // Using AddOrUpdate to ensure atomic insert or update operation
             _cache.AddOrUpdate(key, value, (existingKey, existingValue) => value);
@@ -84,7 +84,7 @@ namespace TYLDDB.Utils.FastCache.ConcurrentDictionary
         /// <param name="key">Key<br />键</param>
         /// <param name="value">Value<br />值</param>
         /// <returns>Whether the operation is successful.<br />操作是否成功。</returns>
-        public virtual async Task<bool> SetAsync(string key, string value) => await Task.FromResult(Set(key, value));
+        public virtual async Task<bool> SetAsync(string key, int value) => await Task.FromResult(Set(key, value));
 
         /// <summary>
         /// Remove a cache entry by its key.<br />
@@ -119,6 +119,6 @@ namespace TYLDDB.Utils.FastCache.ConcurrentDictionary
         /// 获取所有缓存项，返回字典。
         /// </summary>
         /// <returns>All cache entries as a dictionary.<br />所有缓存项的字典。</returns>
-        public virtual Dictionary<string, string> GetAllCache() => new Dictionary<string, string>(_cache);
+        public virtual Dictionary<string, int> GetAllCache() => new Dictionary<string, int>(_cache);
     }
 }
