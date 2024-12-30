@@ -1,13 +1,13 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 
-namespace TYLDDB.Utils.FastCache
+namespace TYLDDB.Utils.FastCache.ConcurrentDictionary
 {
     /// <summary>
     /// Use thread locks based on concurrent dictionaries to achieve high concurrency stability.<br />
     /// 使用基于信号量的线程锁来实现高并发的稳定性。
     /// </summary>
-    public class ConcurrentDictionary : Cache
+    public class CdStringDictionary : Cache
     {
         /// <summary>
         /// Thread-safe dictionary to store cache data.<br />

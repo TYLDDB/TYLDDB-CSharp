@@ -3,7 +3,8 @@ using System.Threading.Tasks;
 using TYLDDB.Basic;
 using TYLDDB.Parser;
 using TYLDDB.Utils;
-using TYLDDB.Utils.FastCache;
+using TYLDDB.Utils.FastCache.ConcurrentDictionary;
+using TYLDDB.Utils.FastCache.SemaphoreThreadLock;
 
 namespace TYLDDB
 {
@@ -29,8 +30,8 @@ namespace TYLDDB
         private string _databaseContent; // 存储数据库内容
         private bool _isRead = false; // 是否已调用读取文件
         private Database database = new Database();
-        private ConcurrentDictionary cdStringCache = new ConcurrentDictionary();
-        private SemaphoreThreadLock stlCache = new SemaphoreThreadLock();
+        private CdStringDictionary cdStringDictionary = new CdStringDictionary();
+        private StlStringDictionary StlStringDictionary = new StlStringDictionary();
 
         ///////////////////////////////////////////////////// 公开字段
         /// <summary>
@@ -140,7 +141,7 @@ namespace TYLDDB
                     var value = kvp.Value;  // 获取第二个值 (value)
 
                     // 将 key-value 对存储到缓存
-                    await cdStringCache.SetAsync(key, value);
+                    await cdStringDictionary.SetAsync(key, value);
                 }
             }
         }
