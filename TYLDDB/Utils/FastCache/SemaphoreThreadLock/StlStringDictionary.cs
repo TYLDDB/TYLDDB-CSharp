@@ -9,7 +9,7 @@ namespace TYLDDB.Utils.FastCache.SemaphoreThreadLock
     /// Use semaphore based thread locks to achieve high concurrency stability.<br />
     /// 使用基于信号量的线程锁来实现高并发的稳定性。
     /// </summary>
-    public class StlStringDictionary : Cache
+    public class StlStringDictionary
     {
         private readonly Dictionary<string, string> keyValueDict;   // 存储键->值映射
         private readonly Dictionary<string, HashSet<string>> valueKeyDict; // 存储值->键的映射
@@ -32,7 +32,7 @@ namespace TYLDDB.Utils.FastCache.SemaphoreThreadLock
         /// </summary>
         /// <param name="key">Key<br />键</param>
         /// <returns>Value<br />值</returns>
-        public override string GetByKey(string key)
+        public virtual string GetByKey(string key)
         {
             lock (semaphore)
             {
@@ -47,7 +47,7 @@ namespace TYLDDB.Utils.FastCache.SemaphoreThreadLock
         /// </summary>
         /// <param name="key">Key<br />键</param>
         /// <returns>Value<br />值</returns>
-        public override async Task<string> GetByKeyAsync(string key)
+        public virtual async Task<string> GetByKeyAsync(string key)
         {
             await semaphore.WaitAsync();
             try
@@ -67,7 +67,7 @@ namespace TYLDDB.Utils.FastCache.SemaphoreThreadLock
         /// </summary>
         /// <param name="value">Value<br />值</param>
         /// <returns>Key (List)<br />键 (List)</returns>
-        public override List<string> GetKeysByValue(string value)
+        public virtual List<string> GetKeysByValue(string value)
         {
             lock (semaphore)
             {
@@ -85,7 +85,7 @@ namespace TYLDDB.Utils.FastCache.SemaphoreThreadLock
         /// </summary>
         /// <param name="value">Value<br />值</param>
         /// <returns>Key (List)<br />键 (List)</returns>
-        public override async Task<List<string>> GetKeysByValueAsync(string value)
+        public virtual async Task<List<string>> GetKeysByValueAsync(string value)
         {
             await semaphore.WaitAsync();
             try
@@ -109,7 +109,7 @@ namespace TYLDDB.Utils.FastCache.SemaphoreThreadLock
         /// <param name="key">Key<br />键</param>
         /// <param name="value">Value<br />值</param>
         /// <returns>Whether the Settings are successful.<br />是否设置成功</returns>
-        public override bool Set(string key, string value)
+        public virtual bool Set(string key, string value)
         {
             lock (semaphore)
             {
@@ -136,7 +136,7 @@ namespace TYLDDB.Utils.FastCache.SemaphoreThreadLock
         /// <param name="key">Key<br />键</param>
         /// <param name="value">Value<br />值</param>
         /// <returns>Whether the Settings are successful.<br />是否设置成功</returns>
-        public override async Task<bool> SetAsync(string key, string value)
+        public virtual async Task<bool> SetAsync(string key, string value)
         {
             await semaphore.WaitAsync();
             try
@@ -166,7 +166,7 @@ namespace TYLDDB.Utils.FastCache.SemaphoreThreadLock
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public override bool RemoveByKey(string key)
+        public virtual bool RemoveByKey(string key)
         {
             lock (semaphore)
             {
@@ -194,7 +194,7 @@ namespace TYLDDB.Utils.FastCache.SemaphoreThreadLock
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public override async Task<bool> RemoveByKeyAsync(string key)
+        public virtual async Task<bool> RemoveByKeyAsync(string key)
         {
             await semaphore.WaitAsync();
             try
@@ -225,7 +225,7 @@ namespace TYLDDB.Utils.FastCache.SemaphoreThreadLock
         /// <summary>
         /// 同步方法：清空缓存。
         /// </summary>
-        public override void Clear()
+        public virtual void Clear()
         {
             lock (semaphore)
             {
@@ -238,7 +238,7 @@ namespace TYLDDB.Utils.FastCache.SemaphoreThreadLock
         /// 异步方法：清空缓存。
         /// </summary>
         /// <returns></returns>
-        public override async Task ClearAsync()
+        public virtual async Task ClearAsync()
         {
             await semaphore.WaitAsync();
             try
@@ -257,7 +257,7 @@ namespace TYLDDB.Utils.FastCache.SemaphoreThreadLock
         /// 获取所有的键值对。
         /// </summary>
         /// <returns>Key-value pair<br />键值对</returns>
-        public override Dictionary<string, string> GetAllCache()
+        public virtual Dictionary<string, string> GetAllCache()
         {
             lock (semaphore)
             {
@@ -271,7 +271,7 @@ namespace TYLDDB.Utils.FastCache.SemaphoreThreadLock
         /// 获取所有的键值对。
         /// </summary>
         /// <returns>Key-value pair<br />键值对</returns>
-        public override async Task<Dictionary<string, string>> GetAllCacheAsync()
+        public virtual async Task<Dictionary<string, string>> GetAllCacheAsync()
         {
             await semaphore.WaitAsync();
             try
