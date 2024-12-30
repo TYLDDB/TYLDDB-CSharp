@@ -39,11 +39,16 @@ namespace TYLDDB
         /// </summary>
         public string FilePath
         {
-            get => _filePath; // 获取文件路径
+            get
+            {
+                return _filePath; // 获取文件路径
+            }
             set
             {
-                ValidateFilePath(value); // 在设置值之前进行验证
-                _filePath = value; // 只有通过验证后才设置值
+                if (ValidateFilePath(value)) // 在设置值之前进行验证
+                {
+                    _filePath = value;
+                }
             }
         }
         /// <summary>
@@ -57,12 +62,15 @@ namespace TYLDDB
         /// </summary>
         /// <param name="path">路径</param>
         /// <exception cref="FilePathIsNullOrWhiteSpace"></exception>
-        private static void ValidateFilePath(string path)
+        /// <returns>If <c>true</c>, it can be used, if <c>false</c>, it cannot be used.<br />如果为<c>true</c>则可以使用，若为<c>false</c>则不可使用。</returns>
+        private static bool ValidateFilePath(string path)
         {
             if (string.IsNullOrWhiteSpace(path))
             {
+                return false;
                 throw new FilePathIsNullOrWhiteSpace("文件路径不能为 null 或空白");
             }
+            return true;
         }
 
         /// <summary>
