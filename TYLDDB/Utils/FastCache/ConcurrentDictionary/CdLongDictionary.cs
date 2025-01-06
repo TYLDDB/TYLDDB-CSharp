@@ -22,10 +22,13 @@ namespace TYLDDB.Utils.FastCache.ConcurrentDictionary
         /// </summary>
         /// <param name="key">Key<br />键</param>
         /// <returns>Value<br />值</returns>
-        public virtual long GetByKey(string key)
+        public virtual long? GetByKey(string key)
         {
-            _cache.TryGetValue(key, out var value);
-            return value;
+            if (_cache.TryGetValue(key, out var value))
+            {
+                return value;
+            }
+            return null;
         }
 
         /// <summary>
@@ -34,7 +37,7 @@ namespace TYLDDB.Utils.FastCache.ConcurrentDictionary
         /// </summary>
         /// <param name="key">Key<br />键</param>
         /// <returns>Value<br />值</returns>
-        public virtual async Task<long> GetByKeyAsync(string key) => await Task.FromResult(GetByKey(key));
+        public virtual async Task<long?> GetByKeyAsync(string key) => await Task.FromResult(GetByKey(key));
 
         /// <summary>
         /// Get a list of keys that correspond to a specific value.<br />

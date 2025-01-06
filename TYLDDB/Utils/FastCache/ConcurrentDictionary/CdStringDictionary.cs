@@ -24,8 +24,11 @@ namespace TYLDDB.Utils.FastCache.ConcurrentDictionary
         /// <returns>Value<br />值</returns>
         public virtual string GetByKey(string key)
         {
-            _cache.TryGetValue(key, out var value);
-            return value;
+            if (_cache.TryGetValue(key, out var value))
+            {
+                return value;
+            }
+            return null;
         }
 
         /// <summary>

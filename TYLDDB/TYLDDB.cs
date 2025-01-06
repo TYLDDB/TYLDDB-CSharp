@@ -465,20 +465,22 @@ namespace TYLDDB
 
         public string[] AllTypeSearch(string key)
         {
-            string cdString = cdStringDictionary.GetByKey(key);
-            string cdShort = cdShortDictionary.GetByKey(key).ToString();
-            string cdLong = cdLongDictionary.GetByKey(key).ToString();
-            string cdInt = cdIntegerDictionary.GetByKey(key).ToString();
-            string cdFloat = cdFloatDictionary.GetByKey(key).ToString();
-            string cdDouble = cdDoubleDictionary.GetByKey(key).ToString();
-            string cdDecimal = cdDecimalDictionary.GetByKey(key).ToString();
-            string cdChar = cdCharDictionary.GetByKey(key).ToString();
-            string cdBool = cdBooleanDictionary.GetByKey(key).ToString();
+            // 安全地从字典获取并转换为字符串（对于可能为 null 的值使用 ?.ToString()）
+            string cdString = cdStringDictionary.GetByKey(key)?.ToString();
+            string cdShort = cdShortDictionary.GetByKey(key)?.ToString();
+            string cdLong = cdLongDictionary.GetByKey(key)?.ToString();
+            string cdInt = cdIntegerDictionary.GetByKey(key)?.ToString();
+            string cdFloat = cdFloatDictionary.GetByKey(key)?.ToString();
+            string cdDouble = cdDoubleDictionary.GetByKey(key)?.ToString();
+            string cdDecimal = cdDecimalDictionary.GetByKey(key)?.ToString();
+            string cdChar = cdCharDictionary.GetByKey(key)?.ToString();
+            string cdBool = cdBooleanDictionary.GetByKey(key)?.ToString();
 
-            // 使用 LINQ 来过滤非 null 的项并将其转换为数组
+            // 使用 LINQ 来过滤非 null 且非空的字符串，并将其转换为数组
             string[] resultArray = new[] { cdString, cdShort, cdLong, cdInt, cdFloat, cdDouble, cdDecimal, cdChar, cdBool }
-                                     .Where(s => s != null)  // 只保留非 null 的字符串
+                                     .Where(s => !string.IsNullOrEmpty(s))  // 只保留非 null 且非空字符串
                                      .ToArray();
+
             return resultArray;
         }
     }

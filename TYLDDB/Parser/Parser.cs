@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace TYLDDB.Parser
 {
@@ -54,6 +55,14 @@ namespace TYLDDB.Parser
         /// </summary>
         /// <param name="content">The content string to be parsed, containing key-value pairs.<br />要解析的内容字符串，包含键值对。</param>
         /// <returns>A dictionary containing all matched key-value pairs. If no matching key-value pair is found, an empty dictionary is returned.<br />包含所有匹配的键值对的字典。如果没有找到匹配的键值对，返回空字典。</returns>
+        public static Task<Dictionary<string, string>> ParseStringAsync(string content) => Task.FromResult(ParseString(content));
+
+        /// <summary>
+        /// Parses the given content and finds all matching key-value pairs.<br />
+        /// 解析给定的内容并查找所有匹配的键值对。
+        /// </summary>
+        /// <param name="content">The content string to be parsed, containing key-value pairs.<br />要解析的内容字符串，包含键值对。</param>
+        /// <returns>A dictionary containing all matched key-value pairs. If no matching key-value pair is found, an empty dictionary is returned.<br />包含所有匹配的键值对的字典。如果没有找到匹配的键值对，返回空字典。</returns>
         public static Dictionary<string, int> ParseInt(string content)
         {
             string type = "int"; // 目标类型是 int
@@ -90,6 +99,14 @@ namespace TYLDDB.Parser
             // 返回结果字典，若没有匹配项则返回空字典
             return result;
         }
+
+        /// <summary>
+        /// Parses the given content and finds all matching key-value pairs.<br />
+        /// 解析给定的内容并查找所有匹配的键值对。
+        /// </summary>
+        /// <param name="content">The content string to be parsed, containing key-value pairs.<br />要解析的内容字符串，包含键值对。</param>
+        /// <returns>A dictionary containing all matched key-value pairs. If no matching key-value pair is found, an empty dictionary is returned.<br />包含所有匹配的键值对的字典。如果没有找到匹配的键值对，返回空字典。</returns>
+        public static Task<Dictionary<string, int>> ParseIntAsync(string content) => Task.FromResult(ParseInt(content));
 
         /// <summary>
         /// Parses the given content and finds all matching key-value pairs.<br />
@@ -140,6 +157,14 @@ namespace TYLDDB.Parser
         /// </summary>
         /// <param name="content">The content string to be parsed, containing key-value pairs.<br />要解析的内容字符串，包含键值对。</param>
         /// <returns>A dictionary containing all matched key-value pairs. If no matching key-value pair is found, an empty dictionary is returned.<br />包含所有匹配的键值对的字典。如果没有找到匹配的键值对，返回空字典。</returns>
+        public static Task<Dictionary<string, short>> ParseShortAsync(string content) => Task.FromResult(ParseShort(content));
+
+        /// <summary>
+        /// Parses the given content and finds all matching key-value pairs.<br />
+        /// 解析给定的内容并查找所有匹配的键值对。
+        /// </summary>
+        /// <param name="content">The content string to be parsed, containing key-value pairs.<br />要解析的内容字符串，包含键值对。</param>
+        /// <returns>A dictionary containing all matched key-value pairs. If no matching key-value pair is found, an empty dictionary is returned.<br />包含所有匹配的键值对的字典。如果没有找到匹配的键值对，返回空字典。</returns>
         public static Dictionary<string, long> ParseLong(string content)
         {
             string type = "long"; // 目标类型是 long
@@ -176,6 +201,14 @@ namespace TYLDDB.Parser
             // 返回结果字典，若没有匹配项则返回空字典
             return result;
         }
+
+        /// <summary>
+        /// Parses the given content and finds all matching key-value pairs.<br />
+        /// 解析给定的内容并查找所有匹配的键值对。
+        /// </summary>
+        /// <param name="content">The content string to be parsed, containing key-value pairs.<br />要解析的内容字符串，包含键值对。</param>
+        /// <returns>A dictionary containing all matched key-value pairs. If no matching key-value pair is found, an empty dictionary is returned.<br />包含所有匹配的键值对的字典。如果没有找到匹配的键值对，返回空字典。</returns>
+        public static Task<Dictionary<string, long>> ParseLongAsync(string content) => Task.FromResult(ParseLong(content));
 
         /// <summary>
         /// Parses the given content and finds all matching key-value pairs.<br />
@@ -226,6 +259,14 @@ namespace TYLDDB.Parser
         /// </summary>
         /// <param name="content">The content string to be parsed, containing key-value pairs.<br />要解析的内容字符串，包含键值对。</param>
         /// <returns>A dictionary containing all matched key-value pairs. If no matching key-value pair is found, an empty dictionary is returned.<br />包含所有匹配的键值对的字典。如果没有找到匹配的键值对，返回空字典。</returns>
+        public static Task<Dictionary<string, float>> ParseFloatAsync(string content) => Task.FromResult(ParseFloat(content));
+
+        /// <summary>
+        /// Parses the given content and finds all matching key-value pairs.<br />
+        /// 解析给定的内容并查找所有匹配的键值对。
+        /// </summary>
+        /// <param name="content">The content string to be parsed, containing key-value pairs.<br />要解析的内容字符串，包含键值对。</param>
+        /// <returns>A dictionary containing all matched key-value pairs. If no matching key-value pair is found, an empty dictionary is returned.<br />包含所有匹配的键值对的字典。如果没有找到匹配的键值对，返回空字典。</returns>
         public static Dictionary<string, double> ParseDouble(string content)
         {
             string type = "double"; // 目标类型是 double
@@ -262,6 +303,14 @@ namespace TYLDDB.Parser
             // 返回结果字典，若没有匹配项则返回空字典
             return result;
         }
+
+        /// <summary>
+        /// Parses the given content and finds all matching key-value pairs.<br />
+        /// 解析给定的内容并查找所有匹配的键值对。
+        /// </summary>
+        /// <param name="content">The content string to be parsed, containing key-value pairs.<br />要解析的内容字符串，包含键值对。</param>
+        /// <returns>A dictionary containing all matched key-value pairs. If no matching key-value pair is found, an empty dictionary is returned.<br />包含所有匹配的键值对的字典。如果没有找到匹配的键值对，返回空字典。</returns>
+        public static Task<Dictionary<string, double>> ParseDoubleAsync(string content) => Task.FromResult(ParseDouble(content)); 
 
         /// <summary>
         /// Parses the given content and finds all matching key-value pairs.<br />
@@ -312,6 +361,14 @@ namespace TYLDDB.Parser
         /// </summary>
         /// <param name="content">The content string to be parsed, containing key-value pairs.<br />要解析的内容字符串，包含键值对。</param>
         /// <returns>A dictionary containing all matched key-value pairs. If no matching key-value pair is found, an empty dictionary is returned.<br />包含所有匹配的键值对的字典。如果没有找到匹配的键值对，返回空字典。</returns>
+        public static Task<Dictionary<string, bool>> ParseBooleanAsync(string content) => Task.FromResult(ParseBoolean(content));
+
+        /// <summary>
+        /// Parses the given content and finds all matching key-value pairs.<br />
+        /// 解析给定的内容并查找所有匹配的键值对。
+        /// </summary>
+        /// <param name="content">The content string to be parsed, containing key-value pairs.<br />要解析的内容字符串，包含键值对。</param>
+        /// <returns>A dictionary containing all matched key-value pairs. If no matching key-value pair is found, an empty dictionary is returned.<br />包含所有匹配的键值对的字典。如果没有找到匹配的键值对，返回空字典。</returns>
         public static Dictionary<string, char> ParseChar(string content)
         {
             string type = "char"; // 目标类型是 float
@@ -355,6 +412,14 @@ namespace TYLDDB.Parser
         /// </summary>
         /// <param name="content">The content string to be parsed, containing key-value pairs.<br />要解析的内容字符串，包含键值对。</param>
         /// <returns>A dictionary containing all matched key-value pairs. If no matching key-value pair is found, an empty dictionary is returned.<br />包含所有匹配的键值对的字典。如果没有找到匹配的键值对，返回空字典。</returns>
+        public static Task<Dictionary<string, char>> ParseCharAsync(string content) => Task.FromResult(ParseChar(content));
+
+        /// <summary>
+        /// Parses the given content and finds all matching key-value pairs.<br />
+        /// 解析给定的内容并查找所有匹配的键值对。
+        /// </summary>
+        /// <param name="content">The content string to be parsed, containing key-value pairs.<br />要解析的内容字符串，包含键值对。</param>
+        /// <returns>A dictionary containing all matched key-value pairs. If no matching key-value pair is found, an empty dictionary is returned.<br />包含所有匹配的键值对的字典。如果没有找到匹配的键值对，返回空字典。</returns>
         public static Dictionary<string, decimal> ParseDecimal(string content)
         {
             string type = "decimal"; // 目标类型是 float
@@ -391,5 +456,13 @@ namespace TYLDDB.Parser
             // 返回结果字典，若没有匹配项则返回空字典
             return result;
         }
+
+        /// <summary>
+        /// Parses the given content and finds all matching key-value pairs.<br />
+        /// 解析给定的内容并查找所有匹配的键值对。
+        /// </summary>
+        /// <param name="content">The content string to be parsed, containing key-value pairs.<br />要解析的内容字符串，包含键值对。</param>
+        /// <returns>A dictionary containing all matched key-value pairs. If no matching key-value pair is found, an empty dictionary is returned.<br />包含所有匹配的键值对的字典。如果没有找到匹配的键值对，返回空字典。</returns>
+        public static Task<Dictionary<string, decimal>> ParseDecimalAsync(string content) => Task.FromResult(ParseDecimal(content)); 
     }
 }
