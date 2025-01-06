@@ -23,3 +23,7 @@ A strongly typed constrained distributed file system that can act as a database.
 There are two copyright licenses for this class library, one is the global (except China mainland) provisions, and the other is the China mainland specific provisions.
 
 This applies to the region where the actual use/service of the class library is directed, not the country where the company is located.
+
+For some special cases, such as some files or code blocks marked with a specific copyright agreement (such as MIT), please refer to the internal mark. In most cases, the copyright agreement in the warehouse is used (according to the region).
+
+Different versions may have different provisions, please use the version of the provisions prevail.
