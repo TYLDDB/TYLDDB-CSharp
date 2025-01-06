@@ -463,7 +463,13 @@ namespace TYLDDB
             }
         }
 
-        public string[] AllTypeSearch(string key)
+        /// <summary>
+        /// Finds the value associated with a given key from multiple types of concurrent dictionaries and returns all non-empty values as an array of strings.<br />
+        /// 从多个类型的并发词典中查找与给定键相关的值，并将所有非空的值以字符串数组的形式返回。
+        /// </summary>
+        /// <param name="key">The key used to find. Method looks up the corresponding value from multiple dictionaries based on this key.<br />用于查找的键。方法将根据这个键从多个字典中查找对应的值。</param>
+        /// <returns>Returns an array of strings containing all non-empty values associated with the given key. If no matching value is found, an empty array is returned.<br />返回一个字符串数组，其中包含所有非空的、与给定键相关的值。如果没有找到匹配的值，则返回空数组。</returns>
+        public string[] AllTypeSearchFromConcurrentDictionary(string key)
         {
             // 安全地从字典获取并转换为字符串（对于可能为 null 的值使用 ?.ToString()）
             string cdString = cdStringDictionary.GetByKey(key)?.ToString();

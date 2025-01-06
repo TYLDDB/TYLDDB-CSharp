@@ -43,17 +43,17 @@ await lddb.ParseAsync();
 parseDbTimer.Stop();
 WriteTime("从发起解析文件到成功解析并写入缓存的总时间: ", parseDbTimer.ElapsedMilliseconds());
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////// 数据库全类型搜寻
+///////////////////////////////////////////////////////////////////////////////////////////////////////// 并发词典数据库全类型异步搜寻
 HighPrecisionTimer allTypeSearchTimer = new();
 allTypeSearchTimer.Start();
-string[] AllTypeSearchResult = lddb.AllTypeSearch("str_name");
+string[] AllTypeSearchResult = lddb.AllTypeSearchFromConcurrentDictionary("str_name");
 allTypeSearchTimer.Stop();
 // 使用 foreach 输出数组的每个元素
 foreach (var str in AllTypeSearchResult)
 {
     Console.WriteLine(str);
 }
-WriteTime("数据库全类型搜寻时间: ", parseDbTimer.ElapsedMilliseconds());
+WriteTime("并发词典数据库全类型异步搜寻: ", parseDbTimer.ElapsedMilliseconds());
 
 
 
