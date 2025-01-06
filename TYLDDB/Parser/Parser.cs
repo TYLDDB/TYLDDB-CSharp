@@ -11,7 +11,7 @@ namespace TYLDDB.Parser
     public class DataParser
     {
         // 定义正则表达式来匹配键值对（类型::"key"="value"）
-        private readonly static string pattern = @"(?<=^|\s)(\w+)\s*::\s*""([^""]+)""";
+        private readonly static string pattern = @"(\w+)\s*::\s*""([^""]+)""\s*=\s*""([^""]+)"";";
 
         /// <summary>
         /// Parses the given content and finds all matching key-value pairs.<br />
@@ -32,11 +32,12 @@ namespace TYLDDB.Parser
             // 遍历所有的匹配项
             foreach (Match match in matches)
             {
-                string matchedKey = match.Groups[1].Value;
-                string matchedValue = match.Groups[2].Value;
+                string matchedType = match.Groups[1].Value;
+                string matchedKey = match.Groups[2].Value;
+                string matchedValue = match.Groups[3].Value;
 
                 // 如果提供的类型与键的类型匹配，加入到结果字典
-                if (string.Equals(type, matchedKey, StringComparison.OrdinalIgnoreCase))
+                if (string.Equals(type, matchedType, StringComparison.OrdinalIgnoreCase))
                 {
                     // 将匹配的键值对添加到字典中
                     result[matchedKey] = matchedValue;
@@ -66,11 +67,12 @@ namespace TYLDDB.Parser
             // 遍历所有的匹配项
             foreach (Match match in matches)
             {
-                string matchedKey = match.Groups[1].Value;
-                string matchedValue = match.Groups[2].Value;
+                string matchedType = match.Groups[1].Value;  // 这是类型，比如 int, short, long
+                string matchedKey = match.Groups[2].Value;   // 这是键，比如 int_value, string_value
+                string matchedValue = match.Groups[3].Value; // 这是值的字符串部分，比如 "123", "32767"
 
                 // 如果提供的类型与键的类型匹配
-                if (string.Equals(type, matchedKey, StringComparison.OrdinalIgnoreCase))
+                if (string.Equals(type, matchedType, StringComparison.OrdinalIgnoreCase))
                 {
                     // 尝试将值转换为 int 类型
                     if (int.TryParse(matchedValue, out int intValue))
@@ -108,11 +110,12 @@ namespace TYLDDB.Parser
             // 遍历所有的匹配项
             foreach (Match match in matches)
             {
-                string matchedKey = match.Groups[1].Value;
-                string matchedValue = match.Groups[2].Value;
+                string matchedType = match.Groups[1].Value;
+                string matchedKey = match.Groups[2].Value;
+                string matchedValue = match.Groups[3].Value;
 
                 // 如果提供的类型与键的类型匹配
-                if (string.Equals(type, matchedKey, StringComparison.OrdinalIgnoreCase))
+                if (string.Equals(type, matchedType, StringComparison.OrdinalIgnoreCase))
                 {
                     // 尝试将值转换为 short 类型
                     if (short.TryParse(matchedValue, out short shortValue))
@@ -150,11 +153,12 @@ namespace TYLDDB.Parser
             // 遍历所有的匹配项
             foreach (Match match in matches)
             {
-                string matchedKey = match.Groups[1].Value;
-                string matchedValue = match.Groups[2].Value;
+                string matchedType = match.Groups[1].Value;
+                string matchedKey = match.Groups[2].Value;
+                string matchedValue = match.Groups[3].Value;
 
                 // 如果提供的类型与键的类型匹配
-                if (string.Equals(type, matchedKey, StringComparison.OrdinalIgnoreCase))
+                if (string.Equals(type, matchedType, StringComparison.OrdinalIgnoreCase))
                 {
                     // 尝试将值转换为 long 类型
                     if (long.TryParse(matchedValue, out long longValue))
@@ -192,11 +196,12 @@ namespace TYLDDB.Parser
             // 遍历所有的匹配项
             foreach (Match match in matches)
             {
-                string matchedKey = match.Groups[1].Value;
-                string matchedValue = match.Groups[2].Value;
+                string matchedType = match.Groups[1].Value;
+                string matchedKey = match.Groups[2].Value;
+                string matchedValue = match.Groups[3].Value;
 
                 // 如果提供的类型与键的类型匹配
-                if (string.Equals(type, matchedKey, StringComparison.OrdinalIgnoreCase))
+                if (string.Equals(type, matchedType, StringComparison.OrdinalIgnoreCase))
                 {
                     // 尝试将值转换为 short 类型
                     if (float.TryParse(matchedValue, out float floatValue))
@@ -234,11 +239,12 @@ namespace TYLDDB.Parser
             // 遍历所有的匹配项
             foreach (Match match in matches)
             {
-                string matchedKey = match.Groups[1].Value;
-                string matchedValue = match.Groups[2].Value;
+                string matchedType = match.Groups[1].Value;
+                string matchedKey = match.Groups[2].Value;
+                string matchedValue = match.Groups[3].Value;
 
                 // 如果提供的类型与键的类型匹配
-                if (string.Equals(type, matchedKey, StringComparison.OrdinalIgnoreCase))
+                if (string.Equals(type, matchedType, StringComparison.OrdinalIgnoreCase))
                 {
                     // 尝试将值转换为 short 类型
                     if (double.TryParse(matchedValue, out double Value))
@@ -276,11 +282,12 @@ namespace TYLDDB.Parser
             // 遍历所有的匹配项
             foreach (Match match in matches)
             {
-                string matchedKey = match.Groups[1].Value;
-                string matchedValue = match.Groups[2].Value;
+                string matchedType = match.Groups[1].Value;
+                string matchedKey = match.Groups[2].Value;
+                string matchedValue = match.Groups[3].Value;
 
                 // 如果提供的类型与键的类型匹配
-                if (string.Equals(type, matchedKey, StringComparison.OrdinalIgnoreCase))
+                if (string.Equals(type, matchedType, StringComparison.OrdinalIgnoreCase))
                 {
                     // 尝试将值转换为 short 类型
                     if (bool.TryParse(matchedValue, out bool Value))
@@ -318,11 +325,12 @@ namespace TYLDDB.Parser
             // 遍历所有的匹配项
             foreach (Match match in matches)
             {
-                string matchedKey = match.Groups[1].Value;
-                string matchedValue = match.Groups[2].Value;
+                string matchedType = match.Groups[1].Value;
+                string matchedKey = match.Groups[2].Value;
+                string matchedValue = match.Groups[3].Value;
 
                 // 如果提供的类型与键的类型匹配
-                if (string.Equals(type, matchedKey, StringComparison.OrdinalIgnoreCase))
+                if (string.Equals(type, matchedType, StringComparison.OrdinalIgnoreCase))
                 {
                     // 尝试将值转换为 short 类型
                     if (char.TryParse(matchedValue, out char Value))
@@ -360,11 +368,12 @@ namespace TYLDDB.Parser
             // 遍历所有的匹配项
             foreach (Match match in matches)
             {
-                string matchedKey = match.Groups[1].Value;
-                string matchedValue = match.Groups[2].Value;
+                string matchedType = match.Groups[1].Value;
+                string matchedKey = match.Groups[2].Value;
+                string matchedValue = match.Groups[3].Value;
 
                 // 如果提供的类型与键的类型匹配
-                if (string.Equals(type, matchedKey, StringComparison.OrdinalIgnoreCase))
+                if (string.Equals(type, matchedType, StringComparison.OrdinalIgnoreCase))
                 {
                     // 尝试将值转换为 short 类型
                     if (decimal.TryParse(matchedValue, out decimal Value))
