@@ -20,7 +20,29 @@ namespace TYLDDB
         /// </summary>
         public LDDB()
         {
-            // NOTHING HERE!
+            database = new Database(); // 实例化数据库操作类
+
+            // 实例化并发词典
+            cdStringDictionary = new CdStringDictionary();
+            cdShortDictionary = new CdShortDictionary();
+            cdLongDictionary = new CdLongDictionary();
+            cdIntegerDictionary = new CdIntegerDictionary();
+            cdFloatDictionary = new CdFloatDictionary();
+            cdDoubleDictionary = new CdDoubleDictionary();
+            cdDecimalDictionary = new CdDecimalDictionary();
+            cdCharDictionary = new CdCharDictionary();
+            cdBooleanDictionary = new CdBooleanDictionary();
+
+            // 实例化信号词典
+            stlStringDictionary = new StlStringDictionary();
+            stlShortDictionary = new StlShortDictionary();
+            stlLongDictionary = new StlLongDictionary();
+            stlIntegerDictionary = new StlIntegerDictionary();
+            stlFloatDictionary = new StlFloatDictionary();
+            stlDoubleDictionary = new StlDoubleDictionary();
+            stlDecimalDictionary = new StlDecimalDictionary();
+            stlCharDictionary = new StlCharDictionary();
+            stlBooleanDictionary = new StlBooleanDictionary();
         }
 
         ///////////////////////////////////////////////////// 私有字段
@@ -29,9 +51,25 @@ namespace TYLDDB
         private string _database; // 存储正在访问的数据库
         private string _databaseContent; // 存储数据库内容
         private bool _isRead = false; // 是否已调用读取文件
-        private Database database = new Database();
-        private CdStringDictionary cdStringDictionary = new CdStringDictionary();
-        private StlStringDictionary StlStringDictionary = new StlStringDictionary();
+        private Database database;
+        private CdStringDictionary cdStringDictionary;
+        private CdShortDictionary cdShortDictionary;
+        private CdLongDictionary cdLongDictionary;
+        private CdIntegerDictionary cdIntegerDictionary;
+        private CdFloatDictionary cdFloatDictionary;
+        private CdDoubleDictionary cdDoubleDictionary;
+        private CdDecimalDictionary cdDecimalDictionary;
+        private CdCharDictionary cdCharDictionary;
+        private CdBooleanDictionary cdBooleanDictionary;
+        private StlStringDictionary stlStringDictionary;
+        private StlShortDictionary stlShortDictionary;
+        private StlLongDictionary stlLongDictionary;
+        private StlIntegerDictionary stlIntegerDictionary;
+        private StlFloatDictionary stlFloatDictionary;
+        private StlDoubleDictionary stlDoubleDictionary;
+        private StlDecimalDictionary stlDecimalDictionary;
+        private StlCharDictionary stlCharDictionary;
+        private StlBooleanDictionary stlBooleanDictionary;
 
         ///////////////////////////////////////////////////// 公开字段
         /// <summary>

@@ -14,6 +14,7 @@ namespace TYLDDB.Basic
         /// </summary>
         public TylddbException(string message) : base(message) { }
     }
+
     /// <summary>
     /// File opening failure<br/>
     /// 文件打开失败
@@ -26,6 +27,7 @@ namespace TYLDDB.Basic
         /// </summary>
         public FileOpenFailException(string message) : base(message) { }
     }
+
     /// <summary>
     /// File read failure<br/>
     /// 文件读取失败
@@ -38,6 +40,7 @@ namespace TYLDDB.Basic
         /// </summary>
         public FileReadingFailException(string message) : base(message) { }
     }
+
     /// <summary>
     /// File not found<br/>
     /// 文件未找到
@@ -50,6 +53,7 @@ namespace TYLDDB.Basic
         /// </summary>
         public FileNotFoundException(string message) : base(message) { }
     }
+
     /// <summary>
     /// The file path is null or space<br/>
     /// 文件路径为null或空白
@@ -62,6 +66,7 @@ namespace TYLDDB.Basic
         /// </summary>
         public FilePathIsNullOrWhiteSpace(string message) : base(message) { }
     }
+
     /// <summary>
     /// Incorrect or invalid data<br/>
     /// 错误或无效的数据
@@ -74,6 +79,7 @@ namespace TYLDDB.Basic
         /// </summary>
         public InvalidDataException(string message) : base(message) { }
     }
+
     /// <summary>
     /// Database not found<br/>
     /// 未找到数据库
@@ -86,6 +92,7 @@ namespace TYLDDB.Basic
         /// </summary>
         public DatabaseNotFoundException(string message) : base(message) { }
     }
+
     /// <summary>
     /// Description Failed to obtain the database content<br/>
     /// 数据库内容获取失败
