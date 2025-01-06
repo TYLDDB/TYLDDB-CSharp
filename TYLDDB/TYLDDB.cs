@@ -162,6 +162,8 @@ namespace TYLDDB
         public async Task ParseAsync()
         {
             // 创建多个任务，并使用 LongRunning 来确保每个任务在独立线程中运行
+
+            // ConcurrentDictionary
             Task cdStringCacheTask = Task.Factory.StartNew(() => CdString(), TaskCreationOptions.LongRunning);
             Task cdIntCacheTask = Task.Factory.StartNew(() => CdInt(), TaskCreationOptions.LongRunning);
             Task cdShortCacheTask = Task.Factory.StartNew(() => CdShort(), TaskCreationOptions.LongRunning);
@@ -172,6 +174,17 @@ namespace TYLDDB
             Task cdCharCacheTask = Task.Factory.StartNew(() => CdChar(), TaskCreationOptions.LongRunning);
             Task cdBoolCacheTask = Task.Factory.StartNew(() => CdBool(), TaskCreationOptions.LongRunning);
 
+            // SemaphoreThreadLock
+            Task stlStringCacheTask = Task.Factory.StartNew(() => StlString(), TaskCreationOptions.LongRunning);
+            Task stlIntCacheTask = Task.Factory.StartNew(() => StlInt(), TaskCreationOptions.LongRunning);
+            Task stlShortCacheTask = Task.Factory.StartNew(() => StlShort(), TaskCreationOptions.LongRunning);
+            Task stlLongCacheTask = Task.Factory.StartNew(() => StlLong(), TaskCreationOptions.LongRunning);
+            Task stlFloatCacheTask = Task.Factory.StartNew(() => StlFloat(), TaskCreationOptions.LongRunning);
+            Task stlDoubleCacheTask = Task.Factory.StartNew(() => StlDouble(), TaskCreationOptions.LongRunning);
+            Task stlDecimalCacheTask = Task.Factory.StartNew(() => StlDecimal(), TaskCreationOptions.LongRunning);
+            Task stlCharCacheTask = Task.Factory.StartNew(() => StlChar(), TaskCreationOptions.LongRunning);
+            Task stlBoolCacheTask = Task.Factory.StartNew(() => StlBool(), TaskCreationOptions.LongRunning);
+
             // 等待所有任务完成
             await Task.WhenAll(cdStringCacheTask,
                                cdIntCacheTask,
@@ -181,8 +194,18 @@ namespace TYLDDB
                                cdDoubleCacheTask,
                                cdDecimalCacheTask,
                                cdCharCacheTask,
-                               cdBoolCacheTask);
+                               cdBoolCacheTask,
+                               stlStringCacheTask,
+                               stlIntCacheTask,
+                               stlShortCacheTask,
+                               stlLongCacheTask,
+                               stlFloatCacheTask,
+                               stlDoubleCacheTask,
+                               stlDecimalCacheTask,
+                               stlCharCacheTask,
+                               stlBoolCacheTask);
 
+            // ConcurrentDictionary
             async void CdString()
             {
                 var dict = DataParser.ParseString(_databaseContent);
@@ -197,7 +220,6 @@ namespace TYLDDB
                     await cdStringDictionary.SetAsync(key, value);
                 }
             }
-
             async void CdShort()
             {
                 var dict = DataParser.ParseShort(_databaseContent);
@@ -212,7 +234,6 @@ namespace TYLDDB
                     await cdShortDictionary.SetAsync(key, value);
                 }
             }
-
             async void CdLong()
             {
                 var dict = DataParser.ParseLong(_databaseContent);
@@ -227,7 +248,6 @@ namespace TYLDDB
                     await cdLongDictionary.SetAsync(key, value);
                 }
             }
-
             async void CdInt()
             {
                 var dict = DataParser.ParseInt(_databaseContent);
@@ -242,7 +262,6 @@ namespace TYLDDB
                     await cdIntegerDictionary.SetAsync(key, value);
                 }
             }
-
             async void CdFloat()
             {
                 var dict = DataParser.ParseFloat(_databaseContent);
@@ -257,7 +276,6 @@ namespace TYLDDB
                     await cdFloatDictionary.SetAsync(key, value);
                 }
             }
-
             async void CdDouble()
             {
                 var dict = DataParser.ParseDouble(_databaseContent);
@@ -272,7 +290,6 @@ namespace TYLDDB
                     await cdDoubleDictionary.SetAsync(key, value);
                 }
             }
-
             async void CdDecimal()
             {
                 var dict = DataParser.ParseDecimal(_databaseContent);
@@ -287,7 +304,6 @@ namespace TYLDDB
                     await cdDecimalDictionary.SetAsync(key, value);
                 }
             }
-
             async void CdChar()
             {
                 var dict = DataParser.ParseChar(_databaseContent);
@@ -302,7 +318,6 @@ namespace TYLDDB
                     await cdCharDictionary.SetAsync(key, value);
                 }
             }
-
             async void CdBool()
             {
                 var dict = DataParser.ParseBoolean(_databaseContent);
@@ -315,6 +330,134 @@ namespace TYLDDB
 
                     // 将 key-value 对存储到缓存
                     await cdBooleanDictionary.SetAsync(key, value);
+                }
+            }
+
+            // SemaphoreThreadLock
+            async void StlString()
+            {
+                var dict = DataParser.ParseString(_databaseContent);
+
+                // 遍历 dict 中的每一项
+                foreach (var kvp in dict)
+                {
+                    var key = kvp.Key;   // 获取第一个值 (key)
+                    var value = kvp.Value;  // 获取第二个值 (value)
+
+                    // 将 key-value 对存储到缓存
+                    await stlStringDictionary.SetAsync(key, value);
+                }
+            }
+            async void StlShort()
+            {
+                var dict = DataParser.ParseShort(_databaseContent);
+
+                // 遍历 dict 中的每一项
+                foreach (var kvp in dict)
+                {
+                    var key = kvp.Key;   // 获取第一个值 (key)
+                    var value = kvp.Value;  // 获取第二个值 (value)
+
+                    // 将 key-value 对存储到缓存
+                    await stlShortDictionary.SetAsync(key, value);
+                }
+            }
+            async void StlLong()
+            {
+                var dict = DataParser.ParseLong(_databaseContent);
+
+                // 遍历 dict 中的每一项
+                foreach (var kvp in dict)
+                {
+                    var key = kvp.Key;   // 获取第一个值 (key)
+                    var value = kvp.Value;  // 获取第二个值 (value)
+
+                    // 将 key-value 对存储到缓存
+                    await stlLongDictionary.SetAsync(key, value);
+                }
+            }
+            async void StlInt()
+            {
+                var dict = DataParser.ParseInt(_databaseContent);
+
+                // 遍历 dict 中的每一项
+                foreach (var kvp in dict)
+                {
+                    var key = kvp.Key;   // 获取第一个值 (key)
+                    var value = kvp.Value;  // 获取第二个值 (value)
+
+                    // 将 key-value 对存储到缓存
+                    await stlIntegerDictionary.SetAsync(key, value);
+                }
+            }
+            async void StlFloat()
+            {
+                var dict = DataParser.ParseFloat(_databaseContent);
+
+                // 遍历 dict 中的每一项
+                foreach (var kvp in dict)
+                {
+                    var key = kvp.Key;   // 获取第一个值 (key)
+                    var value = kvp.Value;  // 获取第二个值 (value)
+
+                    // 将 key-value 对存储到缓存
+                    await stlFloatDictionary.SetAsync(key, value);
+                }
+            }
+            async void StlDouble()
+            {
+                var dict = DataParser.ParseDouble(_databaseContent);
+
+                // 遍历 dict 中的每一项
+                foreach (var kvp in dict)
+                {
+                    var key = kvp.Key;   // 获取第一个值 (key)
+                    var value = kvp.Value;  // 获取第二个值 (value)
+
+                    // 将 key-value 对存储到缓存
+                    await stlDoubleDictionary.SetAsync(key, value);
+                }
+            }
+            async void StlDecimal()
+            {
+                var dict = DataParser.ParseDecimal(_databaseContent);
+
+                // 遍历 dict 中的每一项
+                foreach (var kvp in dict)
+                {
+                    var key = kvp.Key;   // 获取第一个值 (key)
+                    var value = kvp.Value;  // 获取第二个值 (value)
+
+                    // 将 key-value 对存储到缓存
+                    await stlDecimalDictionary.SetAsync(key, value);
+                }
+            }
+            async void StlChar()
+            {
+                var dict = DataParser.ParseChar(_databaseContent);
+
+                // 遍历 dict 中的每一项
+                foreach (var kvp in dict)
+                {
+                    var key = kvp.Key;   // 获取第一个值 (key)
+                    var value = kvp.Value;  // 获取第二个值 (value)
+
+                    // 将 key-value 对存储到缓存
+                    await stlCharDictionary.SetAsync(key, value);
+                }
+            }
+            async void StlBool()
+            {
+                var dict = DataParser.ParseBoolean(_databaseContent);
+
+                // 遍历 dict 中的每一项
+                foreach (var kvp in dict)
+                {
+                    var key = kvp.Key;   // 获取第一个值 (key)
+                    var value = kvp.Value;  // 获取第二个值 (value)
+
+                    // 将 key-value 对存储到缓存
+                    await stlBooleanDictionary.SetAsync(key, value);
                 }
             }
         }
