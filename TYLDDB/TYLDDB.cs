@@ -463,7 +463,7 @@ namespace TYLDDB
             }
         }
 
-        public string[] Read(string key)
+        public string[] AllTypeSearch(string key)
         {
             string cdString = cdStringDictionary.GetByKey(key);
             string cdShort = cdShortDictionary.GetByKey(key).ToString();
