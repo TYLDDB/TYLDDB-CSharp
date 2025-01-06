@@ -90,6 +90,7 @@ namespace TYLDDB
                 }
             }
         }
+
         /// <summary>
         /// Names of all databases in the current file<br />
         /// 当前文件内所有数据库的名称
@@ -162,11 +163,25 @@ namespace TYLDDB
         {
             // 创建多个任务，并使用 LongRunning 来确保每个任务在独立线程中运行
             Task cdStringCacheTask = Task.Factory.StartNew(() => CdString(), TaskCreationOptions.LongRunning);
-            //Task cdIntCacheTask = Task.Factory.StartNew(() => CdInt(), TaskCreationOptions.LongRunning);
-            //Task cdShortCacheTask = Task.Factory.StartNew(() => CdShort(), TaskCreationOptions.LongRunning);
+            Task cdIntCacheTask = Task.Factory.StartNew(() => CdInt(), TaskCreationOptions.LongRunning);
+            Task cdShortCacheTask = Task.Factory.StartNew(() => CdShort(), TaskCreationOptions.LongRunning);
+            Task cdLongCacheTask = Task.Factory.StartNew(() => CdLong(), TaskCreationOptions.LongRunning);
+            Task cdFloatCacheTask = Task.Factory.StartNew(() => CdFloat(), TaskCreationOptions.LongRunning);
+            Task cdDoubleCacheTask = Task.Factory.StartNew(() => CdDouble(), TaskCreationOptions.LongRunning);
+            Task cdDecimalCacheTask = Task.Factory.StartNew(() => CdDecimal(), TaskCreationOptions.LongRunning);
+            Task cdCharCacheTask = Task.Factory.StartNew(() => CdChar(), TaskCreationOptions.LongRunning);
+            Task cdBoolCacheTask = Task.Factory.StartNew(() => CdBool(), TaskCreationOptions.LongRunning);
 
             // 等待所有任务完成
-            await Task.WhenAll(cdStringCacheTask);
+            await Task.WhenAll(cdStringCacheTask,
+                               cdIntCacheTask,
+                               cdShortCacheTask,
+                               cdLongCacheTask,
+                               cdFloatCacheTask,
+                               cdDoubleCacheTask,
+                               cdDecimalCacheTask,
+                               cdCharCacheTask,
+                               cdBoolCacheTask);
 
             async void CdString()
             {
@@ -180,6 +195,126 @@ namespace TYLDDB
 
                     // 将 key-value 对存储到缓存
                     await cdStringDictionary.SetAsync(key, value);
+                }
+            }
+
+            async void CdShort()
+            {
+                var dict = DataParser.ParseShort(_databaseContent);
+
+                // 遍历 dict 中的每一项
+                foreach (var kvp in dict)
+                {
+                    var key = kvp.Key;   // 获取第一个值 (key)
+                    var value = kvp.Value;  // 获取第二个值 (value)
+
+                    // 将 key-value 对存储到缓存
+                    await cdShortDictionary.SetAsync(key, value);
+                }
+            }
+
+            async void CdLong()
+            {
+                var dict = DataParser.ParseLong(_databaseContent);
+
+                // 遍历 dict 中的每一项
+                foreach (var kvp in dict)
+                {
+                    var key = kvp.Key;   // 获取第一个值 (key)
+                    var value = kvp.Value;  // 获取第二个值 (value)
+
+                    // 将 key-value 对存储到缓存
+                    await cdLongDictionary.SetAsync(key, value);
+                }
+            }
+
+            async void CdInt()
+            {
+                var dict = DataParser.ParseInt(_databaseContent);
+
+                // 遍历 dict 中的每一项
+                foreach (var kvp in dict)
+                {
+                    var key = kvp.Key;   // 获取第一个值 (key)
+                    var value = kvp.Value;  // 获取第二个值 (value)
+
+                    // 将 key-value 对存储到缓存
+                    await cdIntegerDictionary.SetAsync(key, value);
+                }
+            }
+
+            async void CdFloat()
+            {
+                var dict = DataParser.ParseFloat(_databaseContent);
+
+                // 遍历 dict 中的每一项
+                foreach (var kvp in dict)
+                {
+                    var key = kvp.Key;   // 获取第一个值 (key)
+                    var value = kvp.Value;  // 获取第二个值 (value)
+
+                    // 将 key-value 对存储到缓存
+                    await cdFloatDictionary.SetAsync(key, value);
+                }
+            }
+
+            async void CdDouble()
+            {
+                var dict = DataParser.ParseDouble(_databaseContent);
+
+                // 遍历 dict 中的每一项
+                foreach (var kvp in dict)
+                {
+                    var key = kvp.Key;   // 获取第一个值 (key)
+                    var value = kvp.Value;  // 获取第二个值 (value)
+
+                    // 将 key-value 对存储到缓存
+                    await cdDoubleDictionary.SetAsync(key, value);
+                }
+            }
+
+            async void CdDecimal()
+            {
+                var dict = DataParser.ParseDecimal(_databaseContent);
+
+                // 遍历 dict 中的每一项
+                foreach (var kvp in dict)
+                {
+                    var key = kvp.Key;   // 获取第一个值 (key)
+                    var value = kvp.Value;  // 获取第二个值 (value)
+
+                    // 将 key-value 对存储到缓存
+                    await cdDecimalDictionary.SetAsync(key, value);
+                }
+            }
+
+            async void CdChar()
+            {
+                var dict = DataParser.ParseChar(_databaseContent);
+
+                // 遍历 dict 中的每一项
+                foreach (var kvp in dict)
+                {
+                    var key = kvp.Key;   // 获取第一个值 (key)
+                    var value = kvp.Value;  // 获取第二个值 (value)
+
+                    // 将 key-value 对存储到缓存
+                    await cdCharDictionary.SetAsync(key, value);
+                }
+            }
+
+            async void CdBool()
+            {
+                var dict = DataParser.ParseBoolean(_databaseContent);
+
+                // 遍历 dict 中的每一项
+                foreach (var kvp in dict)
+                {
+                    var key = kvp.Key;   // 获取第一个值 (key)
+                    var value = kvp.Value;  // 获取第二个值 (value)
+
+                    // 将 key-value 对存储到缓存
+                    await cdBooleanDictionary.SetAsync(key, value);
                 }
             }
         }
