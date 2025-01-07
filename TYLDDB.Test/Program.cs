@@ -43,17 +43,46 @@ await lddb.ParseAsync();
 parseDbTimer.Stop();
 WriteTime("从发起解析文件到成功解析并写入缓存的总时间: ", parseDbTimer.ElapsedMilliseconds());
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////// 并发词典数据库全类型异步搜寻
-HighPrecisionTimer allTypeSearchTimer = new();
-allTypeSearchTimer.Start();
-string[] AllTypeSearchResult = lddb.AllTypeSearchFromConcurrentDictionary("str_name");
-allTypeSearchTimer.Stop();
+///////////////////////////////////////////////////////////////////////////////////////////////////////// 并发词典数据库全类型同步搜寻
+HighPrecisionTimer allTypeSearchFromConcurrentDictionaryTimer = new();
+allTypeSearchFromConcurrentDictionaryTimer.Start();
+string[] AllTypeSearchFromConcurrentDictionaryResult = lddb.AllTypeSearchFromConcurrentDictionary("str_name");
+allTypeSearchFromConcurrentDictionaryTimer.Stop();
 // 使用 foreach 输出数组的每个元素
-foreach (var str in AllTypeSearchResult)
+foreach (var str in AllTypeSearchFromConcurrentDictionaryResult)
 {
     Console.WriteLine(str);
 }
-WriteTime("并发词典数据库全类型异步搜寻: ", parseDbTimer.ElapsedMilliseconds());
+WriteTime("并发词典数据库全类型同步搜寻: ", allTypeSearchFromConcurrentDictionaryTimer.ElapsedMilliseconds());
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////// 信号量线程锁词典数据库全类型同步搜寻
+HighPrecisionTimer allTypeSearchFromSemaphoreThreadLockTimer = new();
+allTypeSearchFromSemaphoreThreadLockTimer.Start();
+string[] AllTypeSearchFromSemaphoreThreadLockResult = lddb.AllTypeSearchFromSemaphoreThreadLock("str_name");
+allTypeSearchFromSemaphoreThreadLockTimer.Stop();
+// 使用 foreach 输出数组的每个元素
+foreach (var str in AllTypeSearchFromSemaphoreThreadLockResult)
+{
+    Console.WriteLine(str);
+}
+WriteTime("信号量线程锁词典数据库全类型同步搜寻: ", allTypeSearchFromSemaphoreThreadLockTimer.ElapsedMilliseconds());
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

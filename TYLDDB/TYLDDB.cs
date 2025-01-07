@@ -51,7 +51,6 @@ namespace TYLDDB
         private string _fileContent; // 存储文件内容
         private string _database; // 存储正在访问的数据库
         private string _databaseContent; // 存储数据库内容
-        private bool _isRead = false; // 是否已调用读取文件
         private Database database;
         private CdStringDictionary cdStringDictionary;
         private CdShortDictionary cdShortDictionary;
@@ -118,30 +117,17 @@ namespace TYLDDB
         /// Read the contents from the file<br/>
         /// 从文件中读取内容
         /// </summary>
-        public void ReadingFile()
-        {
-            _fileContent = Reader.ReadFile(FilePath);
-            _isRead = true;
-        }
+        public void ReadingFile() => _fileContent = Reader.ReadFile(FilePath);
 
         /// <summary>
         /// Set the database to load<br/>
         /// 设置要加载的数据库
         /// </summary>
         /// <param name="db">name of the database<br/>数据库名称</param>
-        public async void LoadDatabase(string db)
+        public void LoadDatabase(string db)
         {
-            switch (_isRead)
-            {
-                case true:
-                    _databaseContent = database.GetDatabaseContent(_fileContent, db);
-                    break;
-                default:
-                    ReadingFile();
-                    _databaseContent = database.GetDatabaseContent(_fileContent, db);
-                    break;
-            }
-            await ParseAsync();
+            ReadingFile();
+            _databaseContent = database.GetDatabaseContent(_fileContent, db);
         }
 
         /// <summary>
@@ -484,6 +470,33 @@ namespace TYLDDB
 
             // 使用 LINQ 来过滤非 null 且非空的字符串，并将其转换为数组
             string[] resultArray = new[] { cdString, cdShort, cdLong, cdInt, cdFloat, cdDouble, cdDecimal, cdChar, cdBool }
+                                     .Where(s => !string.IsNullOrEmpty(s))  // 只保留非 null 且非空字符串
+                                     .ToArray();
+
+            return resultArray;
+        }
+
+        /// <summary>
+        /// Finds the value associated with the given key from the semaphore thread-lock dictionary and returns all non-empty values as an array of strings.<br />
+        /// 从信号量线程锁字典中查找与给定键相关的值，并将所有非空的值以字符串数组的形式返回。
+        /// </summary>
+        /// <param name="key">The key used to find. Method looks up the corresponding value from multiple dictionaries based on this key.<br />用于查找的键。方法将根据这个键从多个字典中查找对应的值。</param>
+        /// <returns>Returns an array of strings containing all non-empty values associated with the given key. If no matching value is found, an empty array is returned.<br />返回一个字符串数组，其中包含所有非空的、与给定键相关的值。如果没有找到匹配的值，则返回空数组。</returns>
+        public string[] AllTypeSearchFromSemaphoreThreadLock(string key)
+        {
+            // 安全地从字典获取并转换为字符串（对于可能为 null 的值使用 ?.ToString()）
+            string stlString = stlStringDictionary.GetByKey(key)?.ToString();
+            string stlShort = stlShortDictionary.GetByKey(key)?.ToString();
+            string stlLong = stlLongDictionary.GetByKey(key)?.ToString();
+            string stlInt = stlIntegerDictionary.GetByKey(key)?.ToString();
+            string stlFloat = stlFloatDictionary.GetByKey(key)?.ToString();
+            string stlDouble = stlDoubleDictionary.GetByKey(key)?.ToString();
+            string stlDecimal = stlDecimalDictionary.GetByKey(key)?.ToString();
+            string stlChar = stlCharDictionary.GetByKey(key)?.ToString();
+            string stlBool = stlBooleanDictionary.GetByKey(key)?.ToString();
+
+            // 使用 LINQ 来过滤非 null 且非空的字符串，并将其转换为数组
+            string[] resultArray = new[] { stlString, stlShort, stlLong, stlInt, stlFloat, stlDouble, stlDecimal, stlChar, stlBool }
                                      .Where(s => !string.IsNullOrEmpty(s))  // 只保留非 null 且非空字符串
                                      .ToArray();
 
