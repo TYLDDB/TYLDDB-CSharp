@@ -9,7 +9,7 @@ namespace TYLDDB.Utils.FastCache.SemaphoreThreadLock
     /// Use semaphore based thread locks to achieve high concurrency stability.<br />
     /// 使用基于信号量的线程锁来实现高并发的稳定性。
     /// </summary>
-    public abstract class StlIntegerDictionary
+    public class StlIntegerDictionary
     {
         private readonly Dictionary<string, int> keyValueDict;   // 存储键->值映射
         private readonly Dictionary<int, HashSet<string>> valueKeyDict; // 存储值->键的映射
