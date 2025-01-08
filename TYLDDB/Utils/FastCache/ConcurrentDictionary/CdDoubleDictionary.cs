@@ -8,7 +8,7 @@ namespace TYLDDB.Utils.FastCache.ConcurrentDictionary
     /// Use concurrent dictionaries to achieve high concurrency stability.<br />
     /// 使用并发词典来实现高并发的稳定性。
     /// </summary>
-    public class CdDoubleDictionary
+    public abstract class CdDoubleDictionary
     {
         /// <summary>
         /// Thread-safe dictionary to store cache data.<br />
