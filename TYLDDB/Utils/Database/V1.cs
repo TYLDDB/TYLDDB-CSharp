@@ -2,11 +2,10 @@
 using System.Text.RegularExpressions;
 using TYLDDB.Basic;
 
-namespace TYLDDB.Utils
+namespace TYLDDB.Utils.Database
 {
-    internal class Database
+    internal class Database_V1 : IDatabase
     {
-#pragma warning disable CA1822 // 忽略静态提示
         public List<string> GetDatabaseList(string fileContent)
         {
             // 正则表达式：排除 internaldb 和 distributeddb，同时匹配符合规则的数据库名称

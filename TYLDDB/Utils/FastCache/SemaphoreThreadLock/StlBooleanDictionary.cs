@@ -32,12 +32,17 @@ namespace TYLDDB.Utils.FastCache.SemaphoreThreadLock
         /// </summary>
         /// <param name="key">Key<br />键</param>
         /// <returns>Value<br />值</returns>
-        public virtual bool GetByKey(string key)
+        public virtual bool? GetByKey(string key)
         {
             lock (semaphore)
             {
-                keyValueDict.TryGetValue(key, out var value);
-                return value;
+                // 尝试从字典中获取值，如果键不存在则返回 null
+                if (keyValueDict.TryGetValue(key, out var value))
+                {
+                    return value;  // 如果找到值，返回该值
+                }
+
+                return null;  // 如果没有找到对应的值，返回 null
             }
         }
 
@@ -47,13 +52,18 @@ namespace TYLDDB.Utils.FastCache.SemaphoreThreadLock
         /// </summary>
         /// <param name="key">Key<br />键</param>
         /// <returns>Value<br />值</returns>
-        public virtual async Task<bool> GetByKeyAsync(string key)
+        public virtual async Task<bool?> GetByKeyAsync(string key)
         {
             await semaphore.WaitAsync();
             try
             {
-                keyValueDict.TryGetValue(key, out var value);
-                return value;
+                // 尝试从字典中获取值，如果键不存在则返回 null
+                if (keyValueDict.TryGetValue(key, out var value))
+                {
+                    return value;  // 如果找到值，返回该值
+                }
+
+                return null;  // 如果没有找到对应的值，返回 null
             }
             finally
             {
