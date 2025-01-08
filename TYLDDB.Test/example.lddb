@@ -8,7 +8,6 @@
 	boolean::"bool"="true";
 	char::"char_value"="A";
 	decimal::decima_value = 19.99";
-	internaldb::"db_name"={};
 	distributeddb::"distributed_db_name"="./example.lddb";
 };
 database2::{
