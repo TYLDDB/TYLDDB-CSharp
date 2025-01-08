@@ -21,7 +21,14 @@ loadDbTimer.Start();
 lddb.LoadDatabase("database1");
 Console.WriteLine(lddb.GetLoadingDatabaseContent()); // 输出database1内容
 loadDbTimer.Stop();
-WriteTime("从发起读取数据库指令到成功返回读取内容的总时间为: ", loadDbTimer.ElapsedMilliseconds());
+WriteTime("从发起读取数据库指令到成功返回读取内容的总时间为(V1): ", loadDbTimer.ElapsedMilliseconds());
+
+HighPrecisionTimer loadDbV2Timer = new(); // 从发起读取数据库到成功返回读取内容的总时间
+loadDbV2Timer.Start();
+lddb.LoadDatabase_V2("database1");
+Console.WriteLine(lddb.GetLoadingDatabaseContent()); // 输出database1内容
+loadDbV2Timer.Stop();
+WriteTime("从发起读取数据库指令到成功返回读取内容的总时间为(V2): ", loadDbV2Timer.ElapsedMilliseconds());
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////// 获取所有数据库名称
 HighPrecisionTimer readAllDbNameTimer = new(); // 从发起读取数据库名称到成功返回读取内容的总时间

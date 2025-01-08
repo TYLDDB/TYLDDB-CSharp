@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using TYLDDB.Basic;
 using TYLDDB.Parser;
 using TYLDDB.Utils;
+using TYLDDB.Utils.Database;
 using TYLDDB.Utils.FastCache.ConcurrentDictionary;
 using TYLDDB.Utils.FastCache.SemaphoreThreadLock;
 
@@ -21,7 +22,9 @@ namespace TYLDDB
         /// </summary>
         public LDDB()
         {
-            database = new Database(); // 实例化数据库操作类
+            // 实例化数据库操作类
+            database_v1 = new Database_V1();
+            database_v2 = new Database_V2();
 
             // 实例化并发词典
             cdStringDictionary = new CdStringDictionary();
@@ -49,9 +52,9 @@ namespace TYLDDB
         ///////////////////////////////////////////////////// 私有字段
         private string _filePath;  // 存储文件路径
         private string _fileContent; // 存储文件内容
-        private string _database; // 存储正在访问的数据库
         private string _databaseContent; // 存储数据库内容
-        private Database database;
+        private Database_V1 database_v1;
+        private Database_V2 database_v2;
         private CdStringDictionary cdStringDictionary;
         private CdShortDictionary cdShortDictionary;
         private CdLongDictionary cdLongDictionary;
@@ -127,7 +130,18 @@ namespace TYLDDB
         public void LoadDatabase(string db)
         {
             ReadingFile();
-            _databaseContent = database.GetDatabaseContent(_fileContent, db);
+            _databaseContent = database_v1.GetDatabaseContent(_fileContent, db);
+        }
+
+        /// <summary>
+        /// Set the database to load<br/>
+        /// 设置要加载的数据库
+        /// </summary>
+        /// <param name="db">name of the database<br/>数据库名称</param>
+        public void LoadDatabase_V2(string db)
+        {
+            ReadingFile();
+            _databaseContent = database_v2.GetDatabaseContent(_fileContent, db);
         }
 
         /// <summary>
@@ -140,7 +154,7 @@ namespace TYLDDB
         /// Read the names of all databases<br />
         /// 读取全部数据库的名称
         /// </summary>
-        public void ReadAllDatabaseName() => AllDatabaseName = database.GetDatabaseList(_fileContent);
+        public void ReadAllDatabaseName() => AllDatabaseName = database_v1.GetDatabaseList(_fileContent);
 
         /// <summary>
         /// Reparse the entire database.<br />
