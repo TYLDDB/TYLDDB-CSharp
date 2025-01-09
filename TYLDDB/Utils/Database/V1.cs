@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using TYLDDB.Basic;
+using TYLDDB.Basic.Exception;
 
 namespace TYLDDB.Utils.Database
 {
@@ -52,7 +52,7 @@ namespace TYLDDB.Utils.Database
             else
             {
                 // 如果未找到匹配项，抛出自定义异常
-                throw new GetDatabaseContentErrorException($"未找到数据库 '{databaseName}' 的内容。");
+                throw new GetDatabaseContentErrorException($"No content found for database '{databaseName}'.");
             }
         }
     }

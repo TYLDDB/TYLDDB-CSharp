@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TYLDDB.Basic;
+using TYLDDB.Basic.Exception;
 using TYLDDB.Parser;
 using TYLDDB.Utils;
 using TYLDDB.Utils.Database;
@@ -111,7 +111,7 @@ namespace TYLDDB
             if (string.IsNullOrWhiteSpace(path))
             {
                 return false;
-                throw new FilePathIsNullOrWhiteSpace("文件路径不能为 null 或空白");
+                throw new FilePathIsNullOrWhiteSpace("The file path cannot be null or blank.");
             }
             return true;
         }

@@ -4,7 +4,7 @@
     <TargetFrameworks>netstandard2.1;net6.0;net8.0;net9.0</TargetFrameworks>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Title>TYLDDB.NET</Title>
-    <Version>1.0.0-alpha.4pre1</Version>
+    <Version>1.0.0-alpha.4pre2</Version>
     <Authors>TYLDDB-Project</Authors>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
@@ -19,8 +19,9 @@
     <PackageTags>DataBase</PackageTags>
     <Company>QingYi-Studio</Company>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageReleaseNotes>Add a database parser (data type only, internal and distributed databases are not available).
-Fast cache underlying interface optimization.</PackageReleaseNotes>
+    <PackageReleaseNotes> - Optimize error classes: Add more refined error handling and throwing.
+-  Allows you to customize the buffer size when reading files in blocks.
+</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
