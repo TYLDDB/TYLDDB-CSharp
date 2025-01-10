@@ -19,9 +19,9 @@
     <PackageTags>DataBase</PackageTags>
     <Company>QingYi-Studio</Company>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageReleaseNotes> - Optimize error classes: Add more refined error handling and throwing.
--  Allows you to customize the buffer size when reading files in blocks.
-</PackageReleaseNotes>
+    <PackageReleaseNotes>- Optimize error classes: Add more refined error handling and throwing.
+- Allows you to customize the buffer size when reading files in blocks.
+- Add pipe-based file read and write classes for testing.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
