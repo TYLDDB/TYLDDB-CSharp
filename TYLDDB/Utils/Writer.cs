@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Text;
+using TYLDDB.Basic.Exception;
 
 namespace TYLDDB.Utils
 {
@@ -16,8 +17,12 @@ namespace TYLDDB.Utils
     /// <list type="bullet"><see cref="WriteStringToFileInChunks(string, string, int)"/>适用于在较快的硬盘中写入内容，如固态硬盘。</list>
     /// <list type="bullet"><see cref="WriteStringToFileInChunksAsync(string, string, int)"/>适用于在较快的硬盘中异步写入内容，如固态硬盘。</list>
     /// </summary>
-    public struct Writer
+    public readonly struct Writer
     {
+        private static readonly int bufferSize = 64 * 1024; // 64KB 缓冲区
+
+        private static int offset = 0;
+
         /// <summary>
         /// Write large strings to a file synchronously.<br />
         /// 同步写入大字符串到文件。
@@ -26,14 +31,18 @@ namespace TYLDDB.Utils
         /// <param name="content">Written content<br />写入的内容</param>
         public static void WriteStringToFile(string filePath, string content)
         {
-            // 使用64KB的缓冲区
-            int bufferSize = 64 * 1024; // 64KB 缓冲区
-
-            // 使用FileStream打开文件，确保文件完全覆盖而不是追加
-            using FileStream fs = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None, bufferSize);
-            using StreamWriter writer = new StreamWriter(fs, Encoding.UTF8, bufferSize);
-            // 写入内容
-            writer.Write(content);
+            try
+            {
+                // 使用FileStream打开文件，确保文件完全覆盖而不是追加
+                using FileStream fs = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None, bufferSize);
+                using StreamWriter writer = new StreamWriter(fs, Encoding.UTF8, bufferSize);
+                // 写入内容
+                writer.Write(content);
+            }
+            catch(Exception ex)
+            {
+                throw new WriteStringToFileException(ex.Message);
+            }
         }
 
         /// <summary>
@@ -44,14 +53,18 @@ namespace TYLDDB.Utils
         /// <param name="content">Written content<br />写入的内容</param>
         public static async void WriteStringToFileAsync(string filePath, string content)
         {
-            // 使用64KB的缓冲区
-            int bufferSize = 64 * 1024; // 64KB 缓冲区
-
-            // 使用FileStream打开文件，确保文件完全覆盖而不是追加
-            using FileStream fs = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None, bufferSize);
-            using StreamWriter writer = new StreamWriter(fs, Encoding.UTF8, bufferSize);
-            // 异步写入内容
-            await writer.WriteAsync(content);
+            try
+            {
+                // 使用FileStream打开文件，确保文件完全覆盖而不是追加
+                using FileStream fs = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None, bufferSize);
+                using StreamWriter writer = new StreamWriter(fs, Encoding.UTF8, bufferSize);
+                // 异步写入内容
+                await writer.WriteAsync(content);
+            }
+            catch(Exception ex)
+{
+                throw new WriteStringToFileException(ex.Message);
+            }
         }
 
         /// <summary>
@@ -63,20 +76,25 @@ namespace TYLDDB.Utils
         /// <param name="chunkSize">Block size<br />分块大小</param>
         public static void WriteStringToFileInChunks(string filePath, string content, int chunkSize = 64 * 1024)
         {
-
-            // 将字符串转换为字节数组
-            byte[] contentBytes = Encoding.UTF8.GetBytes(content);
-
-            using FileStream fs = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None, chunkSize);
-            using StreamWriter writer = new StreamWriter(fs, Encoding.UTF8, chunkSize);
-            int totalLength = contentBytes.Length;
-            int offset = 0;
-
-            while (offset < totalLength)
+            try
             {
-                int length = Math.Min(chunkSize, totalLength - offset);
-                writer.Write(Encoding.UTF8.GetString(contentBytes, offset, length));
-                offset += length;
+                // 将字符串转换为字节数组
+                byte[] contentBytes = Encoding.UTF8.GetBytes(content);
+
+                using FileStream fs = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None, chunkSize);
+                using StreamWriter writer = new StreamWriter(fs, Encoding.UTF8, chunkSize);
+                int totalLength = contentBytes.Length;
+
+                while (offset < totalLength)
+                {
+                    int length = Math.Min(chunkSize, totalLength - offset);
+                    writer.Write(Encoding.UTF8.GetString(contentBytes, offset, length));
+                    offset += length;
+                }
+            }
+            catch(Exception ex)
+            {
+                throw new WriteStringToFileInChunksException(ex.Message);
             }
         }
 
@@ -89,24 +107,30 @@ namespace TYLDDB.Utils
         /// <param name="chunkSize">Block size<br />分块大小</param>
         public static async void WriteStringToFileInChunksAsync(string filePath, string content, int chunkSize = 64 * 1024)
         {
-            // 将字符串转换为字节数组
-            byte[] contentBytes = Encoding.UTF8.GetBytes(content);
-
-            using FileStream fs = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None, chunkSize);
-            using StreamWriter writer = new StreamWriter(fs, Encoding.UTF8, chunkSize);
-            int totalLength = contentBytes.Length;
-            int offset = 0;
-
-            while (offset < totalLength)
+            try
             {
-                int length = Math.Min(chunkSize, totalLength - offset);
-                string chunk = Encoding.UTF8.GetString(contentBytes, offset, length);
+                // 将字符串转换为字节数组
+                byte[] contentBytes = Encoding.UTF8.GetBytes(content);
 
-                // 异步写入当前块
-                await writer.WriteAsync(chunk);
+                using FileStream fs = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None, chunkSize);
+                using StreamWriter writer = new StreamWriter(fs, Encoding.UTF8, chunkSize);
+                int totalLength = contentBytes.Length;
 
-                // 更新偏移量
-                offset += length;
+                while (offset < totalLength)
+                {
+                    int length = Math.Min(chunkSize, totalLength - offset);
+                    string chunk = Encoding.UTF8.GetString(contentBytes, offset, length);
+
+                    // 异步写入当前块
+                    await writer.WriteAsync(chunk);
+
+                    // 更新偏移量
+                    offset += length;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new WriteStringToFileInChunksException(ex.Message);
             }
         }
     }

@@ -47,12 +47,12 @@ WriteTime("从发起读取数据库名称到成功返回读取内容的总时间
 ///////////////////////////////////////////////////////////////////////////////////////////////////////// 数据库解析缓存
 HighPrecisionTimer parseDbTimer = new(); // 从发起解析文件到成功解析并写入缓存的总时间(同步)
 parseDbTimer.Start();
-await lddb.Parse();
+await lddb.Parse_V1();
 parseDbTimer.Stop();
 WriteTime("从发起解析文件到成功解析并写入缓存的总时间(同步): ", parseDbTimer.ElapsedMilliseconds());
 HighPrecisionTimer parseDbTimerAsync = new(); // 从发起解析文件到成功解析并写入缓存的总时间(异步)
 parseDbTimerAsync.Start();
-await lddb.ParseAsync();
+await lddb.ParseAsync_V1();
 parseDbTimerAsync.Stop();
 WriteTime("从发起解析文件到成功解析并写入缓存的总时间(异步): ", parseDbTimerAsync.ElapsedMilliseconds());
 
