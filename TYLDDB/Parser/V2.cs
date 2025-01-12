@@ -11,6 +11,8 @@ namespace TYLDDB.Parser
     {
         // TODO: 需要处理if中的continue，if (typeEndIndex == -1 || equalSignIndex == -1)判断不建议直接continue！可以尝试抛出一个错误，在外部做错误处理！
 
+        // TODO：添加用于实例化的方法
+
         /// <summary>
         /// Parses the given content and finds all matching key-value pairs. This method is resolved by calling other methods, such as <see cref="ParseString(string)"/>.<br />
         /// 解析给定的内容并查找所有匹配的键值对。该方法为调用其它方法进行解析，如<see cref="ParseString(string)"/>。

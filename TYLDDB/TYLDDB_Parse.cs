@@ -618,5 +618,124 @@ namespace TYLDDB
                 }
             }
         }
+
+        /// <summary>
+        /// Reparse the entire database.<br />
+        /// 重新解析整个数据库。
+        /// </summary>
+        public void Parse_V2()
+        {
+            var _str = DataParser_V2.ParseString(_databaseContent);
+            var _int = DataParser_V2.ParseInt(_databaseContent);
+            var _short = DataParser_V2.ParseShort(_databaseContent);
+            var _long = DataParser_V2.ParseLong(_databaseContent);
+            var _float = DataParser_V2.ParseFloat(_databaseContent);
+            var _double = DataParser_V2.ParseDouble(_databaseContent);
+            var _bool = DataParser_V2.ParseBoolean(_databaseContent);
+            var _char = DataParser_V2.ParseChar(_databaseContent);
+            var _decimal = DataParser_V2.ParseDecimal(_databaseContent);
+
+            foreach (var kvp in _str)
+            {
+                var key = kvp.Key;   // 获取第一个值 (key)
+                var value = kvp.Value;  // 获取第二个值 (value)
+
+                // 将 key-value 对存储到缓存
+                cdStringDictionary.Set(key, value);
+                stlStringDictionary.Set(key, value);
+            }
+
+            foreach (var kvp in _int)
+            {
+                var key = kvp.Key;   // 获取第一个值 (key)
+                var value = kvp.Value;  // 获取第二个值 (value)
+
+                // 将 key-value 对存储到缓存
+                cdIntegerDictionary.Set(key, value);
+                stlIntegerDictionary.Set(key, value);
+            }
+
+            foreach (var kvp in _short)
+            {
+                var key = kvp.Key;   // 获取第一个值 (key)
+                var value = kvp.Value;  // 获取第二个值 (value)
+
+                // 将 key-value 对存储到缓存
+                cdShortDictionary.Set(key, value);
+                stlShortDictionary.Set(key, value);
+            }
+
+            foreach (var kvp in _long)
+            {
+                var key = kvp.Key;
+                var value = kvp.Value;
+
+                cdLongDictionary.Set(key, value);
+                stlLongDictionary.Set(key, value);
+            }
+
+            foreach(var kvp in _float)
+            {
+                var key = kvp.Key;
+                var value = kvp.Value;
+
+                cdFloatDictionary.Set(key, value);
+                stlFloatDictionary.Set(key, value);
+            }
+
+            foreach(var kvp in _double)
+            {
+                var key = kvp.Key;
+                var value = kvp.Value;
+
+                cdDoubleDictionary.Set(key, value);
+                stlDoubleDictionary.Set(key, value);
+            }
+
+            foreach(var kvp in _bool)
+            {
+                var key = kvp.Key;
+                var value = kvp.Value;
+
+                cdBooleanDictionary.Set(key, value);
+                stlBooleanDictionary.Set(key, value);
+            }
+
+            foreach(var kvp in _char)
+            {
+                var key = kvp.Key;
+                var value = kvp.Value;
+
+                cdCharDictionary.Set(key, value);
+                stlCharDictionary.Set(key, value);
+            }
+
+            foreach(var kvp in _decimal)
+            {
+                var key = kvp.Key;
+                var value = kvp.Value;
+
+                cdDecimalDictionary.Set(key, value);
+                stlDecimalDictionary.Set(key, value);
+            }
+        }
+
+        /// <summary>
+        /// Reparse the entire database.<br />
+        /// 重新解析整个数据库。
+        /// </summary>
+        public void Parse_V2Integrated()
+        {
+
+        }
+
+        /// <summary>
+        /// Reparse the entire database.<br />
+        /// 重新解析整个数据库。
+        /// </summary>
+        public void Parse_V2Nonintegrated()
+        {
+
+        }
     }
 }

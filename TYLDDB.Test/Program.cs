@@ -45,16 +45,21 @@ if(lddb.AllDatabaseName != null)
 WriteTime("从发起读取数据库名称到成功返回读取内容的总时间为: ", readAllDbNameTimer.ElapsedMilliseconds());
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////// 数据库解析缓存
-HighPrecisionTimer parseDbTimer = new(); // 从发起解析文件到成功解析并写入缓存的总时间(同步)
+HighPrecisionTimer parseDbTimer = new();
 parseDbTimer.Start();
 await lddb.Parse_V1();
 parseDbTimer.Stop();
-WriteTime("从发起解析文件到成功解析并写入缓存的总时间(同步): ", parseDbTimer.ElapsedMilliseconds());
-HighPrecisionTimer parseDbTimerAsync = new(); // 从发起解析文件到成功解析并写入缓存的总时间(异步)
+WriteTime("解析文件并写入缓存V1(同步): ", parseDbTimer.ElapsedMilliseconds());
+HighPrecisionTimer parseDbTimerAsync = new();
 parseDbTimerAsync.Start();
 await lddb.ParseAsync_V1();
 parseDbTimerAsync.Stop();
-WriteTime("从发起解析文件到成功解析并写入缓存的总时间(异步): ", parseDbTimerAsync.ElapsedMilliseconds());
+WriteTime("解析文件并写入缓存V1(异步): ", parseDbTimerAsync.ElapsedMilliseconds());
+HighPrecisionTimer parseDbV2Timer = new();
+parseDbV2Timer.Start();
+lddb.Parse_V2();
+parseDbV2Timer.Stop();
+WriteTime("解析文件并写入缓存V1(同步): ", parseDbV2Timer.ElapsedMilliseconds());
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////// 并发词典数据库全类型同步搜寻
 HighPrecisionTimer allTypeSearchFromConcurrentDictionaryTimer = new();
