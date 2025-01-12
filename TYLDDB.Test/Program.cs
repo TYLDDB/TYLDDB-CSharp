@@ -4,9 +4,12 @@ using TYLDDB;
 string dbFilePath = "./example.lddb";
 List<string> testData = [];
 
+#region 实例化
 ///////////////////////////////////////////////////////////////////////////////////////////////////////// 实例化
 var lddb = new LDDB();
+#endregion
 
+#region 读取文件
 ///////////////////////////////////////////////////////////////////////////////////////////////////////// 读取文件
 HighPrecisionTimer readDbTimer = new(); // 从发起读取文件到成功读取的总时间
 lddb.FilePath = dbFilePath;
@@ -14,7 +17,9 @@ readDbTimer.Start();
 lddb.ReadingFile();
 readDbTimer.Stop();
 WriteTime("从发起读取文件指令到成功读取的总时间为: ", readDbTimer.ElapsedMilliseconds());
+#endregion
 
+#region 读取数据库
 ///////////////////////////////////////////////////////////////////////////////////////////////////////// 读取数据库
 HighPrecisionTimer loadDbTimer = new(); // 从发起读取数据库到成功返回读取内容的总时间
 loadDbTimer.Start();
@@ -29,7 +34,9 @@ lddb.LoadDatabase_V2("database1");
 Console.WriteLine(lddb.GetLoadingDatabaseContent()); // 输出database1内容
 loadDbV2Timer.Stop();
 WriteTime("从发起读取数据库指令到成功返回读取内容的总时间为(V2): ", loadDbV2Timer.ElapsedMilliseconds());
+#endregion
 
+#region 获取所有数据库名称
 ///////////////////////////////////////////////////////////////////////////////////////////////////////// 获取所有数据库名称
 HighPrecisionTimer readAllDbNameTimer = new(); // 从发起读取数据库名称到成功返回读取内容的总时间
 readAllDbNameTimer.Start();
@@ -43,6 +50,7 @@ if(lddb.AllDatabaseName != null)
     }
 }
 WriteTime("从发起读取数据库名称到成功返回读取内容的总时间为: ", readAllDbNameTimer.ElapsedMilliseconds());
+#endregion
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////// 数据库解析缓存
 HighPrecisionTimer parseDbTimer = new();
