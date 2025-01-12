@@ -63,11 +63,12 @@ parseDbTimerAsync.Start();
 await lddb.ParseAsync_V1();
 parseDbTimerAsync.Stop();
 WriteTime("解析文件并写入缓存V1(异步): ", parseDbTimerAsync.ElapsedMilliseconds());
-HighPrecisionTimer parseDbV2Timer = new();
-parseDbV2Timer.Start();
-lddb.Parse_V2();
-parseDbV2Timer.Stop();
-WriteTime("解析文件并写入缓存V1(同步): ", parseDbV2Timer.ElapsedMilliseconds());
+
+//HighPrecisionTimer parseDbV2Timer = new();
+//parseDbV2Timer.Start();
+//lddb.Parse_V2();
+//parseDbV2Timer.Stop();
+//WriteTime("解析文件并写入缓存V1(同步): ", parseDbV2Timer.ElapsedMilliseconds());
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////// 并发词典数据库全类型同步搜寻
 HighPrecisionTimer allTypeSearchFromConcurrentDictionaryTimer = new();
