@@ -48,9 +48,6 @@ namespace TYLDDB.Utils.Database
             return result.ToString().TrimEnd(); // 移除结尾的多余换行符
         }
 
-        public List<string> GetDatabaseList(string fileContent)
-        {
-            throw new System.NotImplementedException();
-        }
+        public List<string> GetDatabaseList(string fileContent) => throw new NotImplementedException();
     }
 }
