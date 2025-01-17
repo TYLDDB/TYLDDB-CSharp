@@ -3,7 +3,8 @@
 namespace TYLDDB.Utils.Database
 {
     /// <summary>
-    /// Interfaces for operations on external databases.
+    /// Interfaces for operations on external databases.<br />
+    /// 对外部数据库进行操作的接口。
     /// </summary>
     public interface IDatabase
     {
