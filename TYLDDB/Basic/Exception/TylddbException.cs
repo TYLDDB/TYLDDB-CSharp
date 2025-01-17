@@ -65,6 +65,19 @@
         public DatabaseException(string message) : base(message) { }
     }
 
+    /// <summary>
+    /// Dictionary exception class.<br />
+    /// 字典的错误类。
+    /// </summary>
+    public class DictionaryException : TylddbException
+    {
+        /// <summary>
+        /// Dictionary exception class.<br />
+        /// 字典的错误类。
+        /// </summary>
+        public DictionaryException(string message) : base(message) { }
+    }
+
     // 未分类的错误
     /// <summary>
     /// Incorrect or invalid data<br/>

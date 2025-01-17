@@ -1,7 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.1;net6.0;net8.0;net9.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.1;net6.0;net7.0;net8.0;net9.0;net6.0-windows;net7.0-windows;net8.0-windows;net9.0-windows</TargetFrameworks>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Title>TYLDDB.NET</Title>
     <Version>1.0.0-alpha.4pre2</Version>
@@ -21,7 +21,7 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageReleaseNotes>- Optimize error classes: Add more refined error handling and throwing.
 - Allows you to customize the buffer size when reading files in blocks.
-- Add pipe-based file read and write classes for testing.</PackageReleaseNotes>
+- Add a three-value dictionary (under test).</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
