@@ -11,7 +11,7 @@ namespace TYLDDB
     /// </summary>
     public partial class LDDB
     {
-        ///////////////////////////////////////////////////// 公开字段
+        #region 公开字段
         /// <summary>
         /// Set the path where you want to read the file<br/>
         /// 设置希望读取文件的路径
@@ -36,8 +36,9 @@ namespace TYLDDB
         /// 当前文件内所有数据库的名称
         /// </summary>
         public List<string> AllDatabaseName;
+        #endregion
 
-        ///////////////////////////////////////////////////// 方法
+        #region 方法
 
         /// <summary>
         /// 验证文件路径是否为null或空
@@ -148,5 +149,6 @@ namespace TYLDDB
 
             return resultArray;
         }
+        #endregion
     }
 }

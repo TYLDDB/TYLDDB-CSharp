@@ -6,7 +6,7 @@ namespace TYLDDB
 {
     public partial class LDDB
     {
-        ///////////////////////////////////////////////////// 私有字段
+        #region 私有字段
         private string _filePath;  // 存储文件路径
         private string _fileContent; // 存储文件内容
         private string _databaseContent; // 存储数据库内容
@@ -30,5 +30,6 @@ namespace TYLDDB
         private StlDecimalDictionary stlDecimalDictionary;
         private StlCharDictionary stlCharDictionary;
         private StlBooleanDictionary stlBooleanDictionary;
+        #endregion
     }
 }

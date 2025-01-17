@@ -12,11 +12,12 @@ namespace TYLDDB
         /// </summary>
         public LDDB()
         {
-            // 实例化数据库操作类
+            #region 实例化数据库操作类
             database_v1 = new Database_V1();
             database_v2 = new Database_V2();
+            #endregion
 
-            // 实例化并发词典
+            #region 实例化并发词典
             cdStringDictionary = new CdStringDictionary();
             cdShortDictionary = new CdShortDictionary();
             cdLongDictionary = new CdLongDictionary();
@@ -26,8 +27,9 @@ namespace TYLDDB
             cdDecimalDictionary = new CdDecimalDictionary();
             cdCharDictionary = new CdCharDictionary();
             cdBooleanDictionary = new CdBooleanDictionary();
+            #endregion
 
-            // 实例化信号词典
+            #region 实例化信号词典
             stlStringDictionary = new StlStringDictionary();
             stlShortDictionary = new StlShortDictionary();
             stlLongDictionary = new StlLongDictionary();
@@ -37,6 +39,7 @@ namespace TYLDDB
             stlDecimalDictionary = new StlDecimalDictionary();
             stlCharDictionary = new StlCharDictionary();
             stlBooleanDictionary = new StlBooleanDictionary();
+            #endregion
         }
     }
 }
