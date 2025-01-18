@@ -45,7 +45,7 @@ namespace TYLDDB.Utils.Database
                 string databaseContent = match.Groups[1].Value;
 
                 // 替换多余的空格和换行符，保持引号内的空格
-                string cleanedContent = Regex.Replace(databaseContent, @"\s*(?=\S)", "");
+                // string cleanedContent = Regex.Replace(databaseContent, @"\s*(?=\S)", "");
 
                 return databaseContent;
             }

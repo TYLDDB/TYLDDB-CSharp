@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace TYLDDB.Utils.Database
 {
@@ -27,10 +28,10 @@ namespace TYLDDB.Utils.Database
 
             // 提取数据库内容
             int contentStartIndex = startIndex + startMarker.Length;
-            string dbContent = input.Substring(contentStartIndex, endIndex - contentStartIndex).Trim();
+            string dbContent = input[contentStartIndex..endIndex].Trim();
 
             // 使用 StringBuilder 高效地处理每行开头的空格
-            var result = new System.Text.StringBuilder();
+            var result = new StringBuilder();
 
             // 将数据库内容按行分割
             string[] lines = dbContent.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
