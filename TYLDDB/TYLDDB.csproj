@@ -4,14 +4,14 @@
     <TargetFrameworks>netstandard2.1;net6.0;net7.0;net8.0;net9.0;net6.0-windows;net7.0-windows;net8.0-windows;net9.0-windows</TargetFrameworks>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Title>TYLDDB.NET</Title>
-    <Version>1.0.0-alpha.4pre2</Version>
+    <Version>1.0.0-alpha.4</Version>
     <Authors>TYLDDB-Project</Authors>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <PackageIcon>icon.png</PackageIcon>
     <RepositoryUrl>https://github.com/TYLDDB/TYLDDB-CSharp</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageProjectUrl>ttypdb.qingyi-studio.top</PackageProjectUrl>
+    <PackageProjectUrl>https://tylddb.qingyi-studio.top</PackageProjectUrl>
     <Copyright>BSD 3-Clause License (Modified)</Copyright>
     <Description>A strongly typed constrained distributed file system that can act as a database.</Description>
     <ProduceReferenceAssembly>True</ProduceReferenceAssembly>
@@ -19,9 +19,9 @@
     <PackageTags>DataBase</PackageTags>
     <Company>QingYi-Studio</Company>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageReleaseNotes>- Optimize error classes: Add more refined error handling and throwing.
-- Allows you to customize the buffer size when reading files in blocks.
-- Add a three-value dictionary (under test).</PackageReleaseNotes>
+    <PackageReleaseNotes>· Apply a three-value dictionary.
+· Optimizing LDDB.Parse_V1()
+· Add more instantiation overloads</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

@@ -2,6 +2,10 @@
 using TYLDDB.Utils.FastCache.ConcurrentDictionary;
 using TYLDDB.Utils.FastCache.SemaphoreThreadLock;
 
+#if NET8_0_OR_GREATER
+using TYLDDB.Utils.FastCache.TDCache;
+#endif
+
 namespace TYLDDB
 {
     public partial class LDDB
@@ -10,8 +14,9 @@ namespace TYLDDB
         private string _filePath;  // 存储文件路径
         private string _fileContent; // 存储文件内容
         private string _databaseContent; // 存储数据库内容
-        private Database_V1 database_v1;
-        private Database_V2 database_v2;
+        private readonly Database_V1 database_v1;
+        private readonly Database_V2 database_v2;
+        private readonly CacheMode _cacheMode;
         private CdStringDictionary cdStringDictionary;
         private CdShortDictionary cdShortDictionary;
         private CdLongDictionary cdLongDictionary;
@@ -30,6 +35,10 @@ namespace TYLDDB
         private StlDecimalDictionary stlDecimalDictionary;
         private StlCharDictionary stlCharDictionary;
         private StlBooleanDictionary stlBooleanDictionary;
-        #endregion
+
+#if NET8_0_OR_GREATER
+        private readonly TripleDictionaryCache tripleDictionaryCache;
+#endif
+#endregion
     }
 }
