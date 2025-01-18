@@ -85,7 +85,7 @@ async void ParseDatabaseToTemp()
     #region 数据库解析缓存
     HighPrecisionTimer parseDbTimer = new();
     parseDbTimer.Start();
-    await lddb.Parse_V1();
+    lddb.Parse_V1();
     parseDbTimer.Stop();
     WriteTime("解析文件并写入缓存V1(同步): ", parseDbTimer.ElapsedMilliseconds());
     HighPrecisionTimer parseDbTimerAsync = new();

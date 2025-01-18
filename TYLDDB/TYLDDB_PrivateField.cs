@@ -16,6 +16,7 @@ namespace TYLDDB
         private string _databaseContent; // 存储数据库内容
         private readonly Database_V1 database_v1;
         private readonly Database_V2 database_v2;
+        private readonly CacheMode _cacheMode;
         private CdStringDictionary cdStringDictionary;
         private CdShortDictionary cdShortDictionary;
         private CdLongDictionary cdLongDictionary;

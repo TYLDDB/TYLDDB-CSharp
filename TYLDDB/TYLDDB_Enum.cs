@@ -18,11 +18,13 @@
         /// </summary>
         SemaphoreThreadLock,
 
+#if NET8_0_OR_GREATER
         /// <summary>
         /// High concurrency stability is achieved by using concurrent dictionary as core and semaphore based thread lock.<br />
         /// 以并发词典为核，结合基于信号量的线程锁实现高并发的稳定性。
         /// </summary>
         TripleDictionaryCache,
+#endif
 
         /// <summary>
         /// <see cref="ConcurrentDictionary"/> + <see cref="SemaphoreThreadLock"/>

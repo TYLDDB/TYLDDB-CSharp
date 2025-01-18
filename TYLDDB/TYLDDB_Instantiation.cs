@@ -45,6 +45,8 @@ namespace TYLDDB
             stlBooleanDictionary = new StlBooleanDictionary();
             #endregion
 
+            _cacheMode = CacheMode.CDAndSTL;
+
 #if NET8_0_OR_GREATER
             tripleDictionaryCache = new TripleDictionaryCache();
 #endif
@@ -114,11 +116,11 @@ namespace TYLDDB
                     stlBooleanDictionary = new StlBooleanDictionary();
                     #endregion
                     break;
-                case CacheMode.TripleDictionaryCache:
 #if NET8_0_OR_GREATER
+                case CacheMode.TripleDictionaryCache:
                     tripleDictionaryCache = new TripleDictionaryCache();
-#endif
                     break;
+#endif
             }
         }
 
@@ -151,6 +153,8 @@ namespace TYLDDB
             stlCharDictionary = new StlCharDictionary();
             stlBooleanDictionary = new StlBooleanDictionary();
             #endregion
+
+            _cacheMode = CacheMode.CDAndSTL;
 
 #if NET8_0_OR_GREATER
             tripleDictionaryCache = new TripleDictionaryCache();
@@ -187,6 +191,7 @@ namespace TYLDDB
                     cdCharDictionary = new CdCharDictionary();
                     cdBooleanDictionary = new CdBooleanDictionary();
                     #endregion
+                    _cacheMode = mode;
                     break;
                 case CacheMode.SemaphoreThreadLock:
                     #region 实例化信号词典
@@ -200,6 +205,8 @@ namespace TYLDDB
                     stlCharDictionary = new StlCharDictionary();
                     stlBooleanDictionary = new StlBooleanDictionary();
                     #endregion
+
+                    _cacheMode = mode;
                     break;
                 case CacheMode.CDAndSTL:
                     #region 实例化并发词典
@@ -225,12 +232,15 @@ namespace TYLDDB
                     stlCharDictionary = new StlCharDictionary();
                     stlBooleanDictionary = new StlBooleanDictionary();
                     #endregion
+
+                    _cacheMode = mode;
                     break;
-                case CacheMode.TripleDictionaryCache:
 #if NET8_0_OR_GREATER
+                case CacheMode.TripleDictionaryCache:
                     tripleDictionaryCache = new TripleDictionaryCache();
-#endif
+                    _cacheMode = mode;
                     break;
+#endif
             }
 
             switch (process)

@@ -20,7 +20,8 @@
     <Company>QingYi-Studio</Company>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageReleaseNotes>· Apply a three-value dictionary.
-· </PackageReleaseNotes>
+· Optimizing LDDB.Parse_V1()
+· Add more instantiation overloads</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

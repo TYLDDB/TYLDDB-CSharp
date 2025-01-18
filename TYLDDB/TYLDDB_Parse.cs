@@ -12,173 +12,518 @@ namespace TYLDDB
         /// </summary>
         public void Parse_V1()
         {
-            #region method
-            void String()
+            switch (_cacheMode)
             {
-                var dict = DataParser_V1.ParseString(_databaseContent);
+                case CacheMode.CDAndSTL:
+                    {
+                        #region method
+                        void String()
+                        {
+                            var dict = DataParser_V1.ParseString(_databaseContent);
 
-                // 遍历 dict 中的每一项
-                foreach (var kvp in dict)
-                {
-                    var key = kvp.Key;   // 获取第一个值 (key)
-                    var value = kvp.Value;  // 获取第二个值 (value)
+                            // 遍历 dict 中的每一项
+                            foreach (var kvp in dict)
+                            {
+                                var key = kvp.Key;   // 获取第一个值 (key)
+                                var value = kvp.Value;  // 获取第二个值 (value)
 
-                    // 将 key-value 对存储到缓存
-                    stlStringDictionary.Set(key, value);
-                    cdStringDictionary.Set(key, value);
-                }
+                                // 将 key-value 对存储到缓存
+                                stlStringDictionary.Set(key, value);
+                                cdStringDictionary.Set(key, value);
+                            }
+                        }
+                        void Short()
+                        {
+                            var dict = DataParser_V1.ParseShort(_databaseContent);
+
+                            // 遍历 dict 中的每一项
+                            foreach (var kvp in dict)
+                            {
+                                var key = kvp.Key;   // 获取第一个值 (key)
+                                var value = kvp.Value;  // 获取第二个值 (value)
+
+                                // 将 key-value 对存储到缓存
+                                stlShortDictionary.Set(key, value);
+                                cdShortDictionary.Set(key, value);
+                            }
+                        }
+                        void Long()
+                        {
+                            var dict = DataParser_V1.ParseLong(_databaseContent);
+
+                            // 遍历 dict 中的每一项
+                            foreach (var kvp in dict)
+                            {
+                                var key = kvp.Key;   // 获取第一个值 (key)
+                                var value = kvp.Value;  // 获取第二个值 (value)
+
+                                // 将 key-value 对存储到缓存
+                                stlLongDictionary.Set(key, value);
+                                cdLongDictionary.Set(key, value);
+                            }
+                        }
+                        void Int()
+                        {
+                            var dict = DataParser_V1.ParseInt(_databaseContent);
+
+                            // 遍历 dict 中的每一项
+                            foreach (var kvp in dict)
+                            {
+                                var key = kvp.Key;   // 获取第一个值 (key)
+                                var value = kvp.Value;  // 获取第二个值 (value)
+
+                                // 将 key-value 对存储到缓存
+                                stlIntegerDictionary.Set(key, value);
+                                cdIntegerDictionary.Set(key, value);
+                            }
+                        }
+                        void Float()
+                        {
+                            var dict = DataParser_V1.ParseFloat(_databaseContent);
+
+                            // 遍历 dict 中的每一项
+                            foreach (var kvp in dict)
+                            {
+                                var key = kvp.Key;   // 获取第一个值 (key)
+                                var value = kvp.Value;  // 获取第二个值 (value)
+
+                                // 将 key-value 对存储到缓存
+                                stlFloatDictionary.Set(key, value);
+                                cdFloatDictionary.Set(key, value);
+                            }
+                        }
+                        void Double()
+                        {
+                            var dict = DataParser_V1.ParseDouble(_databaseContent);
+
+                            // 遍历 dict 中的每一项
+                            foreach (var kvp in dict)
+                            {
+                                var key = kvp.Key;   // 获取第一个值 (key)
+                                var value = kvp.Value;  // 获取第二个值 (value)
+
+                                // 将 key-value 对存储到缓存
+                                stlDoubleDictionary.Set(key, value);
+                                cdDoubleDictionary.Set(key, value);
+                            }
+                        }
+                        void Decimal()
+                        {
+                            var dict = DataParser_V1.ParseDecimal(_databaseContent);
+
+                            // 遍历 dict 中的每一项
+                            foreach (var kvp in dict)
+                            {
+                                var key = kvp.Key;   // 获取第一个值 (key)
+                                var value = kvp.Value;  // 获取第二个值 (value)
+
+                                // 将 key-value 对存储到缓存
+                                stlDecimalDictionary.Set(key, value);
+                                cdDecimalDictionary.Set(key, value);
+                            }
+                        }
+                        void Char()
+                        {
+                            var dict = DataParser_V1.ParseChar(_databaseContent);
+
+                            // 遍历 dict 中的每一项
+                            foreach (var kvp in dict)
+                            {
+                                var key = kvp.Key;   // 获取第一个值 (key)
+                                var value = kvp.Value;  // 获取第二个值 (value)
+
+                                // 将 key-value 对存储到缓存
+                                stlCharDictionary.Set(key, value);
+                                cdCharDictionary.Set(key, value);
+                            }
+                        }
+                        void Bool()
+                        {
+                            var dict = DataParser_V1.ParseBoolean(_databaseContent);
+
+                            // 遍历 dict 中的每一项
+                            foreach (var kvp in dict)
+                            {
+                                var key = kvp.Key;   // 获取第一个值 (key)
+                                var value = kvp.Value;  // 获取第二个值 (value)
+
+                                // 将 key-value 对存储到缓存
+                                stlBooleanDictionary.Set(key, value);
+                                cdBooleanDictionary.Set(key, value);
+                            }
+                        }
+                        #endregion
+
+                        #region thread
+                        Thread _str = new Thread(String);
+                        Thread _short = new Thread(Short);
+                        Thread _long = new Thread(Long);
+                        Thread _float = new Thread(Float);
+                        Thread _double = new Thread(Double);
+                        Thread _decimal = new Thread(Decimal);
+                        Thread _char = new Thread(Char);
+                        Thread _int = new Thread(Int);
+                        Thread _bool = new Thread(Bool);
+
+                        _str.Start();
+                        _short.Start();
+                        _long.Start();
+                        _float.Start();
+                        _double.Start();
+                        _decimal.Start();
+                        _char.Start();
+                        _int.Start();
+                        _bool.Start();
+
+                        _str.Join();
+                        _short.Join();
+                        _long.Join();
+                        _float.Join();
+                        _double.Join();
+                        _decimal.Join();
+                        _char.Join();
+                        _int.Join();
+                        _bool.Join();
+                        break;
+                        #endregion
+                    }
+
+                case CacheMode.SemaphoreThreadLock:
+                    {
+                        #region method
+                        void String()
+                        {
+                            var dict = DataParser_V1.ParseString(_databaseContent);
+
+                            // 遍历 dict 中的每一项
+                            foreach (var kvp in dict)
+                            {
+                                var key = kvp.Key;   // 获取第一个值 (key)
+                                var value = kvp.Value;  // 获取第二个值 (value)
+
+                                // 将 key-value 对存储到缓存
+                                stlStringDictionary.Set(key, value);
+                            }
+                        }
+                        void Short()
+                        {
+                            var dict = DataParser_V1.ParseShort(_databaseContent);
+
+                            // 遍历 dict 中的每一项
+                            foreach (var kvp in dict)
+                            {
+                                var key = kvp.Key;   // 获取第一个值 (key)
+                                var value = kvp.Value;  // 获取第二个值 (value)
+
+                                // 将 key-value 对存储到缓存
+                                stlShortDictionary.Set(key, value);
+                            }
+                        }
+                        void Long()
+                        {
+                            var dict = DataParser_V1.ParseLong(_databaseContent);
+
+                            // 遍历 dict 中的每一项
+                            foreach (var kvp in dict)
+                            {
+                                var key = kvp.Key;   // 获取第一个值 (key)
+                                var value = kvp.Value;  // 获取第二个值 (value)
+
+                                // 将 key-value 对存储到缓存
+                                stlLongDictionary.Set(key, value);
+                            }
+                        }
+                        void Int()
+                        {
+                            var dict = DataParser_V1.ParseInt(_databaseContent);
+
+                            // 遍历 dict 中的每一项
+                            foreach (var kvp in dict)
+                            {
+                                var key = kvp.Key;   // 获取第一个值 (key)
+                                var value = kvp.Value;  // 获取第二个值 (value)
+
+                                // 将 key-value 对存储到缓存
+                                stlIntegerDictionary.Set(key, value);
+                            }
+                        }
+                        void Float()
+                        {
+                            var dict = DataParser_V1.ParseFloat(_databaseContent);
+
+                            // 遍历 dict 中的每一项
+                            foreach (var kvp in dict)
+                            {
+                                var key = kvp.Key;   // 获取第一个值 (key)
+                                var value = kvp.Value;  // 获取第二个值 (value)
+
+                                // 将 key-value 对存储到缓存
+                                stlFloatDictionary.Set(key, value);
+                            }
+                        }
+                        void Double()
+                        {
+                            var dict = DataParser_V1.ParseDouble(_databaseContent);
+
+                            // 遍历 dict 中的每一项
+                            foreach (var kvp in dict)
+                            {
+                                var key = kvp.Key;   // 获取第一个值 (key)
+                                var value = kvp.Value;  // 获取第二个值 (value)
+
+                                // 将 key-value 对存储到缓存
+                                stlDoubleDictionary.Set(key, value);
+                            }
+                        }
+                        void Decimal()
+                        {
+                            var dict = DataParser_V1.ParseDecimal(_databaseContent);
+
+                            // 遍历 dict 中的每一项
+                            foreach (var kvp in dict)
+                            {
+                                var key = kvp.Key;   // 获取第一个值 (key)
+                                var value = kvp.Value;  // 获取第二个值 (value)
+
+                                // 将 key-value 对存储到缓存
+                                stlDecimalDictionary.Set(key, value);
+                            }
+                        }
+                        void Char()
+                        {
+                            var dict = DataParser_V1.ParseChar(_databaseContent);
+
+                            // 遍历 dict 中的每一项
+                            foreach (var kvp in dict)
+                            {
+                                var key = kvp.Key;   // 获取第一个值 (key)
+                                var value = kvp.Value;  // 获取第二个值 (value)
+
+                                // 将 key-value 对存储到缓存
+                                stlCharDictionary.Set(key, value);
+                            }
+                        }
+                        void Bool()
+                        {
+                            var dict = DataParser_V1.ParseBoolean(_databaseContent);
+
+                            // 遍历 dict 中的每一项
+                            foreach (var kvp in dict)
+                            {
+                                var key = kvp.Key;   // 获取第一个值 (key)
+                                var value = kvp.Value;  // 获取第二个值 (value)
+
+                                // 将 key-value 对存储到缓存
+                                stlBooleanDictionary.Set(key, value);
+                            }
+                        }
+                        #endregion
+
+                        #region thread
+                        Thread _str = new Thread(String);
+                        Thread _short = new Thread(Short);
+                        Thread _long = new Thread(Long);
+                        Thread _float = new Thread(Float);
+                        Thread _double = new Thread(Double);
+                        Thread _decimal = new Thread(Decimal);
+                        Thread _char = new Thread(Char);
+                        Thread _int = new Thread(Int);
+                        Thread _bool = new Thread(Bool);
+
+                        _str.Start();
+                        _short.Start();
+                        _long.Start();
+                        _float.Start();
+                        _double.Start();
+                        _decimal.Start();
+                        _char.Start();
+                        _int.Start();
+                        _bool.Start();
+
+                        _str.Join();
+                        _short.Join();
+                        _long.Join();
+                        _float.Join();
+                        _double.Join();
+                        _decimal.Join();
+                        _char.Join();
+                        _int.Join();
+                        _bool.Join();
+                        break;
+                        #endregion
+                    }
+
+                case CacheMode.ConcurrentDictionary:
+                    {
+                        #region method
+                        void String()
+                        {
+                            var dict = DataParser_V1.ParseString(_databaseContent);
+
+                            // 遍历 dict 中的每一项
+                            foreach (var kvp in dict)
+                            {
+                                var key = kvp.Key;   // 获取第一个值 (key)
+                                var value = kvp.Value;  // 获取第二个值 (value)
+
+                                // 将 key-value 对存储到缓存
+                                cdStringDictionary.Set(key, value);
+                            }
+                        }
+                        void Short()
+                        {
+                            var dict = DataParser_V1.ParseShort(_databaseContent);
+
+                            // 遍历 dict 中的每一项
+                            foreach (var kvp in dict)
+                            {
+                                var key = kvp.Key;   // 获取第一个值 (key)
+                                var value = kvp.Value;  // 获取第二个值 (value)
+
+                                // 将 key-value 对存储到缓存
+                                cdShortDictionary.Set(key, value);
+                            }
+                        }
+                        void Long()
+                        {
+                            var dict = DataParser_V1.ParseLong(_databaseContent);
+
+                            // 遍历 dict 中的每一项
+                            foreach (var kvp in dict)
+                            {
+                                var key = kvp.Key;   // 获取第一个值 (key)
+                                var value = kvp.Value;  // 获取第二个值 (value)
+
+                                // 将 key-value 对存储到缓存
+                                cdLongDictionary.Set(key, value);
+                            }
+                        }
+                        void Int()
+                        {
+                            var dict = DataParser_V1.ParseInt(_databaseContent);
+
+                            // 遍历 dict 中的每一项
+                            foreach (var kvp in dict)
+                            {
+                                var key = kvp.Key;   // 获取第一个值 (key)
+                                var value = kvp.Value;  // 获取第二个值 (value)
+
+                                // 将 key-value 对存储到缓存
+                                cdIntegerDictionary.Set(key, value);
+                            }
+                        }
+                        void Float()
+                        {
+                            var dict = DataParser_V1.ParseFloat(_databaseContent);
+
+                            // 遍历 dict 中的每一项
+                            foreach (var kvp in dict)
+                            {
+                                var key = kvp.Key;   // 获取第一个值 (key)
+                                var value = kvp.Value;  // 获取第二个值 (value)
+
+                                // 将 key-value 对存储到缓存
+                                cdFloatDictionary.Set(key, value);
+                            }
+                        }
+                        void Double()
+                        {
+                            var dict = DataParser_V1.ParseDouble(_databaseContent);
+
+                            // 遍历 dict 中的每一项
+                            foreach (var kvp in dict)
+                            {
+                                var key = kvp.Key;   // 获取第一个值 (key)
+                                var value = kvp.Value;  // 获取第二个值 (value)
+
+                                // 将 key-value 对存储到缓存
+                                cdDoubleDictionary.Set(key, value);
+                            }
+                        }
+                        void Decimal()
+                        {
+                            var dict = DataParser_V1.ParseDecimal(_databaseContent);
+
+                            // 遍历 dict 中的每一项
+                            foreach (var kvp in dict)
+                            {
+                                var key = kvp.Key;   // 获取第一个值 (key)
+                                var value = kvp.Value;  // 获取第二个值 (value)
+
+                                // 将 key-value 对存储到缓存
+                                cdDecimalDictionary.Set(key, value);
+                            }
+                        }
+                        void Char()
+                        {
+                            var dict = DataParser_V1.ParseChar(_databaseContent);
+
+                            // 遍历 dict 中的每一项
+                            foreach (var kvp in dict)
+                            {
+                                var key = kvp.Key;   // 获取第一个值 (key)
+                                var value = kvp.Value;  // 获取第二个值 (value)
+
+                                // 将 key-value 对存储到缓存
+                                cdCharDictionary.Set(key, value);
+                            }
+                        }
+                        void Bool()
+                        {
+                            var dict = DataParser_V1.ParseBoolean(_databaseContent);
+
+                            // 遍历 dict 中的每一项
+                            foreach (var kvp in dict)
+                            {
+                                var key = kvp.Key;   // 获取第一个值 (key)
+                                var value = kvp.Value;  // 获取第二个值 (value)
+
+                                // 将 key-value 对存储到缓存
+                                cdBooleanDictionary.Set(key, value);
+                            }
+                        }
+                        #endregion
+
+                        #region thread
+                        Thread _str = new Thread(String);
+                        Thread _short = new Thread(Short);
+                        Thread _long = new Thread(Long);
+                        Thread _float = new Thread(Float);
+                        Thread _double = new Thread(Double);
+                        Thread _decimal = new Thread(Decimal);
+                        Thread _char = new Thread(Char);
+                        Thread _int = new Thread(Int);
+                        Thread _bool = new Thread(Bool);
+
+                        _str.Start();
+                        _short.Start();
+                        _long.Start();
+                        _float.Start();
+                        _double.Start();
+                        _decimal.Start();
+                        _char.Start();
+                        _int.Start();
+                        _bool.Start();
+
+                        _str.Join();
+                        _short.Join();
+                        _long.Join();
+                        _float.Join();
+                        _double.Join();
+                        _decimal.Join();
+                        _char.Join();
+                        _int.Join();
+                        _bool.Join();
+                        break;
+                        #endregion
+                    }
+
+#if NET8_0_OR_GREATER
+                case CacheMode.TripleDictionaryCache:
+                    TripleDictParse();
+                    break;
+#endif
             }
-            void Short()
-            {
-                var dict = DataParser_V1.ParseShort(_databaseContent);
-
-                // 遍历 dict 中的每一项
-                foreach (var kvp in dict)
-                {
-                    var key = kvp.Key;   // 获取第一个值 (key)
-                    var value = kvp.Value;  // 获取第二个值 (value)
-
-                    // 将 key-value 对存储到缓存
-                    stlShortDictionary.Set(key, value);
-                    cdShortDictionary.Set(key, value);
-                }
-            }
-            void Long()
-            {
-                var dict = DataParser_V1.ParseLong(_databaseContent);
-
-                // 遍历 dict 中的每一项
-                foreach (var kvp in dict)
-                {
-                    var key = kvp.Key;   // 获取第一个值 (key)
-                    var value = kvp.Value;  // 获取第二个值 (value)
-
-                    // 将 key-value 对存储到缓存
-                    stlLongDictionary.Set(key, value);
-                    cdLongDictionary.Set(key, value);
-                }
-            }
-            void Int()
-            {
-                var dict = DataParser_V1.ParseInt(_databaseContent);
-
-                // 遍历 dict 中的每一项
-                foreach (var kvp in dict)
-                {
-                    var key = kvp.Key;   // 获取第一个值 (key)
-                    var value = kvp.Value;  // 获取第二个值 (value)
-
-                    // 将 key-value 对存储到缓存
-                    stlIntegerDictionary.Set(key, value);
-                    cdIntegerDictionary.Set(key, value);
-                }
-            }
-            void Float()
-            {
-                var dict = DataParser_V1.ParseFloat(_databaseContent);
-
-                // 遍历 dict 中的每一项
-                foreach (var kvp in dict)
-                {
-                    var key = kvp.Key;   // 获取第一个值 (key)
-                    var value = kvp.Value;  // 获取第二个值 (value)
-
-                    // 将 key-value 对存储到缓存
-                    stlFloatDictionary.Set(key, value);
-                    cdFloatDictionary.Set(key, value);
-                }
-            }
-            void Double()
-            {
-                var dict = DataParser_V1.ParseDouble(_databaseContent);
-
-                // 遍历 dict 中的每一项
-                foreach (var kvp in dict)
-                {
-                    var key = kvp.Key;   // 获取第一个值 (key)
-                    var value = kvp.Value;  // 获取第二个值 (value)
-
-                    // 将 key-value 对存储到缓存
-                    stlDoubleDictionary.Set(key, value);
-                    cdDoubleDictionary.Set(key, value);
-                }
-            }
-            void Decimal()
-            {
-                var dict = DataParser_V1.ParseDecimal(_databaseContent);
-
-                // 遍历 dict 中的每一项
-                foreach (var kvp in dict)
-                {
-                    var key = kvp.Key;   // 获取第一个值 (key)
-                    var value = kvp.Value;  // 获取第二个值 (value)
-
-                    // 将 key-value 对存储到缓存
-                    stlDecimalDictionary.Set(key, value);
-                    cdDecimalDictionary.Set(key, value);
-                }
-            }
-            void Char()
-            {
-                var dict = DataParser_V1.ParseChar(_databaseContent);
-
-                // 遍历 dict 中的每一项
-                foreach (var kvp in dict)
-                {
-                    var key = kvp.Key;   // 获取第一个值 (key)
-                    var value = kvp.Value;  // 获取第二个值 (value)
-
-                    // 将 key-value 对存储到缓存
-                    stlCharDictionary.Set(key, value);
-                    cdCharDictionary.Set(key, value);
-                }
-            }
-            void Bool()
-            {
-                var dict = DataParser_V1.ParseBoolean(_databaseContent);
-
-                // 遍历 dict 中的每一项
-                foreach (var kvp in dict)
-                {
-                    var key = kvp.Key;   // 获取第一个值 (key)
-                    var value = kvp.Value;  // 获取第二个值 (value)
-
-                    // 将 key-value 对存储到缓存
-                    stlBooleanDictionary.Set(key, value);
-                    cdBooleanDictionary.Set(key, value);
-                }
-            }
-            #endregion
-
-            Thread _str = new Thread(String);
-            Thread _short = new Thread(Short);
-            Thread _long = new Thread(Long);
-            Thread _float = new Thread(Float);
-            Thread _double = new Thread(Double);
-            Thread _decimal = new Thread(Decimal);
-            Thread _char = new Thread(Char);
-            Thread _int = new Thread(Int);
-            Thread _bool = new Thread(Bool);
-
-            _str.Start();
-            _short.Start();
-            _long.Start();
-            _float.Start();
-            _double.Start();
-            _decimal.Start();
-            _char.Start();
-            _int.Start();
-            _bool.Start();
-
-            _str.Join();
-            _short.Join();
-            _long.Join();
-            _float.Join();
-            _double.Join();
-            _decimal.Join();
-            _char.Join();
-            _int.Join();
-            _bool.Join();
         }
 
         /// <summary>
