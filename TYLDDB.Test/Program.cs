@@ -3,10 +3,21 @@ using TYLDDB;
 
 internal class Program
 {
-    private readonly LDDB lddb = new LDDB();
+    private static void Main()
+    {
+        Test test = new();
+        test.TestMethod();
+    }
+    
+}
+
+class Test
+{
+    private readonly LDDB lddb = new();
     private readonly string dbFilePath = "./example.lddb";
     private readonly List<string> testData = [];
-    private void Main(string[] args)
+
+    public void TestMethod()
     {
         ReadFile();
 
