@@ -19,7 +19,8 @@
     <PackageTags>DataBase</PackageTags>
     <Company>QingYi-Studio</Company>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageReleaseNotes>- Apply a three-value dictionary.</PackageReleaseNotes>
+    <PackageReleaseNotes>· Apply a three-value dictionary.
+· </PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

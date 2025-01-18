@@ -1,9 +1,6 @@
 ﻿using System.Threading.Tasks;
 using TYLDDB.Parser;
-
-#if NET8_0_OR_GREATER
 using System.Threading;
-#endif
 
 namespace TYLDDB
 {
@@ -13,185 +10,10 @@ namespace TYLDDB
         /// Reparse the entire database.<br />
         /// 重新解析整个数据库。
         /// </summary>
-        public async Task Parse_V1()
+        public void Parse_V1()
         {
-            // 创建多个任务，并使用 LongRunning 来确保每个任务在独立线程中运行
-
-            #region 并发数据库任务
-            Task cdStringCacheTask = Task.Factory.StartNew(() => CdString(), TaskCreationOptions.LongRunning);
-            Task cdIntCacheTask = Task.Factory.StartNew(() => CdInt(), TaskCreationOptions.LongRunning);
-            Task cdShortCacheTask = Task.Factory.StartNew(() => CdShort(), TaskCreationOptions.LongRunning);
-            Task cdLongCacheTask = Task.Factory.StartNew(() => CdLong(), TaskCreationOptions.LongRunning);
-            Task cdFloatCacheTask = Task.Factory.StartNew(() => CdFloat(), TaskCreationOptions.LongRunning);
-            Task cdDoubleCacheTask = Task.Factory.StartNew(() => CdDouble(), TaskCreationOptions.LongRunning);
-            Task cdDecimalCacheTask = Task.Factory.StartNew(() => CdDecimal(), TaskCreationOptions.LongRunning);
-            Task cdCharCacheTask = Task.Factory.StartNew(() => CdChar(), TaskCreationOptions.LongRunning);
-            Task cdBoolCacheTask = Task.Factory.StartNew(() => CdBool(), TaskCreationOptions.LongRunning);
-            #endregion
-
-            #region 信号量数据库任务
-            Task stlStringCacheTask = Task.Factory.StartNew(() => StlString(), TaskCreationOptions.LongRunning);
-            Task stlIntCacheTask = Task.Factory.StartNew(() => StlInt(), TaskCreationOptions.LongRunning);
-            Task stlShortCacheTask = Task.Factory.StartNew(() => StlShort(), TaskCreationOptions.LongRunning);
-            Task stlLongCacheTask = Task.Factory.StartNew(() => StlLong(), TaskCreationOptions.LongRunning);
-            Task stlFloatCacheTask = Task.Factory.StartNew(() => StlFloat(), TaskCreationOptions.LongRunning);
-            Task stlDoubleCacheTask = Task.Factory.StartNew(() => StlDouble(), TaskCreationOptions.LongRunning);
-            Task stlDecimalCacheTask = Task.Factory.StartNew(() => StlDecimal(), TaskCreationOptions.LongRunning);
-            Task stlCharCacheTask = Task.Factory.StartNew(() => StlChar(), TaskCreationOptions.LongRunning);
-            Task stlBoolCacheTask = Task.Factory.StartNew(() => StlBool(), TaskCreationOptions.LongRunning);
-            #endregion
-
-            // 等待所有任务完成
-            await Task.WhenAll(cdStringCacheTask,
-                               cdIntCacheTask,
-                               cdShortCacheTask,
-                               cdLongCacheTask,
-                               cdFloatCacheTask,
-                               cdDoubleCacheTask,
-                               cdDecimalCacheTask,
-                               cdCharCacheTask,
-                               cdBoolCacheTask,
-                               stlStringCacheTask,
-                               stlIntCacheTask,
-                               stlShortCacheTask,
-                               stlLongCacheTask,
-                               stlFloatCacheTask,
-                               stlDoubleCacheTask,
-                               stlDecimalCacheTask,
-                               stlCharCacheTask,
-                               stlBoolCacheTask);
-
-            #region ConcurrentDictionary
-            void CdString()
-            {
-                var dict = DataParser_V1.ParseString(_databaseContent);
-
-                // 遍历 dict 中的每一项
-                foreach (var kvp in dict)
-                {
-                    var key = kvp.Key;   // 获取第一个值 (key)
-                    var value = kvp.Value;  // 获取第二个值 (value)
-
-                    // 将 key-value 对存储到缓存
-                    cdStringDictionary.Set(key, value);
-                }
-            }
-            void CdShort()
-            {
-                var dict = DataParser_V1.ParseShort(_databaseContent);
-
-                // 遍历 dict 中的每一项
-                foreach (var kvp in dict)
-                {
-                    var key = kvp.Key;   // 获取第一个值 (key)
-                    var value = kvp.Value;  // 获取第二个值 (value)
-
-                    // 将 key-value 对存储到缓存
-                    cdShortDictionary.Set(key, value);
-                }
-            }
-            void CdLong()
-            {
-                var dict = DataParser_V1.ParseLong(_databaseContent);
-
-                // 遍历 dict 中的每一项
-                foreach (var kvp in dict)
-                {
-                    var key = kvp.Key;   // 获取第一个值 (key)
-                    var value = kvp.Value;  // 获取第二个值 (value)
-
-                    // 将 key-value 对存储到缓存
-                    cdLongDictionary.Set(key, value);
-                }
-            }
-            void CdInt()
-            {
-                var dict = DataParser_V1.ParseInt(_databaseContent);
-
-                // 遍历 dict 中的每一项
-                foreach (var kvp in dict)
-                {
-                    var key = kvp.Key;   // 获取第一个值 (key)
-                    var value = kvp.Value;  // 获取第二个值 (value)
-
-                    // 将 key-value 对存储到缓存
-                    cdIntegerDictionary.Set(key, value);
-                }
-            }
-            void CdFloat()
-            {
-                var dict = DataParser_V1.ParseFloat(_databaseContent);
-
-                // 遍历 dict 中的每一项
-                foreach (var kvp in dict)
-                {
-                    var key = kvp.Key;   // 获取第一个值 (key)
-                    var value = kvp.Value;  // 获取第二个值 (value)
-
-                    // 将 key-value 对存储到缓存
-                    cdFloatDictionary.Set(key, value);
-                }
-            }
-            void CdDouble()
-            {
-                var dict = DataParser_V1.ParseDouble(_databaseContent);
-
-                // 遍历 dict 中的每一项
-                foreach (var kvp in dict)
-                {
-                    var key = kvp.Key;   // 获取第一个值 (key)
-                    var value = kvp.Value;  // 获取第二个值 (value)
-
-                    // 将 key-value 对存储到缓存
-                    cdDoubleDictionary.Set(key, value);
-                }
-            }
-            void CdDecimal()
-            {
-                var dict = DataParser_V1.ParseDecimal(_databaseContent);
-
-                // 遍历 dict 中的每一项
-                foreach (var kvp in dict)
-                {
-                    var key = kvp.Key;   // 获取第一个值 (key)
-                    var value = kvp.Value;  // 获取第二个值 (value)
-
-                    // 将 key-value 对存储到缓存
-                    cdDecimalDictionary.Set(key, value);
-                }
-            }
-            void CdChar()
-            {
-                var dict = DataParser_V1.ParseChar(_databaseContent);
-
-                // 遍历 dict 中的每一项
-                foreach (var kvp in dict)
-                {
-                    var key = kvp.Key;   // 获取第一个值 (key)
-                    var value = kvp.Value;  // 获取第二个值 (value)
-
-                    // 将 key-value 对存储到缓存
-                    cdCharDictionary.Set(key, value);
-                }
-            }
-            void CdBool()
-            {
-                var dict = DataParser_V1.ParseBoolean(_databaseContent);
-
-                // 遍历 dict 中的每一项
-                foreach (var kvp in dict)
-                {
-                    var key = kvp.Key;   // 获取第一个值 (key)
-                    var value = kvp.Value;  // 获取第二个值 (value)
-
-                    // 将 key-value 对存储到缓存
-                    cdBooleanDictionary.Set(key, value);
-                }
-            }
-            #endregion
-
-            // SemaphoreThreadLock
-            void StlString()
+            #region method
+            void String()
             {
                 var dict = DataParser_V1.ParseString(_databaseContent);
 
@@ -203,9 +25,10 @@ namespace TYLDDB
 
                     // 将 key-value 对存储到缓存
                     stlStringDictionary.Set(key, value);
+                    cdStringDictionary.Set(key, value);
                 }
             }
-            void StlShort()
+            void Short()
             {
                 var dict = DataParser_V1.ParseShort(_databaseContent);
 
@@ -217,9 +40,10 @@ namespace TYLDDB
 
                     // 将 key-value 对存储到缓存
                     stlShortDictionary.Set(key, value);
+                    cdShortDictionary.Set(key, value);
                 }
             }
-            void StlLong()
+            void Long()
             {
                 var dict = DataParser_V1.ParseLong(_databaseContent);
 
@@ -231,9 +55,10 @@ namespace TYLDDB
 
                     // 将 key-value 对存储到缓存
                     stlLongDictionary.Set(key, value);
+                    cdLongDictionary.Set(key, value);
                 }
             }
-            void StlInt()
+            void Int()
             {
                 var dict = DataParser_V1.ParseInt(_databaseContent);
 
@@ -245,9 +70,10 @@ namespace TYLDDB
 
                     // 将 key-value 对存储到缓存
                     stlIntegerDictionary.Set(key, value);
+                    cdIntegerDictionary.Set(key, value);
                 }
             }
-            void StlFloat()
+            void Float()
             {
                 var dict = DataParser_V1.ParseFloat(_databaseContent);
 
@@ -259,9 +85,10 @@ namespace TYLDDB
 
                     // 将 key-value 对存储到缓存
                     stlFloatDictionary.Set(key, value);
+                    cdFloatDictionary.Set(key, value);
                 }
             }
-            void StlDouble()
+            void Double()
             {
                 var dict = DataParser_V1.ParseDouble(_databaseContent);
 
@@ -273,9 +100,10 @@ namespace TYLDDB
 
                     // 将 key-value 对存储到缓存
                     stlDoubleDictionary.Set(key, value);
+                    cdDoubleDictionary.Set(key, value);
                 }
             }
-            void StlDecimal()
+            void Decimal()
             {
                 var dict = DataParser_V1.ParseDecimal(_databaseContent);
 
@@ -287,9 +115,10 @@ namespace TYLDDB
 
                     // 将 key-value 对存储到缓存
                     stlDecimalDictionary.Set(key, value);
+                    cdDecimalDictionary.Set(key, value);
                 }
             }
-            void StlChar()
+            void Char()
             {
                 var dict = DataParser_V1.ParseChar(_databaseContent);
 
@@ -301,9 +130,10 @@ namespace TYLDDB
 
                     // 将 key-value 对存储到缓存
                     stlCharDictionary.Set(key, value);
+                    cdCharDictionary.Set(key, value);
                 }
             }
-            void StlBool()
+            void Bool()
             {
                 var dict = DataParser_V1.ParseBoolean(_databaseContent);
 
@@ -315,8 +145,40 @@ namespace TYLDDB
 
                     // 将 key-value 对存储到缓存
                     stlBooleanDictionary.Set(key, value);
+                    cdBooleanDictionary.Set(key, value);
                 }
             }
+            #endregion
+
+            Thread _str = new Thread(String);
+            Thread _short = new Thread(Short);
+            Thread _long = new Thread(Long);
+            Thread _float = new Thread(Float);
+            Thread _double = new Thread(Double);
+            Thread _decimal = new Thread(Decimal);
+            Thread _char = new Thread(Char);
+            Thread _int = new Thread(Int);
+            Thread _bool = new Thread(Bool);
+
+            _str.Start();
+            _short.Start();
+            _long.Start();
+            _float.Start();
+            _double.Start();
+            _decimal.Start();
+            _char.Start();
+            _int.Start();
+            _bool.Start();
+
+            _str.Join();
+            _short.Join();
+            _long.Join();
+            _float.Join();
+            _double.Join();
+            _decimal.Join();
+            _char.Join();
+            _int.Join();
+            _bool.Join();
         }
 
         /// <summary>
