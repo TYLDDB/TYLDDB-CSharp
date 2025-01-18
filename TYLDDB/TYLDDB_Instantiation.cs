@@ -2,6 +2,10 @@
 using TYLDDB.Utils.FastCache.ConcurrentDictionary;
 using TYLDDB.Utils.FastCache.SemaphoreThreadLock;
 
+#if NET8_0_OR_GREATER
+using TYLDDB.Utils.FastCache.TDCache;
+#endif
+
 namespace TYLDDB
 {
     public partial class LDDB
@@ -40,6 +44,10 @@ namespace TYLDDB
             stlCharDictionary = new StlCharDictionary();
             stlBooleanDictionary = new StlBooleanDictionary();
             #endregion
+
+#if NET8_0_OR_GREATER
+            tripleDictionaryCache = new TripleDictionaryCache();
+#endif
         }
 
         /// <summary>
@@ -107,6 +115,9 @@ namespace TYLDDB
                     #endregion
                     break;
                 case CacheMode.TripleDictionaryCache:
+#if NET8_0_OR_GREATER
+                    tripleDictionaryCache = new TripleDictionaryCache();
+#endif
                     break;
             }
         }
@@ -140,6 +151,10 @@ namespace TYLDDB
             stlCharDictionary = new StlCharDictionary();
             stlBooleanDictionary = new StlBooleanDictionary();
             #endregion
+
+#if NET8_0_OR_GREATER
+            tripleDictionaryCache = new TripleDictionaryCache();
+#endif
 
             switch (process)
             {
@@ -212,6 +227,9 @@ namespace TYLDDB
                     #endregion
                     break;
                 case CacheMode.TripleDictionaryCache:
+#if NET8_0_OR_GREATER
+                    tripleDictionaryCache = new TripleDictionaryCache();
+#endif
                     break;
             }
 

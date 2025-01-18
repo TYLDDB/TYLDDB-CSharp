@@ -21,6 +21,8 @@ CdAllTypeSearch();
 
 StlAllTypeSearch();
 
+TripleDictionaryTest();
+
 
 ExportTestData();
 Console.ReadLine();
@@ -124,6 +126,15 @@ void StlAllTypeSearch()
     }
     WriteTime("信号量线程锁词典数据库全类型搜寻: ", allTypeSearchFromSemaphoreThreadLockTimer.ElapsedMilliseconds());
     #endregion
+}
+
+void TripleDictionaryTest()
+{
+    HighPrecisionTimer parse = new();
+    parse.Start();
+    lddb.TripleDictParse();
+    parse.Stop();
+    WriteTime("三值字典解析并写入(同步): ", parse.ElapsedMilliseconds());
 }
 #endregion
 

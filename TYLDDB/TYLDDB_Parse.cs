@@ -1,6 +1,10 @@
 ﻿using System.Threading.Tasks;
 using TYLDDB.Parser;
 
+#if NET8_0_OR_GREATER
+using System.Threading;
+#endif
+
 namespace TYLDDB
 {
     public partial class LDDB
@@ -57,7 +61,7 @@ namespace TYLDDB
                                stlCharCacheTask,
                                stlBoolCacheTask);
 
-            // ConcurrentDictionary
+            #region ConcurrentDictionary
             void CdString()
             {
                 var dict = DataParser_V1.ParseString(_databaseContent);
@@ -184,6 +188,7 @@ namespace TYLDDB
                     cdBooleanDictionary.Set(key, value);
                 }
             }
+            #endregion
 
             // SemaphoreThreadLock
             void StlString()
@@ -620,5 +625,182 @@ namespace TYLDDB
                 }
             }
         }
+
+#if NET8_0_OR_GREATER
+        // 三值字典操作
+        /// <summary>
+        /// Parses the database and writes to the three-value dictionary cache.<br />
+        /// 解析数据库并写入三值字典缓存。
+        /// </summary>
+        public void TripleDictParse()
+        {
+            #region 各数据类型字典
+            var _str = DataParser_V1.ParseString(_databaseContent);
+            var _short = DataParser_V1.ParseShort(_databaseContent);
+            var _long = DataParser_V1.ParseLong(_databaseContent);
+            var _int = DataParser_V1.ParseInt(_databaseContent);
+            var _float = DataParser_V1.ParseFloat(_databaseContent);
+            var _double = DataParser_V1.ParseDouble(_databaseContent);
+            var _decimal = DataParser_V1.ParseDecimal(_databaseContent);
+            var _char = DataParser_V1.ParseChar(_databaseContent);
+            var _bool = DataParser_V1.ParseBoolean(_databaseContent);
+            #endregion
+
+            #region 方法
+            void Str()
+            {
+                // 遍历 dict 中的每一项
+                foreach (var kvp in _str)
+                {
+                    var key = kvp.Key;   // 获取第一个值 (key)
+                    var value = kvp.Value;  // 获取第二个值 (value)
+
+                    // 将 key-value 对存储到缓存
+                    tripleDictionaryCache.Set("string", key, value);
+                }
+            }
+
+            void Short()
+            {
+                // 遍历 dict 中的每一项
+                foreach (var kvp in _short)
+                {
+                    var key = kvp.Key;   // 获取第一个值 (key)
+                    var value = kvp.Value;  // 获取第二个值 (value)
+
+                    // 将 key-value 对存储到缓存
+                    tripleDictionaryCache.Set("short", key, value);
+                }
+            }
+
+            void Long()
+            {
+                // 遍历 dict 中的每一项
+                foreach (var kvp in _long)
+                {
+                    var key = kvp.Key;   // 获取第一个值 (key)
+                    var value = kvp.Value;  // 获取第二个值 (value)
+
+                    // 将 key-value 对存储到缓存
+                    tripleDictionaryCache.Set("long", key, value);
+                }
+            }
+
+            void Int()
+            {
+                // 遍历 dict 中的每一项
+                foreach (var kvp in _int)
+                {
+                    var key = kvp.Key;   // 获取第一个值 (key)
+                    var value = kvp.Value;  // 获取第二个值 (value)
+
+                    // 将 key-value 对存储到缓存
+                    tripleDictionaryCache.Set("int", key, value);
+                }
+            }
+
+            void Float()
+            {
+                // 遍历 dict 中的每一项
+                foreach (var kvp in _float)
+                {
+                    var key = kvp.Key;   // 获取第一个值 (key)
+                    var value = kvp.Value;  // 获取第二个值 (value)
+
+                    // 将 key-value 对存储到缓存
+                    tripleDictionaryCache.Set("float", key, value);
+                }
+            }
+
+            void Double()
+            {
+                // 遍历 dict 中的每一项
+                foreach (var kvp in _double)
+                {
+                    var key = kvp.Key;   // 获取第一个值 (key)
+                    var value = kvp.Value;  // 获取第二个值 (value)
+
+                    // 将 key-value 对存储到缓存
+                    tripleDictionaryCache.Set("double", key, value);
+                }
+            }
+
+            void Decimal()
+            {
+                // 遍历 dict 中的每一项
+                foreach (var kvp in _decimal)
+                {
+                    var key = kvp.Key;   // 获取第一个值 (key)
+                    var value = kvp.Value;  // 获取第二个值 (value)
+
+                    // 将 key-value 对存储到缓存
+                    tripleDictionaryCache.Set("decimal", key, value);
+                }
+            }
+
+            void Char()
+            {
+                // 遍历 dict 中的每一项
+                foreach (var kvp in _char)
+                {
+                    var key = kvp.Key;   // 获取第一个值 (key)
+                    var value = kvp.Value;  // 获取第二个值 (value)
+
+                    // 将 key-value 对存储到缓存
+                    tripleDictionaryCache.Set("char", key, value);
+                }
+            }
+
+            void Bool()
+            {
+                // 遍历 dict 中的每一项
+                foreach (var kvp in _bool)
+                {
+                    var key = kvp.Key;   // 获取第一个值 (key)
+                    var value = kvp.Value;  // 获取第二个值 (value)
+
+                    // 将 key-value 对存储到缓存
+                    tripleDictionaryCache.Set("bool", key, value);
+                }
+            }
+            #endregion
+
+            #region 线程
+            #region 创建线程实例
+            Thread strThread = new(Str);
+            Thread shortThread = new(Short);
+            Thread longThread = new(Long);
+            Thread floatThread = new(Float);
+            Thread doubleThread = new(Double);
+            Thread decimalThread = new(Decimal);
+            Thread charThread = new(Char);
+            Thread intThread = new(Int);
+            Thread boolThread = new(Bool);
+            #endregion
+            #region 启动线程
+            strThread.Start();
+            shortThread.Start();
+            longThread.Start();
+            floatThread.Start();
+            doubleThread.Start();
+            decimalThread.Start();
+            charThread.Start();
+            intThread.Start();
+            boolThread.Start();
+            #endregion
+            #region 等待线程执行完毕
+            strThread.Join();
+            shortThread.Join();
+            longThread.Join();
+            floatThread.Join();
+            doubleThread.Join();
+            decimalThread.Join();
+            charThread.Join();
+            intThread.Join();
+            boolThread.Join();
+            #endregion
+            #endregion
+        }
+#endif
     }
 }
