@@ -90,7 +90,7 @@ class Test
         #endregion
     }
 
-    async void ParseDatabaseToTemp()
+    void ParseDatabaseToTemp()
     {
         #region 数据库解析缓存
         HighPrecisionTimer parseDbTimer = new();
@@ -100,7 +100,7 @@ class Test
         WriteTime("解析文件并写入缓存V1(同步): ", parseDbTimer.ElapsedMilliseconds());
         HighPrecisionTimer parseDbTimerAsync = new();
         parseDbTimerAsync.Start();
-        await lddb.ParseAsync_V1();
+        lddb.ParseAsync_V1();
         parseDbTimerAsync.Stop();
         WriteTime("解析文件并写入缓存V1(异步): ", parseDbTimerAsync.ElapsedMilliseconds());
         #endregion
