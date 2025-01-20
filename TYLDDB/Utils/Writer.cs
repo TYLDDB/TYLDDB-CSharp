@@ -19,7 +19,7 @@ namespace TYLDDB.Utils
     /// </summary>
     public readonly struct Writer
     {
-        private static readonly int bufferSize = 64 * 1024; // 64KB 缓冲区
+        private const int bufferSize = 64 * 1024; // 64KB 缓冲区
 
         private static int offset = 0;
 

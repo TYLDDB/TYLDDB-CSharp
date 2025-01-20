@@ -9,7 +9,7 @@ namespace TYLDDB.Utils.Database
         public List<string> GetDatabaseList(string fileContent)
         {
             // 正则表达式：排除 internaldb 和 distributeddb，同时匹配符合规则的数据库名称
-            string pattern = @"(?!internaldb$|distributeddb$)[a-zA-Z0-9_]+(?=::\{)";
+            const string pattern = @"(?!internaldb$|distributeddb$)[a-zA-Z0-9_]+(?=::\{)";
 
             // 使用正则表达式提取所有数据库名称
             MatchCollection matches = Regex.Matches(fileContent, pattern);
