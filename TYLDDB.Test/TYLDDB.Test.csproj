@@ -10,7 +10,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TimeRecord\TimeRecord.csproj" />
+    <PackageReference Include="QingYi.Core" Version="5.2.0-pre4o" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\TYLDDB\TYLDDB.csproj" />
   </ItemGroup>
 
