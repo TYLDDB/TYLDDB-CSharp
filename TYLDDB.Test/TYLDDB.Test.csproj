@@ -10,6 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ComputerInformation\ComputerInformation.csproj" />
     <ProjectReference Include="..\TimeRecord\TimeRecord.csproj" />
     <ProjectReference Include="..\TYLDDB\TYLDDB.csproj" />
   </ItemGroup>

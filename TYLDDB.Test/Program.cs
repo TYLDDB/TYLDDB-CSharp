@@ -1,14 +1,34 @@
-﻿using TimeRecord;
+﻿using ComputerInformation;
+using TimeRecord;
 using TYLDDB;
 
 internal class Program
 {
     private static void Main()
     {
-        Test test = new();
+        InitTemp();
+
+        var test = new Test();
         test.TestMethod();
     }
-    
+
+    private static void InitTemp()
+    {
+        // 获取当前程序所在目录
+        string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+
+        // 创建一个用于缓存的子文件夹路径，例如 "temp"
+        string tempDirectory = Path.Combine(baseDirectory, "temp");
+
+        // 确保该目录存在，如果不存在则创建
+        if (!Directory.Exists(tempDirectory))
+        {
+            Directory.CreateDirectory(tempDirectory);
+        }
+
+        // 设置当前进程的 JIT 缓存目录 (只影响当前进程)
+        Environment.SetEnvironmentVariable("CORECLR_JIT_CACHE", tempDirectory, EnvironmentVariableTarget.Process);
+    }
 }
 
 class Test
@@ -19,6 +39,12 @@ class Test
 
     public void TestMethod()
     {
+        testData.Add($"Computer Id: {GetInfo.SystemInfoHash()}\n");
+
+        testData.Add($"CPU: {GetInfo.GetCpuModel()} {GetInfo.GetCpuCoreCount()}");
+
+        testData.Add($"Memory: {GetInfo.GetTotalMemory()} {GetInfo.GetMemoryFrequency()}");
+
         ReadFile();
 
         ReadDatabase();
@@ -160,7 +186,7 @@ class Test
     private void ExportTestData()
     {
         // 获取当前日期和时间，格式化为 "yyyy-MM-dd HH-mm"
-        string fileName = DateTime.Now.ToString("yyyy-MM-dd HH-mm") + ".txt";
+        string fileName = DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss") + ".txt";
 
         // 指定文件路径
         string directoryPath = "./testdata/";
