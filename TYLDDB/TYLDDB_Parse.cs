@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using TYLDDB.Parser;
 using System.Threading;
+using System;
 
 namespace TYLDDB
 {
@@ -530,306 +531,500 @@ namespace TYLDDB
         /// Reparse the entire database.<br />
         /// 重新解析整个数据库。
         /// </summary>
-        public async Task ParseAsync_V1()
+        public void ParseAsync_V1()
         {
-            // 创建多个任务，并使用 LongRunning 来确保每个任务在独立线程中运行
-
-            // ConcurrentDictionary
-            Task cdStringCacheTask = Task.Factory.StartNew(() => CdString(), TaskCreationOptions.LongRunning);
-            Task cdIntCacheTask = Task.Factory.StartNew(() => CdInt(), TaskCreationOptions.LongRunning);
-            Task cdShortCacheTask = Task.Factory.StartNew(() => CdShort(), TaskCreationOptions.LongRunning);
-            Task cdLongCacheTask = Task.Factory.StartNew(() => CdLong(), TaskCreationOptions.LongRunning);
-            Task cdFloatCacheTask = Task.Factory.StartNew(() => CdFloat(), TaskCreationOptions.LongRunning);
-            Task cdDoubleCacheTask = Task.Factory.StartNew(() => CdDouble(), TaskCreationOptions.LongRunning);
-            Task cdDecimalCacheTask = Task.Factory.StartNew(() => CdDecimal(), TaskCreationOptions.LongRunning);
-            Task cdCharCacheTask = Task.Factory.StartNew(() => CdChar(), TaskCreationOptions.LongRunning);
-            Task cdBoolCacheTask = Task.Factory.StartNew(() => CdBool(), TaskCreationOptions.LongRunning);
-
-            // SemaphoreThreadLock
-            Task stlStringCacheTask = Task.Factory.StartNew(() => StlString(), TaskCreationOptions.LongRunning);
-            Task stlIntCacheTask = Task.Factory.StartNew(() => StlInt(), TaskCreationOptions.LongRunning);
-            Task stlShortCacheTask = Task.Factory.StartNew(() => StlShort(), TaskCreationOptions.LongRunning);
-            Task stlLongCacheTask = Task.Factory.StartNew(() => StlLong(), TaskCreationOptions.LongRunning);
-            Task stlFloatCacheTask = Task.Factory.StartNew(() => StlFloat(), TaskCreationOptions.LongRunning);
-            Task stlDoubleCacheTask = Task.Factory.StartNew(() => StlDouble(), TaskCreationOptions.LongRunning);
-            Task stlDecimalCacheTask = Task.Factory.StartNew(() => StlDecimal(), TaskCreationOptions.LongRunning);
-            Task stlCharCacheTask = Task.Factory.StartNew(() => StlChar(), TaskCreationOptions.LongRunning);
-            Task stlBoolCacheTask = Task.Factory.StartNew(() => StlBool(), TaskCreationOptions.LongRunning);
-
-            // 等待所有任务完成
-            await Task.WhenAll(cdStringCacheTask,
-                               cdIntCacheTask,
-                               cdShortCacheTask,
-                               cdLongCacheTask,
-                               cdFloatCacheTask,
-                               cdDoubleCacheTask,
-                               cdDecimalCacheTask,
-                               cdCharCacheTask,
-                               cdBoolCacheTask,
-                               stlStringCacheTask,
-                               stlIntCacheTask,
-                               stlShortCacheTask,
-                               stlLongCacheTask,
-                               stlFloatCacheTask,
-                               stlDoubleCacheTask,
-                               stlDecimalCacheTask,
-                               stlCharCacheTask,
-                               stlBoolCacheTask);
-
-            // ConcurrentDictionary
-            async void CdString()
+            switch (_cacheMode)
             {
-                var dict = DataParser_V1.ParseString(_databaseContent);
-
-                // 遍历 dict 中的每一项
-                foreach (var kvp in dict)
-                {
-                    var key = kvp.Key;   // 获取第一个值 (key)
-                    var value = kvp.Value;  // 获取第二个值 (value)
-
-                    // 将 key-value 对存储到缓存
-                    await cdStringDictionary.SetAsync(key, value);
-                }
+                case CacheMode.CDAndSTL:
+                    CDAndSTL();
+                    break;
+                case CacheMode.SemaphoreThreadLock:
+                    SemaphoreThreadLock();
+                    break;
+                case CacheMode.ConcurrentDictionary:
+                    ConcurrentDictionary();
+                    break;
+#if NET8_0_OR_GREATER
+                case CacheMode.TripleDictionaryCache:
+                    throw new NotSupportedException("Three-value dictionaries do not yet support asynchronous methods.");
+                    // break;
+#endif
             }
-            async void CdShort()
+            async void CDAndSTL()
             {
-                var dict = DataParser_V1.ParseShort(_databaseContent);
+                #region tasks
+                // 创建多个任务，并使用 LongRunning 来确保每个任务在独立线程中运行
+                Task StringCacheTask = Task.Factory.StartNew(() => String(), TaskCreationOptions.LongRunning);
+                Task IntCacheTask = Task.Factory.StartNew(() => Int(), TaskCreationOptions.LongRunning);
+                Task ShortCacheTask = Task.Factory.StartNew(() => Short(), TaskCreationOptions.LongRunning);
+                Task LongCacheTask = Task.Factory.StartNew(() => Long(), TaskCreationOptions.LongRunning);
+                Task FloatCacheTask = Task.Factory.StartNew(() => Float(), TaskCreationOptions.LongRunning);
+                Task DoubleCacheTask = Task.Factory.StartNew(() => Double(), TaskCreationOptions.LongRunning);
+                Task DecimalCacheTask = Task.Factory.StartNew(() => Decimal(), TaskCreationOptions.LongRunning);
+                Task CharCacheTask = Task.Factory.StartNew(() => Char(), TaskCreationOptions.LongRunning);
+                Task BoolCacheTask = Task.Factory.StartNew(() => Bool(), TaskCreationOptions.LongRunning);
 
-                // 遍历 dict 中的每一项
-                foreach (var kvp in dict)
+                // 等待所有任务完成
+                await Task.WhenAll(StringCacheTask,
+                                   IntCacheTask,
+                                   ShortCacheTask,
+                                   LongCacheTask,
+                                   FloatCacheTask,
+                                   DoubleCacheTask,
+                                   DecimalCacheTask,
+                                   CharCacheTask,
+                                   BoolCacheTask);
+                #endregion
+
+                #region method
+                void String()
                 {
-                    var key = kvp.Key;   // 获取第一个值 (key)
-                    var value = kvp.Value;  // 获取第二个值 (value)
+                    var dict = DataParser_V1.ParseString(_databaseContent);
 
-                    // 将 key-value 对存储到缓存
-                    await cdShortDictionary.SetAsync(key, value);
+                    // 遍历 dict 中的每一项
+                    foreach (var kvp in dict)
+                    {
+                        var key = kvp.Key;   // 获取第一个值 (key)
+                        var value = kvp.Value;  // 获取第二个值 (value)
+
+                        // 将 key-value 对存储到缓存
+                        stlStringDictionary.Set(key, value);
+                        cdStringDictionary.Set(key, value);
+                    }
                 }
+                void Short()
+                {
+                    var dict = DataParser_V1.ParseShort(_databaseContent);
+
+                    // 遍历 dict 中的每一项
+                    foreach (var kvp in dict)
+                    {
+                        var key = kvp.Key;   // 获取第一个值 (key)
+                        var value = kvp.Value;  // 获取第二个值 (value)
+
+                        // 将 key-value 对存储到缓存
+                        stlShortDictionary.Set(key, value);
+                        cdShortDictionary.Set(key, value);
+                    }
+                }
+                void Long()
+                {
+                    var dict = DataParser_V1.ParseLong(_databaseContent);
+
+                    // 遍历 dict 中的每一项
+                    foreach (var kvp in dict)
+                    {
+                        var key = kvp.Key;   // 获取第一个值 (key)
+                        var value = kvp.Value;  // 获取第二个值 (value)
+
+                        // 将 key-value 对存储到缓存
+                        stlLongDictionary.Set(key, value);
+                        cdLongDictionary.Set(key, value);
+                    }
+                }
+                void Int()
+                {
+                    var dict = DataParser_V1.ParseInt(_databaseContent);
+
+                    // 遍历 dict 中的每一项
+                    foreach (var kvp in dict)
+                    {
+                        var key = kvp.Key;   // 获取第一个值 (key)
+                        var value = kvp.Value;  // 获取第二个值 (value)
+
+                        // 将 key-value 对存储到缓存
+                        stlIntegerDictionary.Set(key, value);
+                        cdIntegerDictionary.Set(key, value);
+                    }
+                }
+                void Float()
+                {
+                    var dict = DataParser_V1.ParseFloat(_databaseContent);
+
+                    // 遍历 dict 中的每一项
+                    foreach (var kvp in dict)
+                    {
+                        var key = kvp.Key;   // 获取第一个值 (key)
+                        var value = kvp.Value;  // 获取第二个值 (value)
+
+                        // 将 key-value 对存储到缓存
+                        stlFloatDictionary.Set(key, value);
+                        cdFloatDictionary.Set(key, value);
+                    }
+                }
+                void Double()
+                {
+                    var dict = DataParser_V1.ParseDouble(_databaseContent);
+
+                    // 遍历 dict 中的每一项
+                    foreach (var kvp in dict)
+                    {
+                        var key = kvp.Key;   // 获取第一个值 (key)
+                        var value = kvp.Value;  // 获取第二个值 (value)
+
+                        // 将 key-value 对存储到缓存
+                        stlDoubleDictionary.Set(key, value);
+                        cdDoubleDictionary.Set(key, value);
+                    }
+                }
+                void Decimal()
+                {
+                    var dict = DataParser_V1.ParseDecimal(_databaseContent);
+
+                    // 遍历 dict 中的每一项
+                    foreach (var kvp in dict)
+                    {
+                        var key = kvp.Key;   // 获取第一个值 (key)
+                        var value = kvp.Value;  // 获取第二个值 (value)
+
+                        // 将 key-value 对存储到缓存
+                        stlDecimalDictionary.Set(key, value);
+                        cdDecimalDictionary.Set(key, value);
+                    }
+                }
+                void Char()
+                {
+                    var dict = DataParser_V1.ParseChar(_databaseContent);
+
+                    // 遍历 dict 中的每一项
+                    foreach (var kvp in dict)
+                    {
+                        var key = kvp.Key;   // 获取第一个值 (key)
+                        var value = kvp.Value;  // 获取第二个值 (value)
+
+                        // 将 key-value 对存储到缓存
+                        stlCharDictionary.Set(key, value);
+                        cdCharDictionary.Set(key, value);
+                    }
+                }
+                void Bool()
+                {
+                    var dict = DataParser_V1.ParseBoolean(_databaseContent);
+
+                    // 遍历 dict 中的每一项
+                    foreach (var kvp in dict)
+                    {
+                        var key = kvp.Key;   // 获取第一个值 (key)
+                        var value = kvp.Value;  // 获取第二个值 (value)
+
+                        // 将 key-value 对存储到缓存
+                        stlBooleanDictionary.Set(key, value);
+                        cdBooleanDictionary.Set(key, value);
+                    }
+                }
+                #endregion
             }
-            async void CdLong()
+
+            async void SemaphoreThreadLock()
             {
-                var dict = DataParser_V1.ParseLong(_databaseContent);
+                #region tasks
+                // 创建多个任务，并使用 LongRunning 来确保每个任务在独立线程中运行
+                Task StringCacheTask = Task.Factory.StartNew(() => String(), TaskCreationOptions.LongRunning);
+                Task IntCacheTask = Task.Factory.StartNew(() => Int(), TaskCreationOptions.LongRunning);
+                Task ShortCacheTask = Task.Factory.StartNew(() => Short(), TaskCreationOptions.LongRunning);
+                Task LongCacheTask = Task.Factory.StartNew(() => Long(), TaskCreationOptions.LongRunning);
+                Task FloatCacheTask = Task.Factory.StartNew(() => Float(), TaskCreationOptions.LongRunning);
+                Task DoubleCacheTask = Task.Factory.StartNew(() => Double(), TaskCreationOptions.LongRunning);
+                Task DecimalCacheTask = Task.Factory.StartNew(() => Decimal(), TaskCreationOptions.LongRunning);
+                Task CharCacheTask = Task.Factory.StartNew(() => Char(), TaskCreationOptions.LongRunning);
+                Task BoolCacheTask = Task.Factory.StartNew(() => Bool(), TaskCreationOptions.LongRunning);
 
-                // 遍历 dict 中的每一项
-                foreach (var kvp in dict)
+                // 等待所有任务完成
+                await Task.WhenAll(StringCacheTask,
+                                   IntCacheTask,
+                                   ShortCacheTask,
+                                   LongCacheTask,
+                                   FloatCacheTask,
+                                   DoubleCacheTask,
+                                   DecimalCacheTask,
+                                   CharCacheTask,
+                                   BoolCacheTask);
+                #endregion
+
+                #region method
+                void String()
                 {
-                    var key = kvp.Key;   // 获取第一个值 (key)
-                    var value = kvp.Value;  // 获取第二个值 (value)
+                    var dict = DataParser_V1.ParseString(_databaseContent);
 
-                    // 将 key-value 对存储到缓存
-                    await cdLongDictionary.SetAsync(key, value);
+                    // 遍历 dict 中的每一项
+                    foreach (var kvp in dict)
+                    {
+                        var key = kvp.Key;   // 获取第一个值 (key)
+                        var value = kvp.Value;  // 获取第二个值 (value)
+
+                        // 将 key-value 对存储到缓存
+                        stlStringDictionary.Set(key, value);
+                    }
                 }
+                void Short()
+                {
+                    var dict = DataParser_V1.ParseShort(_databaseContent);
+
+                    // 遍历 dict 中的每一项
+                    foreach (var kvp in dict)
+                    {
+                        var key = kvp.Key;   // 获取第一个值 (key)
+                        var value = kvp.Value;  // 获取第二个值 (value)
+
+                        // 将 key-value 对存储到缓存
+                        stlShortDictionary.Set(key, value);
+                    }
+                }
+                void Long()
+                {
+                    var dict = DataParser_V1.ParseLong(_databaseContent);
+
+                    // 遍历 dict 中的每一项
+                    foreach (var kvp in dict)
+                    {
+                        var key = kvp.Key;   // 获取第一个值 (key)
+                        var value = kvp.Value;  // 获取第二个值 (value)
+
+                        // 将 key-value 对存储到缓存
+                        stlLongDictionary.Set(key, value);
+                    }
+                }
+                void Int()
+                {
+                    var dict = DataParser_V1.ParseInt(_databaseContent);
+
+                    // 遍历 dict 中的每一项
+                    foreach (var kvp in dict)
+                    {
+                        var key = kvp.Key;   // 获取第一个值 (key)
+                        var value = kvp.Value;  // 获取第二个值 (value)
+
+                        // 将 key-value 对存储到缓存
+                        stlIntegerDictionary.Set(key, value);
+                    }
+                }
+                void Float()
+                {
+                    var dict = DataParser_V1.ParseFloat(_databaseContent);
+
+                    // 遍历 dict 中的每一项
+                    foreach (var kvp in dict)
+                    {
+                        var key = kvp.Key;   // 获取第一个值 (key)
+                        var value = kvp.Value;  // 获取第二个值 (value)
+
+                        // 将 key-value 对存储到缓存
+                        stlFloatDictionary.Set(key, value);
+                    }
+                }
+                void Double()
+                {
+                    var dict = DataParser_V1.ParseDouble(_databaseContent);
+
+                    // 遍历 dict 中的每一项
+                    foreach (var kvp in dict)
+                    {
+                        var key = kvp.Key;   // 获取第一个值 (key)
+                        var value = kvp.Value;  // 获取第二个值 (value)
+
+                        // 将 key-value 对存储到缓存
+                        stlDoubleDictionary.Set(key, value);
+                    }
+                }
+                void Decimal()
+                {
+                    var dict = DataParser_V1.ParseDecimal(_databaseContent);
+
+                    // 遍历 dict 中的每一项
+                    foreach (var kvp in dict)
+                    {
+                        var key = kvp.Key;   // 获取第一个值 (key)
+                        var value = kvp.Value;  // 获取第二个值 (value)
+
+                        // 将 key-value 对存储到缓存
+                        stlDecimalDictionary.Set(key, value);
+                    }
+                }
+                void Char()
+                {
+                    var dict = DataParser_V1.ParseChar(_databaseContent);
+
+                    // 遍历 dict 中的每一项
+                    foreach (var kvp in dict)
+                    {
+                        var key = kvp.Key;   // 获取第一个值 (key)
+                        var value = kvp.Value;  // 获取第二个值 (value)
+
+                        // 将 key-value 对存储到缓存
+                        stlCharDictionary.Set(key, value);
+                    }
+                }
+                void Bool()
+                {
+                    var dict = DataParser_V1.ParseBoolean(_databaseContent);
+
+                    // 遍历 dict 中的每一项
+                    foreach (var kvp in dict)
+                    {
+                        var key = kvp.Key;   // 获取第一个值 (key)
+                        var value = kvp.Value;  // 获取第二个值 (value)
+
+                        // 将 key-value 对存储到缓存
+                        stlBooleanDictionary.Set(key, value);
+                    }
+                }
+                #endregion
             }
-            async void CdInt()
+
+            async void ConcurrentDictionary()
             {
-                var dict = DataParser_V1.ParseInt(_databaseContent);
+                #region tasks
+                // 创建多个任务，并使用 LongRunning 来确保每个任务在独立线程中运行
+                Task StringCacheTask = Task.Factory.StartNew(() => String(), TaskCreationOptions.LongRunning);
+                Task IntCacheTask = Task.Factory.StartNew(() => Int(), TaskCreationOptions.LongRunning);
+                Task ShortCacheTask = Task.Factory.StartNew(() => Short(), TaskCreationOptions.LongRunning);
+                Task LongCacheTask = Task.Factory.StartNew(() => Long(), TaskCreationOptions.LongRunning);
+                Task FloatCacheTask = Task.Factory.StartNew(() => Float(), TaskCreationOptions.LongRunning);
+                Task DoubleCacheTask = Task.Factory.StartNew(() => Double(), TaskCreationOptions.LongRunning);
+                Task DecimalCacheTask = Task.Factory.StartNew(() => Decimal(), TaskCreationOptions.LongRunning);
+                Task CharCacheTask = Task.Factory.StartNew(() => Char(), TaskCreationOptions.LongRunning);
+                Task BoolCacheTask = Task.Factory.StartNew(() => Bool(), TaskCreationOptions.LongRunning);
 
-                // 遍历 dict 中的每一项
-                foreach (var kvp in dict)
+                // 等待所有任务完成
+                await Task.WhenAll(StringCacheTask,
+                                   IntCacheTask,
+                                   ShortCacheTask,
+                                   LongCacheTask,
+                                   FloatCacheTask,
+                                   DoubleCacheTask,
+                                   DecimalCacheTask,
+                                   CharCacheTask,
+                                   BoolCacheTask);
+                #endregion
+
+                #region method
+                void String()
                 {
-                    var key = kvp.Key;   // 获取第一个值 (key)
-                    var value = kvp.Value;  // 获取第二个值 (value)
+                    var dict = DataParser_V1.ParseString(_databaseContent);
 
-                    // 将 key-value 对存储到缓存
-                    await cdIntegerDictionary.SetAsync(key, value);
+                    // 遍历 dict 中的每一项
+                    foreach (var kvp in dict)
+                    {
+                        var key = kvp.Key;   // 获取第一个值 (key)
+                        var value = kvp.Value;  // 获取第二个值 (value)
+
+                        // 将 key-value 对存储到缓存
+                        cdStringDictionary.Set(key, value);
+                    }
                 }
-            }
-            async void CdFloat()
-            {
-                var dict = DataParser_V1.ParseFloat(_databaseContent);
-
-                // 遍历 dict 中的每一项
-                foreach (var kvp in dict)
+                void Short()
                 {
-                    var key = kvp.Key;   // 获取第一个值 (key)
-                    var value = kvp.Value;  // 获取第二个值 (value)
+                    var dict = DataParser_V1.ParseShort(_databaseContent);
 
-                    // 将 key-value 对存储到缓存
-                    await cdFloatDictionary.SetAsync(key, value);
+                    // 遍历 dict 中的每一项
+                    foreach (var kvp in dict)
+                    {
+                        var key = kvp.Key;   // 获取第一个值 (key)
+                        var value = kvp.Value;  // 获取第二个值 (value)
+
+                        // 将 key-value 对存储到缓存
+                        cdShortDictionary.Set(key, value);
+                    }
                 }
-            }
-            async void CdDouble()
-            {
-                var dict = DataParser_V1.ParseDouble(_databaseContent);
-
-                // 遍历 dict 中的每一项
-                foreach (var kvp in dict)
+                void Long()
                 {
-                    var key = kvp.Key;   // 获取第一个值 (key)
-                    var value = kvp.Value;  // 获取第二个值 (value)
+                    var dict = DataParser_V1.ParseLong(_databaseContent);
 
-                    // 将 key-value 对存储到缓存
-                    await cdDoubleDictionary.SetAsync(key, value);
+                    // 遍历 dict 中的每一项
+                    foreach (var kvp in dict)
+                    {
+                        var key = kvp.Key;   // 获取第一个值 (key)
+                        var value = kvp.Value;  // 获取第二个值 (value)
+
+                        // 将 key-value 对存储到缓存
+                        cdLongDictionary.Set(key, value);
+                    }
                 }
-            }
-            async void CdDecimal()
-            {
-                var dict = DataParser_V1.ParseDecimal(_databaseContent);
-
-                // 遍历 dict 中的每一项
-                foreach (var kvp in dict)
+                void Int()
                 {
-                    var key = kvp.Key;   // 获取第一个值 (key)
-                    var value = kvp.Value;  // 获取第二个值 (value)
+                    var dict = DataParser_V1.ParseInt(_databaseContent);
 
-                    // 将 key-value 对存储到缓存
-                    await cdDecimalDictionary.SetAsync(key, value);
+                    // 遍历 dict 中的每一项
+                    foreach (var kvp in dict)
+                    {
+                        var key = kvp.Key;   // 获取第一个值 (key)
+                        var value = kvp.Value;  // 获取第二个值 (value)
+
+                        // 将 key-value 对存储到缓存
+                        cdIntegerDictionary.Set(key, value);
+                    }
                 }
-            }
-            async void CdChar()
-            {
-                var dict = DataParser_V1.ParseChar(_databaseContent);
-
-                // 遍历 dict 中的每一项
-                foreach (var kvp in dict)
+                void Float()
                 {
-                    var key = kvp.Key;   // 获取第一个值 (key)
-                    var value = kvp.Value;  // 获取第二个值 (value)
+                    var dict = DataParser_V1.ParseFloat(_databaseContent);
 
-                    // 将 key-value 对存储到缓存
-                    await cdCharDictionary.SetAsync(key, value);
+                    // 遍历 dict 中的每一项
+                    foreach (var kvp in dict)
+                    {
+                        var key = kvp.Key;   // 获取第一个值 (key)
+                        var value = kvp.Value;  // 获取第二个值 (value)
+
+                        // 将 key-value 对存储到缓存
+                        cdFloatDictionary.Set(key, value);
+                    }
                 }
-            }
-            async void CdBool()
-            {
-                var dict = DataParser_V1.ParseBoolean(_databaseContent);
-
-                // 遍历 dict 中的每一项
-                foreach (var kvp in dict)
+                void Double()
                 {
-                    var key = kvp.Key;   // 获取第一个值 (key)
-                    var value = kvp.Value;  // 获取第二个值 (value)
+                    var dict = DataParser_V1.ParseDouble(_databaseContent);
 
-                    // 将 key-value 对存储到缓存
-                    await cdBooleanDictionary.SetAsync(key, value);
+                    // 遍历 dict 中的每一项
+                    foreach (var kvp in dict)
+                    {
+                        var key = kvp.Key;   // 获取第一个值 (key)
+                        var value = kvp.Value;  // 获取第二个值 (value)
+
+                        // 将 key-value 对存储到缓存
+                        cdDoubleDictionary.Set(key, value);
+                    }
                 }
-            }
-
-            // SemaphoreThreadLock
-            async void StlString()
-            {
-                var dict = DataParser_V1.ParseString(_databaseContent);
-
-                // 遍历 dict 中的每一项
-                foreach (var kvp in dict)
+                void Decimal()
                 {
-                    var key = kvp.Key;   // 获取第一个值 (key)
-                    var value = kvp.Value;  // 获取第二个值 (value)
+                    var dict = DataParser_V1.ParseDecimal(_databaseContent);
 
-                    // 将 key-value 对存储到缓存
-                    await stlStringDictionary.SetAsync(key, value);
+                    // 遍历 dict 中的每一项
+                    foreach (var kvp in dict)
+                    {
+                        var key = kvp.Key;   // 获取第一个值 (key)
+                        var value = kvp.Value;  // 获取第二个值 (value)
+
+                        // 将 key-value 对存储到缓存
+                        cdDecimalDictionary.Set(key, value);
+                    }
                 }
-            }
-            async void StlShort()
-            {
-                var dict = DataParser_V1.ParseShort(_databaseContent);
-
-                // 遍历 dict 中的每一项
-                foreach (var kvp in dict)
+                void Char()
                 {
-                    var key = kvp.Key;   // 获取第一个值 (key)
-                    var value = kvp.Value;  // 获取第二个值 (value)
+                    var dict = DataParser_V1.ParseChar(_databaseContent);
 
-                    // 将 key-value 对存储到缓存
-                    await stlShortDictionary.SetAsync(key, value);
+                    // 遍历 dict 中的每一项
+                    foreach (var kvp in dict)
+                    {
+                        var key = kvp.Key;   // 获取第一个值 (key)
+                        var value = kvp.Value;  // 获取第二个值 (value)
+
+                        // 将 key-value 对存储到缓存
+                        cdCharDictionary.Set(key, value);
+                    }
                 }
-            }
-            async void StlLong()
-            {
-                var dict = DataParser_V1.ParseLong(_databaseContent);
-
-                // 遍历 dict 中的每一项
-                foreach (var kvp in dict)
+                void Bool()
                 {
-                    var key = kvp.Key;   // 获取第一个值 (key)
-                    var value = kvp.Value;  // 获取第二个值 (value)
+                    var dict = DataParser_V1.ParseBoolean(_databaseContent);
 
-                    // 将 key-value 对存储到缓存
-                    await stlLongDictionary.SetAsync(key, value);
+                    // 遍历 dict 中的每一项
+                    foreach (var kvp in dict)
+                    {
+                        var key = kvp.Key;   // 获取第一个值 (key)
+                        var value = kvp.Value;  // 获取第二个值 (value)
+
+                        // 将 key-value 对存储到缓存
+                        cdBooleanDictionary.Set(key, value);
+                    }
                 }
-            }
-            async void StlInt()
-            {
-                var dict = DataParser_V1.ParseInt(_databaseContent);
-
-                // 遍历 dict 中的每一项
-                foreach (var kvp in dict)
-                {
-                    var key = kvp.Key;   // 获取第一个值 (key)
-                    var value = kvp.Value;  // 获取第二个值 (value)
-
-                    // 将 key-value 对存储到缓存
-                    await stlIntegerDictionary.SetAsync(key, value);
-                }
-            }
-            async void StlFloat()
-            {
-                var dict = DataParser_V1.ParseFloat(_databaseContent);
-
-                // 遍历 dict 中的每一项
-                foreach (var kvp in dict)
-                {
-                    var key = kvp.Key;   // 获取第一个值 (key)
-                    var value = kvp.Value;  // 获取第二个值 (value)
-
-                    // 将 key-value 对存储到缓存
-                    await stlFloatDictionary.SetAsync(key, value);
-                }
-            }
-            async void StlDouble()
-            {
-                var dict = DataParser_V1.ParseDouble(_databaseContent);
-
-                // 遍历 dict 中的每一项
-                foreach (var kvp in dict)
-                {
-                    var key = kvp.Key;   // 获取第一个值 (key)
-                    var value = kvp.Value;  // 获取第二个值 (value)
-
-                    // 将 key-value 对存储到缓存
-                    await stlDoubleDictionary.SetAsync(key, value);
-                }
-            }
-            async void StlDecimal()
-            {
-                var dict = DataParser_V1.ParseDecimal(_databaseContent);
-
-                // 遍历 dict 中的每一项
-                foreach (var kvp in dict)
-                {
-                    var key = kvp.Key;   // 获取第一个值 (key)
-                    var value = kvp.Value;  // 获取第二个值 (value)
-
-                    // 将 key-value 对存储到缓存
-                    await stlDecimalDictionary.SetAsync(key, value);
-                }
-            }
-            async void StlChar()
-            {
-                var dict = DataParser_V1.ParseChar(_databaseContent);
-
-                // 遍历 dict 中的每一项
-                foreach (var kvp in dict)
-                {
-                    var key = kvp.Key;   // 获取第一个值 (key)
-                    var value = kvp.Value;  // 获取第二个值 (value)
-
-                    // 将 key-value 对存储到缓存
-                    await stlCharDictionary.SetAsync(key, value);
-                }
-            }
-            async void StlBool()
-            {
-                var dict = DataParser_V1.ParseBoolean(_databaseContent);
-
-                // 遍历 dict 中的每一项
-                foreach (var kvp in dict)
-                {
-                    var key = kvp.Key;   // 获取第一个值 (key)
-                    var value = kvp.Value;  // 获取第二个值 (value)
-
-                    // 将 key-value 对存储到缓存
-                    await stlBooleanDictionary.SetAsync(key, value);
-                }
+                #endregion
             }
         }
 

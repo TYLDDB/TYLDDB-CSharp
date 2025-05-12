@@ -12,7 +12,7 @@ namespace TYLDDB.Parser
     public class DataParser_V1
     {
         // 定义正则表达式来匹配键值对（类型::"key"="value"）
-        private readonly static string pattern = @"(\w+)\s*::\s*""([^""]+)""\s*=\s*""([^""]+)"";";
+        private const string pattern = @"(\w+)\s*::\s*""([^""]+)""\s*=\s*""([^""]+)"";";
 
         /// <summary>
         /// Parses the given content and finds all matching key-value pairs.<br />
