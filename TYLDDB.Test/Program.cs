@@ -1,11 +1,12 @@
-﻿using QingYi.Core.Timer;
+using QingYi.Core.Timer;
+using ComputerInformation;
 using TYLDDB;
 
 internal class Program
 {
     private static void Main()
     {
-        Test test = new();
+        var test = new Test();
         test.TestMethod();
     }
 }
@@ -18,6 +19,12 @@ class Test
 
     public void TestMethod()
     {
+        testData.Add($"Computer Id: {GetInfo.SystemInfoHash()}\n");
+
+        testData.Add($"CPU: {GetInfo.GetCpuModel()} {GetInfo.GetCpuCoreCount()}");
+
+        testData.Add($"Memory: {GetInfo.GetTotalMemory()} {GetInfo.GetMemoryFrequency()}");
+
         ReadFile();
 
         ReadDatabase();
@@ -89,7 +96,7 @@ class Test
         #endregion
     }
 
-    async void ParseDatabaseToTemp()
+    void ParseDatabaseToTemp()
     {
         #region 数据库解析缓存
         HighPrecisionTimer parseDbTimer = new();
@@ -99,7 +106,7 @@ class Test
         WriteTime("解析文件并写入缓存V1(同步): ", parseDbTimer.GetElapsedMilliseconds());
         HighPrecisionTimer parseDbTimerAsync = new();
         parseDbTimerAsync.Start();
-        await lddb.ParseAsync_V1();
+        lddb.ParseAsync_V1();
         parseDbTimerAsync.Stop();
         WriteTime("解析文件并写入缓存V1(异步): ", parseDbTimerAsync.GetElapsedMilliseconds());
         #endregion
@@ -159,7 +166,7 @@ class Test
     private void ExportTestData()
     {
         // 获取当前日期和时间，格式化为 "yyyy-MM-dd HH-mm"
-        string fileName = DateTime.Now.ToString("yyyy-MM-dd HH-mm") + ".txt";
+        string fileName = DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss") + ".txt";
 
         // 指定文件路径
         string directoryPath = "./testdata/";

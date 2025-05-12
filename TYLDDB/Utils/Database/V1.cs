@@ -4,12 +4,14 @@ using TYLDDB.Basic.Exception;
 
 namespace TYLDDB.Utils.Database
 {
-    internal class Database_V1 : IDatabase
+    internal partial class Database_V1 : IDatabase
     {
+#pragma warning disable IDE0079
+#pragma warning disable SYSLIB1045
         public List<string> GetDatabaseList(string fileContent)
         {
             // 正则表达式：排除 internaldb 和 distributeddb，同时匹配符合规则的数据库名称
-            string pattern = @"(?!internaldb$|distributeddb$)[a-zA-Z0-9_]+(?=::\{)";
+            const string pattern = @"(?!internaldb$|distributeddb$)[a-zA-Z0-9_]+(?=::\{)";
 
             // 使用正则表达式提取所有数据库名称
             MatchCollection matches = Regex.Matches(fileContent, pattern);
@@ -54,6 +56,6 @@ namespace TYLDDB.Utils.Database
                 // 如果未找到匹配项，抛出自定义异常
                 throw new GetDatabaseContentErrorException($"No content found for database '{databaseName}'.");
             }
-        }
+        }        
     }
 }
