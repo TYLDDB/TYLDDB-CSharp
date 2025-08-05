@@ -1,5 +1,5 @@
 using ComputerInformation;
-using TimeRecord;
+using QingYi.Core.Timer;
 using TYLDDB;
 
 internal class Program
@@ -56,6 +56,7 @@ class Test
         ReadFile();
         ReadFile_C_MinGW();
         ReadFile_C_VS();
+        ReadFile_C_MinGW_Asm();
 
         ReadDatabase();
 
@@ -81,7 +82,7 @@ class Test
         readDbTimer.Start();
         lddb.ReadingFile();
         readDbTimer.Stop();
-        WriteTime("从发起读取文件指令到成功读取的总时间为: ", readDbTimer.ElapsedMilliseconds());
+        WriteTime("从发起读取文件指令到成功读取的总时间为: ", readDbTimer.GetElapsedMilliseconds());
     }
 
     private void ReadFile_C_MinGW()
@@ -91,7 +92,7 @@ class Test
         readDbTimer.Start();
         lddb.ReadingFile_C_MinGW();
         readDbTimer.Stop();
-        WriteTime("从发起读取文件指令到成功读取的总时间为(MinGW): ", readDbTimer.ElapsedMilliseconds());
+        WriteTime("从发起读取文件指令到成功读取的总时间为(MinGW): ", readDbTimer.GetElapsedMilliseconds());
     }
 
     private void ReadFile_C_VS()
@@ -101,7 +102,17 @@ class Test
         readDbTimer.Start();
         lddb.ReadingFile_C_VisualStudio();
         readDbTimer.Stop();
-        WriteTime("从发起读取文件指令到成功读取的总时间为(VS): ", readDbTimer.ElapsedMilliseconds());
+        WriteTime("从发起读取文件指令到成功读取的总时间为(VS): ", readDbTimer.GetElapsedMilliseconds());
+    }
+
+    private void ReadFile_C_MinGW_Asm()
+    {
+        HighPrecisionTimer readDbTimer = new(); // 从发起读取文件到成功读取的总时间
+        lddb.FilePath = dbFilePath;
+        readDbTimer.Start();
+        lddb.ReadingFile_C_MinGW_Asm();
+        readDbTimer.Stop();
+        WriteTime("从发起读取文件指令到成功读取的总时间为(MinGW Asm): ", readDbTimer.GetElapsedMilliseconds());
     }
     #endregion
 
@@ -114,14 +125,14 @@ class Test
         lddb.LoadDatabase_V1("database1");
         // Console.WriteLine(lddb.GetLoadingDatabaseContent()); // 输出database1内容
         loadDbTimer.Stop();
-        WriteTime("从发起读取数据库指令到成功返回读取内容的总时间为(V1): ", loadDbTimer.ElapsedMilliseconds());
+        WriteTime("从发起读取数据库指令到成功返回读取内容的总时间为(V1): ", loadDbTimer.GetElapsedMilliseconds());
 
         HighPrecisionTimer loadDbV2Timer = new(); // 从发起读取数据库到成功返回读取内容的总时间
         loadDbV2Timer.Start();
         lddb.LoadDatabase_V2("database1");
         // Console.WriteLine(lddb.GetLoadingDatabaseContent()); // 输出database1内容
         loadDbV2Timer.Stop();
-        WriteTime("从发起读取数据库指令到成功返回读取内容的总时间为(V2): ", loadDbV2Timer.ElapsedMilliseconds());
+        WriteTime("从发起读取数据库指令到成功返回读取内容的总时间为(V2): ", loadDbV2Timer.GetElapsedMilliseconds());
         #endregion
     }
 
@@ -142,7 +153,7 @@ class Test
             }
             */
         }
-        WriteTime("从发起读取数据库名称到成功返回读取内容的总时间为: ", readAllDbNameTimer.ElapsedMilliseconds());
+        WriteTime("从发起读取数据库名称到成功返回读取内容的总时间为: ", readAllDbNameTimer.GetElapsedMilliseconds());
         #endregion
     }
 
@@ -155,14 +166,14 @@ class Test
         lddb.Parse_V1();
 #pragma warning restore CS0612 // 类型或成员已过时
         parseDbTimer.Stop();
-        WriteTime("解析文件并写入缓存V1(同步): ", parseDbTimer.ElapsedMilliseconds());
+        WriteTime("解析文件并写入缓存V1(同步): ", parseDbTimer.GetElapsedMilliseconds());
         HighPrecisionTimer parseDbTimerAsync = new();
         parseDbTimerAsync.Start();
 #pragma warning disable CS0612 // 类型或成员已过时
         lddb.ParseAsync_V1();
 #pragma warning restore CS0612 // 类型或成员已过时
         parseDbTimerAsync.Stop();
-        WriteTime("解析文件并写入缓存V1(异步): ", parseDbTimerAsync.ElapsedMilliseconds());
+        WriteTime("解析文件并写入缓存V1(异步): ", parseDbTimerAsync.GetElapsedMilliseconds());
         #endregion
     }
 
@@ -178,7 +189,7 @@ class Test
         {
             // Console.WriteLine(str);
         }
-        WriteTime("并发词典数据库全类型同步搜寻: ", allTypeSearchFromConcurrentDictionaryTimer.ElapsedMilliseconds());
+        WriteTime("并发词典数据库全类型同步搜寻: ", allTypeSearchFromConcurrentDictionaryTimer.GetElapsedMilliseconds());
         #endregion
     }
 
@@ -194,7 +205,7 @@ class Test
         {
             // Console.WriteLine(str);
         }
-        WriteTime("信号量线程锁词典数据库全类型搜寻: ", allTypeSearchFromSemaphoreThreadLockTimer.ElapsedMilliseconds());
+        WriteTime("信号量线程锁词典数据库全类型搜寻: ", allTypeSearchFromSemaphoreThreadLockTimer.GetElapsedMilliseconds());
         #endregion
     }
 
@@ -204,12 +215,12 @@ class Test
         parse.Start();
         lddb.TripleDictParse();
         parse.Stop();
-        WriteTime("三值字典解析并写入(同步): ", parse.ElapsedMilliseconds());
+        WriteTime("三值字典解析并写入(同步): ", parse.GetElapsedMilliseconds());
     }
     #endregion
 
     #region 工具
-    private void WriteTime(string what, double time)
+    private void WriteTime(string what, decimal time)
     {
         string data = what + time + "ms\n";
         Console.WriteLine(data);
