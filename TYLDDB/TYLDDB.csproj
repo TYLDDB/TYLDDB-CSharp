@@ -22,6 +22,7 @@
     <PackageReleaseNotes>· Apply a three-value dictionary.
 · Optimizing LDDB.Parse_V1()
 · Add more instantiation overloads</PackageReleaseNotes>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>
@@ -48,6 +49,19 @@
     <None Include="..\README.md">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="libs\mingw\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="libs\mingw\libReadFile.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="libs\vs\ReadFile.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 

@@ -3,7 +3,7 @@ using System.IO;
 using System.Text;
 using TYLDDB.Basic.Exception;
 
-namespace TYLDDB.Utils
+namespace TYLDDB.Utils.Read
 {
     /// <summary>
     /// A struct used to read a file<br />
@@ -80,5 +80,45 @@ namespace TYLDDB.Utils
                 throw new ReadException(e.Message);
             }
         }
+
+#if NET8_0_OR_GREATER
+        public static string ReadFile_C_MinGW(string filePath)
+        {
+            using var reader = new Read_C_MinGW();
+            int error = reader.Open(Path.GetFullPath(filePath));
+
+            if (error == 0)
+            {
+                // 自动检测编码
+                string content = reader.GetText();
+                //Console.WriteLine($"文件内容长度: {content.Length}");
+                return content;
+            }
+            else
+            {
+                //Console.WriteLine($"错误代码: {error}");
+                throw new FileReadingFailException("Error code: " + error.ToString());
+            }
+        }
+
+        public static string ReadFile_C_VS(string filePath)
+        {
+            using var reader = new Read_C_VS();
+            int error = reader.Open(Path.GetFullPath(filePath));
+
+            if (error == 0)
+            {
+                // 自动检测编码
+                string content = reader.GetText();
+                //Console.WriteLine($"文件内容长度: {content.Length}");
+                return content;
+            }
+            else
+            {
+                //Console.WriteLine($"错误代码: {error}");
+                throw new FileReadingFailException("Error code: " + error.ToString());
+            }
+        }
+#endif
     }
 }
