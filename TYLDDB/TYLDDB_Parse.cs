@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using TYLDDB.Parser;
 using System.Threading;
 using System;

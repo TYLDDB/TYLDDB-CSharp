@@ -1,4 +1,4 @@
-﻿using ComputerInformation;
+using ComputerInformation;
 using TimeRecord;
 using TYLDDB;
 
