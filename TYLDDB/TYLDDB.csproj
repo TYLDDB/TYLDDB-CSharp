@@ -60,9 +60,6 @@
     <None Update="libs\mingw\libReadFile.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="libs\mingw\libRFAsmM.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="libs\vs\ReadFile.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

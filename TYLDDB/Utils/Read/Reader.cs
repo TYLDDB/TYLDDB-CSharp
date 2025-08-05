@@ -121,7 +121,7 @@ namespace TYLDDB.Utils.Read
             }
         }
 #endif
-        public static string ReadFile_C_MinGW_Asm(string filePath)
+        private static string ReadFile_C_MinGW_Asm(string filePath)
         {
             try
             {

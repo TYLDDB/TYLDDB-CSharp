@@ -56,7 +56,6 @@ class Test
         ReadFile();
         ReadFile_C_MinGW();
         ReadFile_C_VS();
-        ReadFile_C_MinGW_Asm();
 
         ReadDatabase();
 
@@ -103,16 +102,6 @@ class Test
         lddb.ReadingFile_C_VisualStudio();
         readDbTimer.Stop();
         WriteTime("从发起读取文件指令到成功读取的总时间为(VS): ", readDbTimer.GetElapsedMilliseconds());
-    }
-
-    private void ReadFile_C_MinGW_Asm()
-    {
-        HighPrecisionTimer readDbTimer = new(); // 从发起读取文件到成功读取的总时间
-        lddb.FilePath = dbFilePath;
-        readDbTimer.Start();
-        lddb.ReadingFile_C_MinGW_Asm();
-        readDbTimer.Stop();
-        WriteTime("从发起读取文件指令到成功读取的总时间为(MinGW Asm): ", readDbTimer.GetElapsedMilliseconds());
     }
     #endregion
 

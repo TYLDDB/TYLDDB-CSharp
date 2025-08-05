@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -6,78 +7,128 @@ namespace TYLDDB.Utils.Read
 {
     internal class Read_C_MinGW_Asm : IDisposable
     {
-        // 导入原生函数 - 完全匹配C代码签名
-        [DllImport("libs/mingw/libRFAsmM.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi, ExactSpelling = true)]
-        private static extern IntPtr read_file(string filename);
-
-        [DllImport("libs/mingw/libRFAsmM.dll", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        private static extern void free_file_buffer(IntPtr buffer);
-
+        private const string ERROR_STRING = "FILE_READ_ERROR";
         private IntPtr _nativeBuffer = IntPtr.Zero;
         private bool _disposed = false;
-        private const string ERROR_STRING = "FILE_READ_ERROR";
+        private static readonly object _lock = new object();
 
-        /// <summary>
-        /// Read the content of the file as a string (in UTF-8 encoding)
-        /// </summary>
+        // 修复调用约定和字符串处理
+        [DllImport("libs/mingw/libRFAsmM.dll",
+            CallingConvention = CallingConvention.StdCall,
+            CharSet = CharSet.Ansi,
+            EntryPoint = "read_file",
+            ExactSpelling = false)]
+        private static extern IntPtr NativeReadFile(string filename);
+
+        [DllImport("libs/mingw/libRFAsmM.dll",
+            CallingConvention = CallingConvention.StdCall,
+            EntryPoint = "free_file_buffer",
+            ExactSpelling = false)]
+        private static extern void NativeFreeFileBuffer(IntPtr buffer);
+
         public string ReadFile(string path)
         {
-            if (string.IsNullOrWhiteSpace(path))
-                throw new ArgumentException("文件路径不能为空", nameof(path));
-
-            ReleaseResources();
-
-            _nativeBuffer = read_file(path);
-
-            // 处理错误情况
-            if (_nativeBuffer == IntPtr.Zero)
+            lock (_lock) // 添加线程安全锁
             {
-                throw new System.IO.IOException($"文件读取失败: {path} (返回空指针)");
-            }
+                try
+                {
+                    if (string.IsNullOrWhiteSpace(path))
+                        throw new ArgumentException("文件路径不能为空", nameof(path));
 
-            // 检查是否为错误字符串
-            string errorCheck = Marshal.PtrToStringAnsi(_nativeBuffer);
-            if (errorCheck == ERROR_STRING)
-            {
-                throw new System.IO.IOException($"文件读取失败: {path} (原生代码错误)");
-            }
+                    // 获取完整路径确保格式正确
+                    string fullPath = Path.GetFullPath(path);
+                    Console.WriteLine($"尝试读取文件: {fullPath}");
 
-            // 安全地转换结果
-            try
-            {
-                return MarshalNativeBufferToString();
-            }
-            catch (AccessViolationException ex)
-            {
-                throw new System.IO.IOException(
-                    $"内存访问错误: {path}. 原生缓冲区无效: 0x{_nativeBuffer.ToInt64():X}", ex);
+                    // 确保文件存在
+                    if (!File.Exists(fullPath))
+                    {
+                        throw new FileNotFoundException($"文件不存在: {fullPath}");
+                    }
+
+                    ReleaseResources();
+
+                    // 调用原生函数
+                    _nativeBuffer = NativeReadFile(fullPath);
+
+                    // 检查空指针
+                    if (_nativeBuffer == IntPtr.Zero)
+                    {
+                        throw new IOException($"文件读取失败: {fullPath} (返回空指针)");
+                    }
+
+                    // 检查是否为错误字符串
+                    string errorCheck = SafePtrToStringAnsi(_nativeBuffer, 50);
+                    if (errorCheck == ERROR_STRING)
+                    {
+                        throw new IOException($"文件读取失败: {fullPath} (原生代码错误)");
+                    }
+
+                    // 安全地转换结果
+                    return SafeMarshalNativeBufferToString();
+                }
+                catch (Exception ex) // 捕获所有类型的异常
+                {
+                    // 释放资源并重新抛出
+                    ReleaseResources();
+                    throw new IOException($"读取文件时出错: {path}", ex);
+                }
             }
         }
 
-        /// <summary>
-        /// Check whether the returned pointer is an erroneous string
-        /// </summary>
-        private bool IsErrorString(IntPtr buffer)
+        // 安全的 PtrToStringAnsi 替代方法
+        private string SafePtrToStringAnsi(IntPtr ptr, int maxLength = 1024)
         {
-            if (buffer == IntPtr.Zero) return false;
+            if (ptr == IntPtr.Zero) return string.Empty;
 
-            // 将原生字符串转换为托管字符串进行比较
-            string result = Marshal.PtrToStringAnsi(buffer);
-            return result == ERROR_STRING;
-        }
-
-        /// <summary>
-        /// Convert the native buffer to a string
-        /// </summary>
-        private unsafe string MarshalNativeBufferToString()
-        {
-            // 获取字符串长度（查找null终止符）
-            byte* ptr = (byte*)_nativeBuffer;
             int length = 0;
-            while (ptr[length] != 0) length++;
+            while (length < maxLength && Marshal.ReadByte(ptr, length) != 0)
+                length++;
 
-            // 直接创建字符串避免额外复制
-            return Encoding.UTF8.GetString(ptr, length);
+            if (length == 0) return string.Empty;
+
+            byte[] buffer = new byte[length];
+            Marshal.Copy(ptr, buffer, 0, length);
+            return Encoding.ASCII.GetString(buffer);
+        }
+
+        // 安全地将原生缓冲区转换为字符串
+        private string SafeMarshalNativeBufferToString()
+        {
+            if (_nativeBuffer == IntPtr.Zero)
+                throw new InvalidOperationException("原生缓冲区为空");
+
+            // 更安全的长度计算方法
+            int length = 0;
+            while (length < int.MaxValue - 1 && Marshal.ReadByte(_nativeBuffer, length) != 0)
+                length++;
+
+            if (length == 0) return string.Empty;
+
+            // 使用字节数组复制内容
+            byte[] buffer = new byte[length];
+            Marshal.Copy(_nativeBuffer, buffer, 0, length);
+
+            // 尝试检测编码
+            Encoding encoding = DetectEncoding(buffer) ?? Encoding.UTF8;
+            return encoding.GetString(buffer);
+        }
+
+        // 简单的编码检测
+        private Encoding DetectEncoding(byte[] buffer)
+        {
+            if (buffer.Length >= 3 && buffer[0] == 0xEF && buffer[1] == 0xBB && buffer[2] == 0xBF)
+            {
+                return Encoding.UTF8;
+            }
+            else if (buffer.Length >= 2 && buffer[0] == 0xFF && buffer[1] == 0xFE)
+            {
+                return Encoding.Unicode;
+            }
+            else if (buffer.Length >= 2 && buffer[0] == 0xFE && buffer[1] == 0xFF)
+            {
+                return Encoding.BigEndianUnicode;
+            }
+            return null; // 无法确定编码
         }
 
         public void Dispose()
@@ -98,22 +149,29 @@ namespace TYLDDB.Utils.Read
         {
             if (_nativeBuffer != IntPtr.Zero)
             {
-                // 仅释放非错误字符串的缓冲区
                 try
                 {
-                    string errorCheck = Marshal.PtrToStringAnsi(_nativeBuffer);
+                    // 仅释放非错误字符串的缓冲区
+                    string errorCheck = SafePtrToStringAnsi(_nativeBuffer, 20);
                     if (errorCheck != ERROR_STRING)
                     {
-                        free_file_buffer(_nativeBuffer);
+                        NativeFreeFileBuffer(_nativeBuffer);
+                    }
+                    else
+                    {
+                        Console.WriteLine("跳过释放错误字符串缓冲区");
                     }
                 }
-                catch
+                catch (Exception ex)
                 {
+                    Console.WriteLine($"释放资源时出错: {ex.Message}");
                     // 即使检查失败也尝试释放
-                    free_file_buffer(_nativeBuffer);
+                    try { NativeFreeFileBuffer(_nativeBuffer); } catch { }
                 }
-
-                _nativeBuffer = IntPtr.Zero;
+                finally
+                {
+                    _nativeBuffer = IntPtr.Zero;
+                }
             }
         }
 
