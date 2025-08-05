@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using TYLDDB.Basic.Exception;
-using TYLDDB.Utils;
+using TYLDDB.Utils.Read;
 
 namespace TYLDDB
 {
@@ -56,18 +56,41 @@ namespace TYLDDB
             return true;
         }
 
+        #region Reading file
         /// <summary>
         /// Read the contents from the file<br/>
         /// 从文件中读取内容
         /// </summary>
         public void ReadingFile() => _fileContent = Reader.ReadFile(FilePath);
 
+#if NET8_0_OR_GREATER
+        /// <summary>
+        /// Read the contents from the file<br/>
+        /// 从文件中读取内容
+        /// </summary>
+        public void ReadingFile_C_MinGW() => _fileContent = Reader.ReadFile_C_MinGW(FilePath);
+
+        /// <summary>
+        /// Read the contents from the file<br/>
+        /// 从文件中读取内容
+        /// </summary>
+        public void ReadingFile_C_VisualStudio() => _fileContent = Reader.ReadFile_C_VS(FilePath);
+#endif
+        #endregion
+
         /// <summary>
         /// Set the database to load<br/>
         /// 设置要加载的数据库
         /// </summary>
         /// <param name="db">name of the database<br/>数据库名称</param>
-        public void LoadDatabase(string db)
+        public void LoadDatabase(string db) => LoadDatabase_V2(db);
+
+        /// <summary>
+        /// Set the database to load<br/>
+        /// 设置要加载的数据库
+        /// </summary>
+        /// <param name="db">name of the database<br/>数据库名称</param>
+        public void LoadDatabase_V1(string db)
         {
             ReadingFile();
             _databaseContent = database_v1.GetDatabaseContent(_fileContent, db);
@@ -80,7 +103,10 @@ namespace TYLDDB
         /// <param name="db">name of the database<br/>数据库名称</param>
         public void LoadDatabase_V2(string db)
         {
-            ReadingFile();
+            if (_fileContent == null)
+            {
+                ReadingFile();
+            }
             _databaseContent = database_v2.GetDatabaseContent(_fileContent, db);
         }
 

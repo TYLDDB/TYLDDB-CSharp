@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using TYLDDB.Parser;
 using System.Threading;
 using System;
@@ -11,6 +11,7 @@ namespace TYLDDB
         /// Reparse the entire database.<br />
         /// 重新解析整个数据库。
         /// </summary>
+        [Obsolete]
         public void Parse_V1()
         {
             switch (_cacheMode)
@@ -531,6 +532,7 @@ namespace TYLDDB
         /// Reparse the entire database.<br />
         /// 重新解析整个数据库。
         /// </summary>
+        [Obsolete]
         public void ParseAsync_V1()
         {
             switch (_cacheMode)
