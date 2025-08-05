@@ -8,25 +8,29 @@
 
 #include <stddef.h>
 
+#ifdef _WIN32
+#define CALLCONV __stdcall
+#define DLLEXPORT __declspec(dllexport)
+#else
+#define CALLCONV
+    #define DLLEXPORT
+#endif
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 typedef struct {
-    void* mapped_view;   // 内存映射视图指针
-    size_t file_size;    // 文件大小(字节)
-    void* _internal;     // 内部句柄(不透明结构)
+    void* mapped_view;
+    size_t file_size;
+    void* _internal;
 } MappedFileResult;
 
-// 打开文件并创建内存映射
-// 成功返回0，失败返回错误代码(非0)
-int open_mapped_file(const wchar_t* file_path, MappedFileResult* result);
-
-// 释放文件映射资源
-void free_mapped_file(MappedFileResult* result);
+DLLEXPORT int CALLCONV open_mapped_file(const wchar_t* file_path, MappedFileResult* result);
+DLLEXPORT void CALLCONV free_mapped_file(MappedFileResult* result);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif //READFILE_FILE_READER_H
+#endif // READFILE_FILE_READER_H

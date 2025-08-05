@@ -2,6 +2,21 @@
 // Created by Grey-Wind on 2025/8/5.
 // Edited by Grey-Wind on 2025/8/5.
 //
+#define WIN32_LEAN_AND_MEAN
+#define _CRT_DECLARE_NONSTDC_NAMES 0
+#define _WINSOCKAPI_
+#define NOCRYPT
+#define NOGDI
+#define NOUSER
+#define NOSERVICE
+#define NOMCX
+#define NOIME
+#define NOSOUND
+#define NOCOMM
+#define NOHELP
+#define NOPROFILER
+#define NODEFERWINDOWPOS
+#define NOMINMAX
 
 #include "file_reader.h"
 #include <windows.h>
@@ -13,7 +28,7 @@ typedef struct {
     HANDLE mapping_handle;
 } InternalHandles;
 
-int open_mapped_file(const wchar_t* file_path, MappedFileResult* result) {
+int CALLCONV open_mapped_file(const wchar_t* file_path, MappedFileResult* result) {
     // 初始化结果结构
     result->mapped_view = NULL;
     result->file_size = 0;
@@ -97,7 +112,7 @@ int open_mapped_file(const wchar_t* file_path, MappedFileResult* result) {
     return 0; // 成功
 }
 
-void free_mapped_file(MappedFileResult* result) {
+void CALLCONV free_mapped_file(MappedFileResult* result) {
     if (result->mapped_view) {
         UnmapViewOfFile(result->mapped_view);
         result->mapped_view = NULL;

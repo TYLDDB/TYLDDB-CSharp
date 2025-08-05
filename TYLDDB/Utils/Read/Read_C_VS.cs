@@ -16,12 +16,10 @@ namespace TYLDDB.Utils.Read
             public IntPtr InternalHandles;
         }
 
-        [DllImport("libs/vs/ReadFile.dll", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
-        private static extern int open_mapped_file(
-            [MarshalAs(UnmanagedType.LPWStr)] string filePath,
-            out MappedFileResult result);
+        [DllImport("libs/vs/ReadFile.dll", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        private static extern int open_mapped_file([MarshalAs(UnmanagedType.LPWStr)] string filePath, out MappedFileResult result);
 
-        [DllImport("libs/vs/ReadFile.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("libs/vs/ReadFile.dll", CallingConvention = CallingConvention.StdCall)]
         private static extern void free_mapped_file(ref MappedFileResult result);
 
         private MappedFileResult _result;
