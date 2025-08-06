@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Security;
 using System.Text;
 using TYLDDB.Basic.Exception;
 
@@ -9,7 +10,7 @@ namespace TYLDDB.Utils.Read
     /// A struct used to read a file<br />
     /// 用于读取文件的结构体
     /// </summary>
-    public struct Reader
+    internal struct Reader
     {
         /// <summary>
         /// Read file.(64KB buffer)<br />
@@ -120,5 +121,20 @@ namespace TYLDDB.Utils.Read
             }
         }
 #endif
+        private static string ReadFile_C_MinGW_Asm(string filePath)
+        {
+            try
+            {
+                using var reader = new Read_C_MinGW_Asm();
+
+                // 读取成功
+                string content = reader.ReadFile(Path.GetFullPath(filePath));
+                return content;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

@@ -63,6 +63,13 @@ namespace TYLDDB
         /// </summary>
         public void ReadingFile() => _fileContent = Reader.ReadFile(FilePath);
 
+        /// <summary>
+        /// <strong>由于内存问题一直未处理完毕，暂时弃用</strong>
+        /// Read the contents from the file<br/>
+        /// 从文件中读取内容
+        /// </summary>
+        //private void ReadingFile_C_MinGW_Asm() => _fileContent = Reader.ReadFile_C_MinGW_Asm(FilePath);
+
 #if NET8_0_OR_GREATER
         /// <summary>
         /// Read the contents from the file<br/>
