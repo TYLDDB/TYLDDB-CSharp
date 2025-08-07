@@ -1,6 +1,5 @@
-﻿using System;
+using System;
 using System.IO;
-using System.Security;
 using System.Text;
 using TYLDDB.Basic.Exception;
 
@@ -85,6 +84,11 @@ namespace TYLDDB.Utils.Read
 #if NET8_0_OR_GREATER
         public static string ReadFile_C_MinGW(string filePath)
         {
+            if (!Path.Exists("libs/mingw/libReadFile.dll"))
+            {
+                throw new DllNotFoundException("DLL not found.");
+            }
+
             using var reader = new Read_C_MinGW();
             int error = reader.Open(Path.GetFullPath(filePath));
 
@@ -104,6 +108,11 @@ namespace TYLDDB.Utils.Read
 
         public static string ReadFile_C_VS(string filePath)
         {
+            if (!Path.Exists("libs/vs/ReadFile.dll"))
+            {
+                throw new DllNotFoundException("DLL not found.");
+            }
+
             using var reader = new Read_C_VS();
             int error = reader.Open(Path.GetFullPath(filePath));
 
@@ -123,6 +132,11 @@ namespace TYLDDB.Utils.Read
 #endif
         private static string ReadFile_C_MinGW_Asm(string filePath)
         {
+            if (!File.Exists("libs/mingw/libRFAsmM.dll"))
+            {
+                throw new DllNotFoundException("DLL not found.");
+            }
+
             try
             {
                 using var reader = new Read_C_MinGW_Asm();
@@ -134,6 +148,20 @@ namespace TYLDDB.Utils.Read
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
+            }
+        }
+
+        public static string ReadFile_Cpp_MinGW(string fp)
+        {
+            using var reader = new Read_Cpp_MinGW();
+            try
+            {
+                reader.Open(fp);
+                return reader.GetContentAsString();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
             }
         }
     }

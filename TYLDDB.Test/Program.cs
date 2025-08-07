@@ -103,6 +103,16 @@ class Test
         readDbTimer.Stop();
         WriteTime("从发起读取文件指令到成功读取的总时间为(VS): ", readDbTimer.GetElapsedMilliseconds());
     }
+
+    private void ReadFile_Cpp_MinGW()
+    {
+        HighPrecisionTimer readDbTimer = new(); // 从发起读取文件到成功读取的总时间
+        lddb.FilePath = dbFilePath;
+        readDbTimer.Start();
+        // lddb.ReadingFile_Cpp_MinGW();
+        readDbTimer.Stop();
+        WriteTime("从发起读取文件指令到成功读取的总时间为(MinGW C++): ", readDbTimer.GetElapsedMilliseconds());
+    }
     #endregion
 
     private void ReadDatabase()

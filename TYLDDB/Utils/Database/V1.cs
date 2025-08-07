@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using TYLDDB.Basic.Exception;
 
 namespace TYLDDB.Utils.Database
 {
+    [Obsolete("Too slow.")]
     internal partial class Database_V1 : IDatabase
     {
 #pragma warning disable IDE0079

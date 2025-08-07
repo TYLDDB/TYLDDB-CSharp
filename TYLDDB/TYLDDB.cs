@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using TYLDDB.Basic.Exception;
 using TYLDDB.Utils.Read;
@@ -63,12 +64,21 @@ namespace TYLDDB
         /// </summary>
         public void ReadingFile() => _fileContent = Reader.ReadFile(FilePath);
 
+        /*
         /// <summary>
         /// <strong>由于内存问题一直未处理完毕，暂时弃用</strong>
         /// Read the contents from the file<br/>
         /// 从文件中读取内容
         /// </summary>
-        //private void ReadingFile_C_MinGW_Asm() => _fileContent = Reader.ReadFile_C_MinGW_Asm(FilePath);
+        public void ReadingFile_C_MinGW_Asm() => _fileContent = Reader.ReadFile_C_MinGW_Asm(FilePath); */
+
+        /*
+        /// <summary>
+        /// <strong>由于内存问题一直未处理完毕，暂时弃用</strong>
+        /// Read the contents from the file<br/>
+        /// 从文件中读取内容
+        /// </summary>
+        public void ReadingFile_Cpp_MinGW() => _fileContent = Reader.ReadFile_Cpp_MinGW(FilePath); */
 
 #if NET8_0_OR_GREATER
         /// <summary>
@@ -97,6 +107,7 @@ namespace TYLDDB
         /// 设置要加载的数据库
         /// </summary>
         /// <param name="db">name of the database<br/>数据库名称</param>
+        [Obsolete("Too slow.")]
         public void LoadDatabase_V1(string db)
         {
             ReadingFile();
