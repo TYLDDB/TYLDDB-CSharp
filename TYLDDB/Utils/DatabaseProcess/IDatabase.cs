@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace TYLDDB.Utils.Database
+namespace TYLDDB.Utils.DatabaseProcess
 {
     /// <summary>
     /// Interfaces for operations on external databases.<br />

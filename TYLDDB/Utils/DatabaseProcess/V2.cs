@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TYLDDB.Utils.Database
+namespace TYLDDB.Utils.DatabaseProcess
 {
     internal class Database_V2 : IDatabase
     {
