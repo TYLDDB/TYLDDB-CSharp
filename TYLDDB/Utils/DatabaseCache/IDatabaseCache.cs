@@ -2,7 +2,7 @@
 
 namespace TYLDDB.Utils.DatabaseCache
 {
-    internal interface IDatabaseTemp<T>
+    internal interface IDatabaseCache<T>
     {
         /// <summary>
         /// Synchronization method: Obtain the corresponding value by key.

@@ -10,14 +10,14 @@ namespace TYLDDB.Utils.DatabaseCache
     /// Concurrent dictionary cache.
     /// </summary>
     /// <typeparam name="T">string, int, short...</typeparam>
-    public class ConcurrentDictionaryTemp<T> : IDatabaseTemp<T>
+    public class ConcurrentDictionaryCache<T> : IDatabaseCache<T>
     {
         private readonly ConcurrentDictionary<string, T> _cache;
 
         /// <summary>
         /// Concurrent dictionary cache.
         /// </summary>
-        public ConcurrentDictionaryTemp()
+        public ConcurrentDictionaryCache()
         {
             _cache = new ConcurrentDictionary<string, T>();
         }

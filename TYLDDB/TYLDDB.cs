@@ -9,7 +9,7 @@ using System.Threading;
 using TYLDDB.Parser;
 using System.Threading.Tasks;
 using TYLDDB.Utils.DatabaseProcess;
-
+using TYLDDB.Utils.DatabaseCache;
 
 
 #if NET8_0_OR_GREATER
@@ -33,6 +33,22 @@ namespace TYLDDB
 #pragma warning restore CS0618 // 类型或成员已过时
         private readonly Database_V2 database_v2;
         private readonly CacheMode _cacheMode;
+
+        #region Concurrent Dictionary Cache
+        private readonly ConcurrentDictionaryCache<String> _stringConcurrentDictionaryCache;
+        private readonly ConcurrentDictionaryCache<Int16> _int16ConcurrentDictionaryCache; // short
+        private readonly ConcurrentDictionaryCache<Int32> _int32ConcurrentDictionaryCache; // int
+        private readonly ConcurrentDictionaryCache<Int64> _int64ConcurrentDictionaryCache; // long
+#if NET7_0_OR_GREATER
+        private readonly ConcurrentDictionaryCache<Int128> _int128ConcurrentDictionaryCache;
+#endif
+        private readonly ConcurrentDictionaryCache<float> _floatConcurrentDictionaryCache;
+        private readonly ConcurrentDictionaryCache<Double> _doubleConcurrentDictionaryCache;
+        private readonly ConcurrentDictionaryCache<Decimal> _decimalConcurrentDictionaryCache;
+        private readonly ConcurrentDictionaryCache<Char> _charConcurrentDictionaryCache;
+        private readonly ConcurrentDictionaryCache<Boolean> _boolConcurrentDictionaryCache;
+        #endregion
+
         private readonly CdStringDictionary cdStringDictionary;
         private readonly CdShortDictionary cdShortDictionary;
         private readonly CdLongDictionary cdLongDictionary;
