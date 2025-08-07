@@ -16,7 +16,7 @@
     <Description>A strongly typed constrained distributed file system that can act as a database.</Description>
     <ProduceReferenceAssembly>True</ProduceReferenceAssembly>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
-    <PackageTags>DataBase</PackageTags>
+    <PackageTags>DataBase;Configuration</PackageTags>
     <Company>QingYi-Studio</Company>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageReleaseNotes>· Apply a three-value dictionary.
