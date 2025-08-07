@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using TYLDDB.Basic.Exception;
 
-namespace TYLDDB.Utils.Database
+namespace TYLDDB.Utils.DatabaseProcess
 {
     [Obsolete("Too slow.")]
     internal partial class Database_V1 : IDatabase
